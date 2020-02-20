@@ -1,0 +1,11 @@
+zé? invadi sua maquina.
+vou deixar meu codigo pra vc ver, se puder me ajudar, é referente aquele sistema
+de ordem de serviço pra equipamentos hospitalares...
+lembrei...
+eu fiquei empacado com um problema. eu preciso deixar alguns campos unicos, 
+ mas nao sei como voltar um errorMessage
+
+tem um exemplo na model setor eu acho, index(isUnique =true), ai a mensagem nao sei!
+
+
+G:\Janlon\SistemaSec
