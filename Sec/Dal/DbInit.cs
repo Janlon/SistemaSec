@@ -18,9 +18,9 @@ namespace Sec.Dal
     /// <summary>
     /// Inicialização (criação, semeadura etc). Esta classe é, portanto, um helper do contexto de persistência.
     /// </summary>
-    public class SistemaSecInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    public class SistemaSecInitializer : DropCreateDatabaseIfModelChanges<DB>
     {
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(DB context)
         {
             // Perfís de acesso padrão:
             try
@@ -71,7 +71,6 @@ namespace Sec.Dal
                 context.SaveChanges();
             }
             catch (Exception ex) { var p = ex; }
-
             // Cargos (CBO2002):
             try
             {
@@ -80,20 +79,24 @@ namespace Sec.Dal
             }
             catch (Exception ex) { var p = ex; }
 
-            // Criar algumas pessoas, apenas para viabilizar o acesso inicial com dados de exemplo.
-            try
-            {
-                if (context.Pessoas.Count() == 0)
-                {
-                    List<Pessoa> pessoas = new List<Pessoa>();
-                    pessoas.Add(new Pessoa { Nome = "Janlon de Carvalho Rodrigues", PessoaFisica = Resposta.Sim });
-                    pessoas.Add(new Pessoa { Nome = "Santa Casa de Misericordia", PessoaFisica = Resposta.Não });
-                    pessoas.ForEach(s => context.Pessoas.AddOrUpdate(s));
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception ex) { var p = ex; }
 
+
+
+
+            ////// Criar algumas pessoas, apenas para viabilizar o acesso inicial com dados de exemplo.
+            ////try
+            ////{
+            ////    if (context.Pessoas.Count() == 0)
+            ////    {
+            ////        List<Pessoa> pessoas = new List<Pessoa>();
+            ////        var pp = new Pessoa { Nome = "Janlon de Carvalho Rodrigues", Documento = "00000000000", Apelido = "Janlon", PessoaFisica = true };
+            ////        pessoas.Add(pp);
+            ////        pessoas.Add(new Pessoa { Nome = "Santa Casa de Misericordia", Documento="00000000001", Apelido="",  PessoaFisica = true });
+            ////        pessoas.ForEach(s => context.Pessoas.AddOrUpdate(s));
+            ////        context.SaveChanges();
+            ////    }
+            ////}
+            ////catch (Exception ex) { var p = ex; }
             //List<Cargo> cargos = new List<Cargo>
             //{
             //    new Cargo { Descricao = "Analista de Sistemas", Sigla = "ASIS" },

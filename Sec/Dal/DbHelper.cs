@@ -20,7 +20,7 @@
         public static void Register()
         {
             int p = 0;
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (DB db = new DB())
                 p = db.Pessoas.Count();
         }
         /// <summary>
@@ -69,14 +69,16 @@
         {
             get
             {
-                SqlConnectionStringBuilder sb = null;
-                string cs = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                string cs = "";
+                if(ConfigurationManager.ConnectionStrings["DefaultConnection"]!=null)
+                    cs= ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 if (string.IsNullOrEmpty(cs))
                     cs = ConfigurationManager.ConnectionStrings[0].ConnectionString;
                 if (string.IsNullOrEmpty(cs))
                     cs = ConfigurationManager.AppSettings["ds"];
                 if (!string.IsNullOrEmpty(cs))
                 {
+                    SqlConnectionStringBuilder sb = null;
                     if ((cs.Contains("source")) || ((cs.Contains("Source"))))
                         sb = new SqlConnectionStringBuilder(cs);
                     else

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sec.Dal
+﻿namespace Sec.Dal
 {
     using Microsoft.AspNet.Identity.EntityFramework;
     using Sec.Models;
@@ -13,40 +7,29 @@ namespace Sec.Dal
     /// <summary>
     /// Contexto dos dados
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public partial class DB : IdentityDbContext<ApplicationUser>
     {
         /// <summary>
         /// Construtor padrão.
         /// </summary>
-        public ApplicationDbContext() : base(DbHelper.Connection, true)
+        public DB() : base(DbHelper.Connection, true)
         {
             Configuration.LazyLoadingEnabled = true;
             Configuration.AutoDetectChangesEnabled = true;
             Configuration.ValidateOnSaveEnabled = true;
             Configuration.EnsureTransactionsForFunctionsAndCommands = true;
             Configuration.UseDatabaseNullSemantics = true;
-            Database.SetInitializer<ApplicationDbContext>(new SistemaSecInitializer());
-            //Database.CreateIfNotExists();
+            Database.SetInitializer<DB>(new SistemaSecInitializer());
         }
 
         /// <summary>
         /// Construtor estático.
         /// </summary>
         /// <returns></returns>
-        public static ApplicationDbContext Create()
+        public static DB Create()
         {
-            return new ApplicationDbContext();
-        }
-
-        /// <summary>
-        /// Vincular o inicializador ao contexto:
-        /// </summary>
-        /// <param name="modelBuilder"></param>
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            Database.SetInitializer<ApplicationDbContext>(new SistemaSecInitializer());
-            base.OnModelCreating(modelBuilder);
-        }
+            return new DB();
+        }        
 
         #region Coleções
         public DbSet<TipoDeDocumento> TiposDeDocumentos { get; set; }
