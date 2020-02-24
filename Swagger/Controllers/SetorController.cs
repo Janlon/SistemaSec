@@ -7,31 +7,31 @@ using System.Web.Http;
 
 namespace Swagger.Controllers
 {
-    public class ValuesController : ApiController
+    public class SetorController : ApiController
     {
-        // GET api/values
+        // GET: api/Setor
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
+        // GET: api/Setor/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
+        // POST: api/Setor
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT: api/Setor/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        
+        // DELETE: api/Setor/5
         public void Delete(int id)
         {
         }
