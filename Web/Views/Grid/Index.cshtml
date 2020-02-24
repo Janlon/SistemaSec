@@ -1,0 +1,49 @@
+﻿@using Web.Models
+
+@(Html.Kendo().Grid<Channel>
+    ()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Logo).Encoded(false).Width(80).Filterable(false).Sortable(false);
+        columns.Bound(p => p.Titulo).Filterable(f => f.Operators(o => o.ForString(s => s.Clear().Contains("Contem"))));
+        columns.Bound(p => p.Endereco).Filterable(f => f.Operators(o => o.ForString(s => s.Clear().Contains("Contem"))));
+    })
+    .AutoBind(true)
+    .Events(events => events.Change("AbrirJanela"))
+    .Selectable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .Group(g => g.Add(c => c.Categoria))
+    .PageSize(150)
+    .Read(read => read.Action("Listar", "Grid"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Window()
+        .Name("window")
+        .Content(@<text>
+               
+        </text>)
+    .Visible(false)
+    .Events(events => events.Close("FecharJanela")).Deferred(true)
+)
+
+<script>
+    function AbrirJanela() {
+        requestFullScreen();
+       $("#window").data("kendoWindow").open();
+       $("#grid").hide();
+    }
+
+    function FecharJanela() {
+       $("#window").data("kendoWindow").close();
+       $("#grid").show();
+    }
+</script>
+
+@Scripts.Render("~/bundles/Web")
