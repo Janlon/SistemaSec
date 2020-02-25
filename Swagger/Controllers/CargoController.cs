@@ -12,7 +12,7 @@ namespace Swagger.Controllers
         // GET: api/Cargo
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3" };
         }
 
         // GET: api/Cargo/5
