@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
 [assembly: AssemblyTitle("Sec")]
-[assembly: AssemblyDescription("Biblioteca genérica - posição inicial")]
+[assembly: AssemblyDescription("Biblioteca de negócios (Business Intelligence) S.E.C. é uma biblioteca de acesso e gerenciamento de negócios no padrão S.E.C.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Sec")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // O GUID a seguir será destinado à ID de typelib se este projeto for exposto para COM
-[assembly: Guid("0eb474cf-b1da-41ef-a047-53bc27ca3857")]
+[assembly: Guid("8d29ff93-323f-4bfa-b0ef-6bc12a24a15c")]
 
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //

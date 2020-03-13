@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using Sec.Models;
+﻿using System.Web.Http;
+
+using Sec.Business.Models;
 
 namespace Swagger.Controllers
 {
@@ -25,7 +20,6 @@ namespace Swagger.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             return Ok();
         }
 
@@ -51,7 +45,6 @@ namespace Swagger.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             return Ok();
         }
 

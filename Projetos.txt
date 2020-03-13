@@ -1,0 +1,18 @@
+======================
+=      Generics      =
+======================
+Neste projeto devem constar apenas as extensões, componentes e funcionalidades que sejam 
+utilizáveis por qualquer projeto .Net, sem manter quaisquer conceitos de negócio ou outras
+lógicas proprietárias, como estruturas de blog e similares;
+======================
+=       S.E.C.       =
+======================
+Neste projeto devem residir todos os componentes, métodos, extensões, modelos e funcionalidades que 
+estejam efetivamente relacionadas à lógica de negócio, tais como validações e implementações de
+fábricas e serviços.
+======================
+=       SWAGGER      =
+======================
+Este projeto deve manter a API de manutenção dos dados nas regras de negócio, cumprindo o 
+papel de mediador entre os aplicativos cliente e os serviços de negócio (S.E.C.).
+

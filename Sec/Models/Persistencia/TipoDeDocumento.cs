@@ -11,7 +11,7 @@
     /// jurídica. Assim, um documento só poderá pertencer á uma única pessoa.
     /// Por exemplo, uma ordem de serviço (documento). 
     /// </summary>
-    [Table("TiposDeDocumentos", Schema = "dbo")]
+    [Table("TiposDeDocumentos", Schema = "Sec")]
     public class TipoDeDocumento
     {
         /// <summary>
