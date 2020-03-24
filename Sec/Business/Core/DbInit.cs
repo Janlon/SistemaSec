@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Generics.Helpers.Errors;
     using Sec.Models;
     using System.Data.Entity;
+    using Generics.Extensoes;
 
     /// <summary>
     /// Inicialização (criação, semeadura etc). Esta classe é, portanto, um helper do contexto de persistência.
@@ -83,15 +83,7 @@
                     context.SaveChanges();
                 }
             }
-            catch (Exception ex) { ex.Log(); }
-            //List<Setor> setores = new List<Setor>
-            //{
-            //    new Setor { Descricao = "Laboratório", Sigla = "LAB" },
-            //    new Setor { Descricao = "Unidade de Terapia Intensiva", Sigla = "UTI" },
-            //    new Setor { Descricao = "Enfermagem", Sigla = "ENF" }
-            //};
-            //setores.ForEach(s => context.Setores.AddOrUpdate(s));
-            //context.SaveChanges();            
+            catch (Exception ex) { ex.Log(); }    
         }
     }
 }

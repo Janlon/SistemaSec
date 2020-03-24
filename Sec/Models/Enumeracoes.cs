@@ -3,6 +3,32 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sec
 {
+    /// <summary>
+    /// Enumeração para os tipos de regras das pessoas físicas e jurídicas.
+    /// </summary>
+    public enum RegraEnum
+    {
+        [Display(Name = "Administrativo")]
+        Administrativo,
+        [Display(Name = "Técnico")]
+        Tecnico,
+        [Display(Name = "Financeiro")]
+        Financeiro,
+        [Display(Name = "Operacional")]
+        Operacional,
+        [Display(Name = "Compras")]
+        Compras,
+        [Display(Name = "Vendas")]
+        Vendas,
+        [Display(Name = "TI")]
+        Desenvolvimento,
+        [Display(Name = "Manutenção")]
+        Manutencao,
+        [Display(Name = "Clientes")]
+        Cliente,
+        [Display(Name = "Fornecedores")]
+        Fornecedor,
+    }
 
     /// <summary>
     /// Enumeração para tipos de filtros textuais.

@@ -1,5 +1,6 @@
 ﻿namespace Generics.Dal
 {
+    using Generics.Extensoes;
     using Generics.Helpers.Errors;
     using Newtonsoft.Json;
     using System;

@@ -1,6 +1,7 @@
 ﻿namespace Sec.Business.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class RegisterViewModel
@@ -36,5 +37,8 @@
         [Display(Name = "Confirmar Senha")]
         [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
         public string ConfirmPassword { get; set; }
+
+
+        public virtual List<RegraEnum> Regras { get; set; } = new List<RegraEnum>();
     }
 }

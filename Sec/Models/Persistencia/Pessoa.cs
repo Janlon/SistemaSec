@@ -1,6 +1,7 @@
 ﻿namespace Sec.Models
 {
     using Generics;
+    using Sec.IdentityGroup;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -80,24 +81,24 @@
         [NotMapped()]
         [StringLength(90, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 1)]
         [Column(TypeName = "VARCHAR")]
-        public virtual string Email { get { return Generics.Cryptis.Text.AESDecrypt(XEmail, DataKey); } set { XEmail = Generics.Cryptis.Text.AESEncrypt(value, DataKey); } }
+        public virtual string Email { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XEmail, DataKey); } set { XEmail = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [NotMapped()]
         [StringLength(100, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 5)]
         [Column(TypeName = "VARCHAR")]
-        public virtual string Nome { get { return Generics.Cryptis.Text.AESDecrypt(XNome, DataKey); } set {XNome = Generics.Cryptis.Text.AESEncrypt(value, DataKey); } }
+        public virtual string Nome { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XNome, DataKey); } set {XNome = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [NotMapped()]
         [Required(AllowEmptyStrings =true)]
         [StringLength(100, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 2)]
         [Column(TypeName = "VARCHAR")]
-        public virtual string Apelido { get { return Generics.Cryptis.Text.AESDecrypt(XApelido, DataKey); } set { XApelido = Generics.Cryptis.Text.AESEncrypt(value, DataKey); } }
+        public virtual string Apelido { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XApelido, DataKey); } set { XApelido = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [NotMapped()]
         [Required(AllowEmptyStrings = true)]
         [StringLength(100, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 2)]
         [Column(TypeName = "VARCHAR")]
-        public virtual string Atividade { get { return Generics.Cryptis.Text.AESDecrypt(XAtividade, DataKey); } set { XAtividade = Generics.Cryptis.Text.AESEncrypt(value, DataKey); } }
+        public virtual string Atividade { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XAtividade, DataKey); } set { XAtividade = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [Display(Name ="Contatos")]
         public virtual List<Contato> Contatos { get; internal set; } = new List<Contato>();

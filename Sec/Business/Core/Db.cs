@@ -1,10 +1,10 @@
 ﻿namespace Sec.Business
 {
-    using Generics;
     using Generics.Dal;
-    using Generics.Helpers.Errors;
+    using Generics.Extensoes;
     using Sec.IdentityGroup;
     using Sec.Models;
+
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -21,48 +21,14 @@
     /// </summary>
     public partial class Db : DB<ApplicationUser>
     {
+        #region Instância
         public Db()
         {
             Database.SetInitializer<Db>(new DbInit());
         }
-
-
-        #region Coleções
-        public DbSet<Contato> Contatos { get; set; }
-        public DbSet<Documento> Documentos { get; set; }
-        public DbSet<DocumentoDaPessoa> DocumentosDasPessoas { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<EnderecoDaPessoa> EnderecosDasPessoas { get; set; }
-        public DbSet<EntregaDoItemDaOrdemDeServico> Entregas { get; set; }
-        public DbSet<Equipamento> Equipamentos { get; set; }
-        public DbSet<EquipamentoDoSetor> EquipamentosDosSetores { get; set; }
-        public DbSet<Imagem> Imagens { get; set; }
-        public DbSet<ItemDaOrdemDeServico> ItensDasOrdensDeServico { get; set; }
-        public DbSet<OrdemDeServico> OrdensDeServico { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
-        public DbSet<Servico> Servicos { get; set; }
-        public DbSet<Setor> Setores { get; set; }
-        public DbSet<SetorDoEndereco> SetoresDosEnderecos { get; set; }
-        public DbSet<TipoDeDocumento> TiposDeDocumentos { get; set; }
-        public DbSet<TipoDeServico> TiposDeServicos { get; set; }
-        #endregion
-
         public Db Create() { return new Db(); }
-
         protected override void PrepareModel(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<ImagemDoEquipamento>()
-            //    .HasKey(p => new { p.EquipamentoId, p.ImagemId });
-            //modelBuilder.Entity<ImagemDaPessoa>()
-            //    .HasKey(p => new { p.PessoaId, p.ImagemId });
-            //modelBuilder.Entity<Pessoa>()
-            //    .HasMany<Contato>(p => p.Contatos);
-            //modelBuilder.Entity<Pessoa>()
-            //    .HasMany<Imagem>(p => p.Imagens);
-            //modelBuilder.Entity<Equipamento>()
-            //    .HasMany<Imagem>(p => p.Imagens);
-
             modelBuilder.Entity<Pessoa>()
                 .HasMany(t => t.Imagens)
                 .WithMany(t => t.Pessoas)
@@ -126,16 +92,11 @@
                 .Update(u => u.HasName("upd_Imagem"))
                 .Delete(d => d.HasName("del_Imagem"))
                 .Insert(i => i.HasName("ins_Imagem")));
-            //modelBuilder.Entity<ImagemDaPessoa>()
-            //    .MapToStoredProcedures(s => s
-            //    .Update(u => u.HasName("upd_ImagemDaPessoa"))
-            //    .Delete(d => d.HasName("del_ImagemDaPessoa"))
-            //    .Insert(i => i.HasName("ins_ImagemDaPessoa")));
-            //modelBuilder.Entity<ImagemDoEquipamento>()
-            //    .MapToStoredProcedures(s => s
-            //    .Update(u => u.HasName("upd_ImagemDoEquipamento"))
-            //    .Delete(d => d.HasName("del_ImagemDoEquipamento"))
-            //    .Insert(i => i.HasName("ins_ImagemDoEquipamento")));
+            modelBuilder.Entity<Usuario>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_Usuario"))
+                .Delete(d => d.HasName("del_Usuario"))
+                .Insert(i => i.HasName("ins_Usuario")));
             modelBuilder.Entity<ItemDaOrdemDeServico>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_ItemDaOrdemDeServico"))
@@ -182,7 +143,31 @@
                 .Delete(d => d.HasName("del_TipoDeServico"))
                 .Insert(i => i.HasName("ins_TipoDeServico")));
         }
+        #endregion
 
+        #region Coleções
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Contato> Contatos { get; set; }
+        public DbSet<Documento> Documentos { get; set; }
+        public DbSet<DocumentoDaPessoa> DocumentosDasPessoas { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<EnderecoDaPessoa> EnderecosDasPessoas { get; set; }
+        public DbSet<EntregaDoItemDaOrdemDeServico> Entregas { get; set; }
+        public DbSet<Equipamento> Equipamentos { get; set; }
+        public DbSet<EquipamentoDoSetor> EquipamentosDosSetores { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
+        public DbSet<ItemDaOrdemDeServico> ItensDasOrdensDeServico { get; set; }
+        public DbSet<OrdemDeServico> OrdensDeServico { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
+        public DbSet<Setor> Setores { get; set; }
+        public DbSet<SetorDoEndereco> SetoresDosEnderecos { get; set; }
+        public DbSet<TipoDeDocumento> TiposDeDocumentos { get; set; }
+        public DbSet<TipoDeServico> TiposDeServicos { get; set; }
+        #endregion
+
+        #region Extensões
         /// <summary>
         /// Enviar emails para endereços.
         /// </summary>
@@ -201,7 +186,6 @@
             });
             await Task.Run(a);
         }
-
         /// <summary>
         /// Enviar emails para endereços.
         /// </summary>
@@ -323,5 +307,6 @@
                 }
             }
         }
+        #endregion
     }
 }

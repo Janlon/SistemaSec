@@ -1,12 +1,14 @@
 ﻿namespace Sec.IdentityGroup
 {
-    using Generics.Helpers.Errors;
+    using Generics.Extensoes;
+    using Sec.Business;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.OAuth;
-    using Sec.Business;
+    
     using System;
     using System.Collections.Generic;
     using System.Reflection;

@@ -3,11 +3,13 @@
 [assembly: OwinStartup(typeof(Sec.IdentityGroup.Startup))]
 namespace Sec.IdentityGroup
 {
-    using Generics.Helpers.Errors;
+    using Generics.Extensoes;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
+
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -58,16 +60,9 @@ namespace Sec.IdentityGroup
             try
             {
                 List<IdentityRole> regras = new List<IdentityRole>();
-                regras.Add(new IdentityRole() { Name = "Administrativo" });
-                regras.Add(new IdentityRole() { Name = "Funcionário" });
-                regras.Add(new IdentityRole() { Name = "Técnico" });
-                regras.Add(new IdentityRole() { Name = "Financeiro" });
-                regras.Add(new IdentityRole() { Name = "Operacional" });
-                regras.Add(new IdentityRole() { Name = "Cliente" });
-                regras.Add(new IdentityRole() { Name = "Vendas" });
-                regras.Add(new IdentityRole() { Name = "Desenvolvimento" });
+                foreach (RegraEnum temp in Enum.GetValues( typeof(RegraEnum)))
+                    regras.Add(new IdentityRole() { Name = temp.DisplayName() });
                 List<IdentityResult> results = new List<IdentityResult>();
-
                 try
                 {
                     if (am.RM.Roles.Count() == 0)

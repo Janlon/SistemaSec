@@ -2,116 +2,16 @@
 {
     namespace Errors
     {
+        using Generics.Extensoes;
         using Newtonsoft.Json;
         using System;
         using System.Collections.Generic;
-        using System.ComponentModel;
-        using System.ComponentModel.DataAnnotations;
         using System.IO;
         using System.Runtime.CompilerServices;
         using System.Text;
-        using System.Threading;
+        using System.Threading;        
 
-        /// <summary>
-        /// Classe para manutenção de erros.
-        /// </summary>
-        public class ErrorBlock
-        {
-            [JsonProperty("DetectionDate")]
-            [Display(Name="Data da detecção")]
-            public DateTime DetectionDate { get; set; } = DateTime.Now;
-
-            [JsonProperty("Caller")]
-            [Display(Name = "Método chamador")]
-            public string Caller { get; set; } = "";
-
-            [JsonProperty("FileName")]
-            [Display(Name = "Arquivo de código")]
-            public string FileName { get; set; } = "";
-
-            [JsonProperty("LineNumber")]
-            [Display(Name = "Linha")]
-            public int LineNumer { get; set; } = 0;
-
-            [JsonProperty("ErrorMessage")]
-            [Display(Name = "Mensagem de erro")]
-            public string ErrorMessage { get; set; } = "";
-
-            [JsonProperty("JSonError")]
-            [Display(Name = "Erro como JSon")]
-            [ScaffoldColumn(false)]
-            [Browsable(false)]
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            public string JSonError { get; set; } = "";
-        }
-
-        /// <summary>
-        /// Métodos de extensão para <see cref="Exception"/> e <see cref="string"/>.
-        /// </summary>
-        public static class ExceptionExtensions
-        {
-            /// <summary>
-            /// Retorna se este <see cref="FileInfo"/> está na faixa de criação indicada.
-            /// </summary>
-            /// <param name="fi">Este <see cref="FileInfo"/>.</param>
-            /// <param name="start">Data inicial.</param>
-            /// <param name="end">Data final.</param>
-            /// <param name="inclusive">Indica se a faixa inclui ou não as datas-limite.</param>
-            /// <returns>Booleano.</returns>
-            public static bool IsBetween(this FileInfo fi, DateTime start, DateTime end , bool inclusive)
-            {
-                bool ret = false;
-                if ((fi != null) && (fi.CreationTime != null))
-                {
-                    if (inclusive)
-                        ret = (fi.CreationTime >= start && fi.CreationTime <= end);
-                    else
-                        ret = (fi.CreationTime > start && fi.CreationTime < end);
-                }
-                return ret;
-            }
-            /// <summary>
-            /// Salva este <see cref="Exception"/> no histórico.
-            /// </summary>
-            /// <param name="value">Este <see cref="Exception"/>.</param>
-            /// <param name="memberName">Método cjamador.</param>
-            /// <param name="sourceFilePath">Arquivo com o código fonte.</param>
-            /// <param name="sourceLineNumber">Linha do arquivo onde o erro foi encontrado.</param>
-            public static void Log(this Exception value, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
-            {
-                using (ErrorManager em = new ErrorManager(new ErrorBlock()
-                {
-                    Caller = memberName,
-                    FileName = sourceFilePath,
-                    DetectionDate = DateTime.Now,
-                    ErrorMessage = value.Message,
-                    JSonError = JsonConvert.SerializeObject(value),
-                    LineNumer = sourceLineNumber
-                }))
-                    em.Save();
-            }
-            /// <summary>
-            /// Salva esta mensagem de erro no histórico.
-            /// </summary>
-            /// <param name="value">Esta mensagem de erro.</param>
-            /// <param name="memberName">Método cjamador.</param>
-            /// <param name="sourceFilePath">Arquivo com o código fonte.</param>
-            /// <param name="sourceLineNumber">Linha do arquivo onde o erro foi encontrado.</param>
-            public static void Log(this string errorMessage, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
-            {
-                Exception value = new Exception(errorMessage);
-                using (ErrorManager em = new ErrorManager(new ErrorBlock()
-                {
-                    Caller = memberName,
-                    FileName = sourceFilePath,
-                    DetectionDate = DateTime.Now,
-                    ErrorMessage = value.Message,
-                    JSonError = JsonConvert.SerializeObject(value),
-                    LineNumer = sourceLineNumber
-                }))
-                    em.Save();
-            }
-        }
+        
 
         /// <summary>
         /// Administrador de históricos de erros.

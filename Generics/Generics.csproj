@@ -67,6 +67,9 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.3.1.2\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.3.1.2\lib\netstandard2.0\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Options.3.1.2\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
@@ -189,7 +192,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstratos\EntidadeBase.cs" />
-    <Compile Include="Dal\ActionBlock.cs" />
+    <Compile Include="DataAnnotation\Validadores.cs" />
+    <Compile Include="Estruturas\CPFCNPJ.cs" />
+    <Compile Include="Extensoes\EnumExtensions.cs" />
+    <Compile Include="Extensoes\ExceptionExtensions.cs" />
+    <Compile Include="Extensoes\GenericsExtensions.cs" />
+    <Compile Include="Extensoes\StringExtensions.cs" />
+    <Compile Include="Helpers\Cryptis.cs" />
+    <Compile Include="Modelos\ActionBlock.cs" />
     <Compile Include="Dal\DataLogManager.cs" />
     <Compile Include="Dal\DBCollections.cs" />
     <Compile Include="Dal\DB.cs" />
@@ -198,36 +208,38 @@
     <Compile Include="Dal\DbInit.cs" />
     <Compile Include="Dal\Atributos.cs" />
     <Compile Include="Dal\DbResponse.cs" />
-    <Compile Include="Enumeracoes.cs" />
+    <Compile Include="Helpers\Enumeracoes.cs" />
     <Compile Include="Helpers\Crypto.cs" />
     <Compile Include="Helpers\ErrorManager.cs" />
-    <Compile Include="Helpers\IBGEHelper.cs" />
-    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\IBGEClient.cs" />
+    <Compile Include="Modelos\IBGEModels.cs" />
     <Compile Include="Abstratos\PessoaBase.cs" />
+    <Compile Include="Modelos\ErrorBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="QRCoder\AbstractQRCode.cs" />
-    <Compile Include="QRCoder\ASCIIQRCode.cs" />
-    <Compile Include="QRCoder\Base64QRCode.cs" />
-    <Compile Include="QRCoder\BitmapByteQRCode.cs" />
-    <Compile Include="QRCoder\Enumeracoes.cs" />
-    <Compile Include="QRCoder\Estruturas.cs" />
-    <Compile Include="QRCoder\Excessoes\DataTooLongException.cs" />
-    <Compile Include="QRCoder\Metodos\Internos.cs" />
-    <Compile Include="QRCoder\Metodos\Publicos.cs" />
-    <Compile Include="QRCoder\PayloadGenerator.cs" />
-    <Compile Include="QRCoder\PngByteQRCode.cs" />
-    <Compile Include="QRCoder\PostscriptQRCode.cs" />
-    <Compile Include="QRCoder\QRCode.cs" />
-    <Compile Include="QRCoder\QRCodeData.cs" />
-    <Compile Include="QRCoder\QRCodeGenerator.cs" />
-    <Compile Include="QRCoder\QRCodeHelper.cs" />
-    <Compile Include="QRCoder\SvgQRCode.cs" />
-    <Compile Include="QRCoder\XamlQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\AbstractQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\ASCIIQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\Base64QRCode.cs" />
+    <Compile Include="Helpers\QRCoder\BitmapByteQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\Enumeracoes.cs" />
+    <Compile Include="Helpers\QRCoder\Estruturas.cs" />
+    <Compile Include="Helpers\QRCoder\Excessoes\DataTooLongException.cs" />
+    <Compile Include="Helpers\QRCoder\Metodos\Internos.cs" />
+    <Compile Include="Helpers\QRCoder\Metodos\Publicos.cs" />
+    <Compile Include="Helpers\QRCoder\PayloadGenerator.cs" />
+    <Compile Include="Helpers\QRCoder\PngByteQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\PostscriptQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\QRCode.cs" />
+    <Compile Include="Helpers\QRCoder\QRCodeData.cs" />
+    <Compile Include="Helpers\QRCoder\QRCodeGenerator.cs" />
+    <Compile Include="Helpers\QRCoder\QRCodeHelper.cs" />
+    <Compile Include="Helpers\QRCoder\SvgQRCode.cs" />
+    <Compile Include="Helpers\QRCoder\XamlQRCode.cs" />
+    <Compile Include="Helpers\SuperKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

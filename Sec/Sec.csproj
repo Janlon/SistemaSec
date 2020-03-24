@@ -107,9 +107,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\Engine\Db.cs" />
-    <Compile Include="Business\Engine\DbInit.cs" />
+    <Compile Include="Business\Core\CrudError.cs" />
+    <Compile Include="Business\Core\CrudResult.cs" />
+    <Compile Include="Business\Core\Db.cs" />
+    <Compile Include="Business\Core\DbInit.cs" />
+    <Compile Include="Business\Core\SpecializedFactories.cs" />
+    <Compile Include="Business\Core\Factory.cs" />
+    <Compile Include="Business\Engine\Cargos.cs" />
+    <Compile Include="Business\Engine\Contatos.cs" />
+    <Compile Include="Business\Engine\Documentos.cs" />
+    <Compile Include="Business\Engine\DocumentosDasPessoas.cs" />
+    <Compile Include="Business\Engine\Enderecos.cs" />
+    <Compile Include="Business\Engine\EnderecosDasPessoas.cs" />
     <Compile Include="Business\Engine\Engine.cs" />
+    <Compile Include="Business\Core\FactoryBase.cs" />
+    <Compile Include="Business\Engine\Entregas.cs" />
+    <Compile Include="Business\Engine\Equipamentos.cs" />
+    <Compile Include="Business\Engine\Geo.cs" />
+    <Compile Include="Business\Engine\Imagens.cs" />
+    <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
+    <Compile Include="Business\Engine\OrdensDeServicos.cs" />
+    <Compile Include="Business\Engine\Retiradas.cs" />
+    <Compile Include="Business\Engine\Setores.cs" />
+    <Compile Include="Business\Engine\SetoresDosEnderecos.cs" />
+    <Compile Include="Business\Engine\TiposDeDocumentos.cs" />
+    <Compile Include="Business\Engine\TiposDeServicos.cs" />
+    <Compile Include="Business\Engine\Users.cs" />
+    <Compile Include="Business\Engine\Usuarios.cs" />
     <Compile Include="Business\IdentityGroup\AppicationOAuthProvider.cs" />
     <Compile Include="Business\IdentityGroup\ApplicationManager.cs" />
     <Compile Include="Business\IdentityGroup\ApplicationPasswordValidator.cs" />
@@ -122,6 +146,7 @@
     <Compile Include="Business\IdentityGroup\ApplicationUserValidator.cs" />
     <Compile Include="Business\IdentityGroup\ChallengeResult.cs" />
     <Compile Include="Business\IdentityGroup\SecStartUp.cs" />
+    <Compile Include="Business\Core\IFactory.cs" />
     <Compile Include="Models\Identity\AddPhoneViewModel.cs" />
     <Compile Include="Models\Identity\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Identity\ConfigureTwoFactorViewModel.cs" />
@@ -142,6 +167,7 @@
     <Compile Include="Models\Identity\VerifyPhoneNumberModel.cs" />
     <Compile Include="Business\Extensoes\Pessoa.cs" />
     <Compile Include="Models\Persistencia\Atividade.cs" />
+    <Compile Include="Models\Persistencia\Usuario.cs" />
     <Compile Include="Models\Transporte.cs" />
     <Compile Include="Models\Enumeracoes.cs" />
     <Compile Include="Models\Persistencia\Contato.cs" />

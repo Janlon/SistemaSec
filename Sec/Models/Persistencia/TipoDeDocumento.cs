@@ -37,6 +37,10 @@
         [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
         public string Sigla { get; set; }
 
+        [Display(Name = "Ativo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ativo", Description = "Indica se este documento est[a ou não ativo.")]
+        [Activation()]
+        public bool Ativo { get; set; } = true;
+
         /// <summary>
         /// Destino do tipo de documento.
         /// </summary>
@@ -44,12 +48,16 @@
         [DefaultValue(true)]
         public bool PessoaFisica { get; set; } = true;
 
+        /// <summary>
+        /// Indica de este item identifica uma pessoa.
+        /// </summary>
         [Display(Name = "Identificador", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Identificador", Description = "É um documento para identificação?")]
         [DefaultValue(true)]
         public bool Identificador { get; set; } = true;
 
-
-
+        /// <summary>
+        /// Lista de documentos deste tipo que estão cadastrados.
+        /// </summary>
         [Display(Name = "Documentos", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Documentos", Description = "Documentos do tipo cadastrados")]
         public virtual List<Documento> Documentos { get; set; } = new List<Documento>();
     }
