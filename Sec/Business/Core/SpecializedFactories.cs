@@ -14,7 +14,7 @@
     internal class EnderecosDasPessoasFactory : Factory<EnderecoDaPessoa> { }
     internal class EntregasFactory : Factory<EntregaDoItemDaOrdemDeServico> { }
     internal class EquipamentosFactory : Factory<Equipamento> { }
-    internal class EquipamentosDosSetoresFactory : Factory<EquipamentoDoSetor> { }
+    // internal class EquipamentosDosSetoresFactory : Factory<EquipamentoDoSetor> { }
     internal class ImagensFactory : Factory<Imagem> { }
     internal class ItensDasOrdensDeServicoFactory : Factory<ItemDaOrdemDeServico> { }
     internal class OrdensDeServicoFactory : Factory<OrdemDeServico> { }
@@ -22,8 +22,6 @@
     internal class RetiradasFactory : Factory<RetiradaDoItemDaOrdemDeServico> { }
     internal class ServicosFactory : Factory<Servico> { }
     internal class SetoresFactory : Factory<Setor> { }
-    internal class SetoresDosEnderecosFactory : Factory<SetorDoEndereco> { }
-    internal class TiposDeServicosFactory : Factory<TipoDeServico> { }
     internal class TiposDeDocumentosFactory : Factory<TipoDeDocumento> { }
     internal class RolesFactory : Factory<IdentityRole> { }
     internal class UsersFactory : Factory<IdentityUser> { }

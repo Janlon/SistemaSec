@@ -14,6 +14,7 @@
     {
         protected override void Seed(Db context)
         {
+            IEnumerable<Models.Atividade> Atividades = Engine.Cargos.Atividades();
             // Tipos de documento padrão:
             try
             {
@@ -49,37 +50,50 @@
                 context.SaveChanges();
             }
             catch (Exception ex) { ex.Log(); }
+
+            // Pessoa
             try
             {
                 if (context.Pessoas.Count() == 0)
                 {
-                    IEnumerable<Models.Atividade> Atividades = Engine.Cargos.Atividades();
                     Models.Atividade pf = Atividades
                         .Where(p => p.Id.StartsWith("21240"))
                         .FirstOrDefault();
-                    Models.Atividade pj = Atividades
-                        .Where(p => p.Id.StartsWith("86101"))
-                        .FirstOrDefault();
-                    List<Pessoa> pessoas = new List<Pessoa>();
-                    pessoas.Add(new Pessoa()
+                    context.Pessoas.Add(new Pessoa()
                     {
                         Nome = "Janlon de Carvalho Rodrigues",
                         Email = "janloncavalchi@msn.com",
                         Apelido = "Janlon",
-                        PessoaFisica = pf.PessoaFisica,
-                        Atividade = pf.Descricao.Trim().ToUpper(),
-                        Nascimento = new DateTime(1980, 1, 1)
+                        Atividade = ((pf == null) ? "" : pf.Descricao.Trim().ToUpper()),
+                        Nascimento = new DateTime(1980, 1, 1),
+                        CPF = "37930464008"
                     });
-                    pessoas.Add(new Pessoa()
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex) { ex.Log(); }
+            // Empresa
+            try
+            {
+                if (context.Empresas.Count() == 0)
+                {
+                    Endereco endereco = new Endereco() { Localidade = "Santoas", Bairro = "Jabaquara", CEP = "11075900", Complemento = "", Logradouro = "Av. Dr. Cláudio Luís da Costa, 50", UF = "SP" };
+                    context.Enderecos.Add(endereco);
+                    context.SaveChanges();
+                    Models.Atividade pj = Atividades
+                        .Where(p => p.Id.StartsWith("86101"))
+                        .FirstOrDefault();                    
+                    context.Empresas.Add(
+                    new Empresa()
                     {
                         Nome = "Santa Casa de Misericordia",
                         Email = "provedoria@scsantos.com.br",
                         Apelido = "Santa Casa",
-                        PessoaFisica = pj.PessoaFisica,
-                        Atividade = pj.Descricao.Trim().ToUpper(),
-                        Nascimento = new DateTime(1912, 1, 1)
+                        Atividade = ((pj == null) ? "" : pj.Descricao.Trim().ToUpper()),
+                        Nascimento = new DateTime(1912, 1, 1),
+                        CNPJ = "25503424000108",
+                        Endereco = endereco
                     });
-                    context.Pessoas.AddRange(pessoas);
                     context.SaveChanges();
                 }
             }

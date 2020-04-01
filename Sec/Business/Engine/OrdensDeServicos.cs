@@ -3,6 +3,7 @@
     using Sec.Business.Core;
     using Sec.Models;
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
 
     public partial class Engine

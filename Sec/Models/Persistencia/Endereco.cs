@@ -39,7 +39,7 @@
         [Column(TypeName = "VARCHAR")]
         public string Complemento { get; set; } = "";
 
-        [Display(Name = "")]
+        [Display(Name = "Bairro")]
         [StringLength(50, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 1)]
         [Column(TypeName = "VARCHAR")]
         public string Bairro { get; set; } = "";

@@ -21,6 +21,11 @@
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [CPF()]
+        [Required()]
+        [Display(Name = "CPF")]
+        public string CPF { get; set; }
+
         [Required]
         [Display(Name = "Conta")]
         [RegularExpression(@"^[a-zA-Z''-'\s]{1,100}$", ErrorMessage = "Números e caracteres especiais não são permitidos na conta.")]

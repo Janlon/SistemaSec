@@ -15,7 +15,6 @@
         {
             return Engine.Cargos
                 .Atividades()
-                .Where(p => p.PessoaFisica == value.PessoaFisica)
                 .ToList();
         }
     }

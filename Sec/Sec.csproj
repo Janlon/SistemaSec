@@ -129,9 +129,7 @@
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Retiradas.cs" />
     <Compile Include="Business\Engine\Setores.cs" />
-    <Compile Include="Business\Engine\SetoresDosEnderecos.cs" />
     <Compile Include="Business\Engine\TiposDeDocumentos.cs" />
-    <Compile Include="Business\Engine\TiposDeServicos.cs" />
     <Compile Include="Business\Engine\Users.cs" />
     <Compile Include="Business\Engine\Usuarios.cs" />
     <Compile Include="Business\IdentityGroup\AppicationOAuthProvider.cs" />
@@ -166,7 +164,9 @@
     <Compile Include="Models\Identity\VerifyCodeViewModel.cs" />
     <Compile Include="Models\Identity\VerifyPhoneNumberModel.cs" />
     <Compile Include="Business\Extensoes\Pessoa.cs" />
-    <Compile Include="Models\Persistencia\Atividade.cs" />
+    <Compile Include="Models\Abstratos\Atividade.cs" />
+    <Compile Include="Models\Abstratos\EntidadeBase.cs" />
+    <Compile Include="Models\Abstratos\IEntdadeBase.cs" />
     <Compile Include="Models\Persistencia\Usuario.cs" />
     <Compile Include="Models\Transporte.cs" />
     <Compile Include="Models\Enumeracoes.cs" />
@@ -177,7 +177,6 @@
     <Compile Include="Models\Persistencia\EnderecosDasPessoas.cs" />
     <Compile Include="Models\Persistencia\EntregaDoItemDaOrdemDeServico.cs" />
     <Compile Include="Models\Persistencia\Equipamento.cs" />
-    <Compile Include="Models\Persistencia\EquipamentoDoSetor.cs" />
     <Compile Include="Models\Persistencia\Imagem.cs" />
     <Compile Include="Models\Persistencia\ItemDaOrdemDeServico.cs" />
     <Compile Include="Models\Persistencia\OrdemDeServico.cs" />
@@ -185,9 +184,7 @@
     <Compile Include="Models\Persistencia\RetiradaDoItemDaOrdemDeServico.cs" />
     <Compile Include="Models\Persistencia\Servico.cs" />
     <Compile Include="Models\Persistencia\Setor.cs" />
-    <Compile Include="Models\Persistencia\SetorDoEndereco.cs" />
     <Compile Include="Models\Persistencia\TipoDeDocumento.cs" />
-    <Compile Include="Models\Persistencia\TipoDeServico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

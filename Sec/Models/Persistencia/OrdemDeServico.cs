@@ -12,22 +12,24 @@
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        //[ScaffoldColumn(false)]
-        //public int EquipamentoId { get; set; }
-
         [ScaffoldColumn(false)]
-        public int EnderecoId { get; set; }
+        public int EmpresaId { get; set; }
 
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string Numero { get; set; }
 
-        public DateTime Emissao { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Emissao { get; set; } = DateTime.Now;
 
-        [Display(Name = "Endereco", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereco")]
-        [ForeignKey("EnderecoId")]
-        public virtual Endereco Endereco { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Validade { get; set; } = DateTime.Now.AddDays(7);
+
+
+        [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
+        [ForeignKey("EmpresaId")]
+        public virtual Empresa Empresa { get; set; }
 
         [Display(Name = "Itens da Ordem de Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Itens da Ordem de Serviço")]
-        public List<ItemDaOrdemDeServico> Itens { get; set; } = new List<ItemDaOrdemDeServico>();
+        public virtual List<ItemDaOrdemDeServico> Itens { get; set; } = new List<ItemDaOrdemDeServico>();
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Sec.Business.Models
 {
-
     public class Atividade
     {
         public string Id { get; set; } = "";

@@ -40,9 +40,11 @@ namespace Sec.Models
         [NotMapped]
         public DateTime DataCadastro { get; set; }
 
+        [ScaffoldColumn(false)]
+        public int SetorId { get; set; }
 
-
-
+        [ForeignKey("SetorId")]
+        public virtual Setor Setor { get; set; }
 
         [Display(Name = "Imagens")]
         public virtual List<Imagem> Imagens { get; internal set; } = new List<Imagem>();

@@ -80,7 +80,7 @@
                                             Email = model.Email.Trim().ToLower(),
                                             Nascimento = model.Nascimento,
                                             Nome = model.Name,
-                                            PessoaFisica = true
+                                            CPF =model.CPF
                                         };
                                         using (Db db = new Db())
                                         {

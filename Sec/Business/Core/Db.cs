@@ -38,15 +38,32 @@
                     m.MapLeftKey("PessoaId");
                     m.MapRightKey("ImagemId");
                 });
+
+            modelBuilder.Entity<Empresa>()
+                .HasMany(p => p.Setores)
+                .WithRequired(p=>p.Empresa)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Equipamento>()
                 .HasMany(t => t.Imagens)
                 .WithMany(t => t.Equipamentos)
                 .Map(m =>
                 {
                     m.ToTable("ImagensDosEquipamentos", "Sec");
-                    m.MapLeftKey("PessoaId");
+                    m.MapLeftKey("EquipamentoId");
                     m.MapRightKey("ImagemId");
                 });
+
+            modelBuilder.Entity<EntregaDoItemDaOrdemDeServico>()
+                .HasRequired(p => p.Pessoa)
+                .WithMany(p => p.OrdensDeServicoEntregues)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RetiradaDoItemDaOrdemDeServico>()
+                .HasRequired(p => p.Pessoa)
+                .WithMany(p => p.OrdensDeServicoRetiradas)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Contato>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Contato"))
@@ -82,11 +99,6 @@
                 .Update(u => u.HasName("upd_Equipamento"))
                 .Delete(d => d.HasName("del_Equipamento"))
                 .Insert(i => i.HasName("ins_Equipamento")));
-            modelBuilder.Entity<EquipamentoDoSetor>()
-                .MapToStoredProcedures(s => s
-                .Update(u => u.HasName("upd_EquipamentoDoSetor"))
-                .Delete(d => d.HasName("del_EquipamentoDoSetor"))
-                .Insert(i => i.HasName("ins_EquipamentoDoSetor")));
             modelBuilder.Entity<Imagem>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Imagem"))
@@ -127,21 +139,11 @@
                 .Update(u => u.HasName("upd_Setor"))
                 .Delete(d => d.HasName("del_Setor"))
                 .Insert(i => i.HasName("ins_Setor")));
-            modelBuilder.Entity<SetorDoEndereco>()
-                .MapToStoredProcedures(s => s
-                .Update(u => u.HasName("upd_SetorDoEndereco"))
-                .Delete(d => d.HasName("del_SetorDoEndereco"))
-                .Insert(i => i.HasName("ins_SetorDoEndereco")));
             modelBuilder.Entity<TipoDeDocumento>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_TipoDeDocumento"))
                 .Delete(d => d.HasName("del_TipoDeDocumento"))
                 .Insert(i => i.HasName("ins_TipoDeDocumento")));
-            modelBuilder.Entity<TipoDeServico>()
-                .MapToStoredProcedures(s => s
-                .Update(u => u.HasName("upd_TipoDeServico"))
-                .Delete(d => d.HasName("del_TipoDeServico"))
-                .Insert(i => i.HasName("ins_TipoDeServico")));
         }
         #endregion
 
@@ -154,17 +156,15 @@
         public DbSet<EnderecoDaPessoa> EnderecosDasPessoas { get; set; }
         public DbSet<EntregaDoItemDaOrdemDeServico> Entregas { get; set; }
         public DbSet<Equipamento> Equipamentos { get; set; }
-        public DbSet<EquipamentoDoSetor> EquipamentosDosSetores { get; set; }
         public DbSet<Imagem> Imagens { get; set; }
         public DbSet<ItemDaOrdemDeServico> ItensDasOrdensDeServico { get; set; }
         public DbSet<OrdemDeServico> OrdensDeServico { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Empresa> Empresas { get; set; }
         public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Setor> Setores { get; set; }
-        public DbSet<SetorDoEndereco> SetoresDosEnderecos { get; set; }
         public DbSet<TipoDeDocumento> TiposDeDocumentos { get; set; }
-        public DbSet<TipoDeServico> TiposDeServicos { get; set; }
         #endregion
 
         #region Extensões
