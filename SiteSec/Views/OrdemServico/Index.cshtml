@@ -1,0 +1,48 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<OrdemServico>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Emissao);
+        columns.Bound(p => p.Id).ClientTemplate("<a href='" + @Url.Action("Index", "ItensDasOrdensDeServicos", new { id = "#=Id#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>Detalhar</a>").Width(90);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+       // .Group(g => g.Add(c => c.Pessoa.Nome)).Group(g => g.Add(c => c.Numero))
+        .Read(read => read.Action("Read", "OrdemServico", new { id = ViewBag.Id }))
+        .Create(update => update.Action("Create", "OrdemServico"))
+        .Update(update => update.Action("Update", "OrdemServico"))
+        .Destroy(update => update.Action("Destroy", "OrdemServico"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+
+@Scripts.Render("~/bundles/Web")
+
+<script>
+    function onChange() {
+        let item = $("#Pessoa").data("kendoDropDownList");
+        let id = item.value();
+        let nome = item.text();
+        console.log(nome, id);
+    }
+</script>

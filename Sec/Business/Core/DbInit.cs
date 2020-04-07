@@ -56,17 +56,13 @@
             {
                 if (context.Pessoas.Count() == 0)
                 {
-                    Models.Atividade pf = Atividades
-                        .Where(p => p.Id.StartsWith("21240"))
-                        .FirstOrDefault();
+                    Models.Atividade pf = Atividades.Where(p => p.Id.StartsWith("21240")).FirstOrDefault();
                     context.Pessoas.Add(new Pessoa()
                     {
                         Nome = "Janlon de Carvalho Rodrigues",
                         Email = "janloncavalchi@msn.com",
-                        Apelido = "Janlon",
                         Atividade = ((pf == null) ? "" : pf.Descricao.Trim().ToUpper()),
-                        Nascimento = new DateTime(1980, 1, 1),
-                        CPF = "37930464008"
+                        CPF = "37930464008"               
                     });
                     context.SaveChanges();
                 }
@@ -77,20 +73,17 @@
             {
                 if (context.Empresas.Count() == 0)
                 {
-                    Endereco endereco = new Endereco() { Localidade = "Santoas", Bairro = "Jabaquara", CEP = "11075900", Complemento = "", Logradouro = "Av. Dr. Cláudio Luís da Costa, 50", UF = "SP" };
+                    Endereco endereco = new Endereco() { Localidade = "Santos", Bairro = "Jabaquara", CEP = "11075900", Complemento = "", Logradouro = "Av. Dr. Cláudio Luís da Costa, 50", UF = "SP" };
                     context.Enderecos.Add(endereco);
                     context.SaveChanges();
-                    Models.Atividade pj = Atividades
-                        .Where(p => p.Id.StartsWith("86101"))
-                        .FirstOrDefault();                    
+
+                    Models.Atividade pj = Atividades.Where(p => p.Id.StartsWith("86101")).FirstOrDefault();                    
                     context.Empresas.Add(
                     new Empresa()
                     {
-                        Nome = "Santa Casa de Misericordia",
-                        Email = "provedoria@scsantos.com.br",
-                        Apelido = "Santa Casa",
+                        RazaoSocial = "Santa Casa de Misericordia",
+                        NomeFantasia = "Santa Casa",
                         Atividade = ((pj == null) ? "" : pj.Descricao.Trim().ToUpper()),
-                        Nascimento = new DateTime(1912, 1, 1),
                         CNPJ = "25503424000108",
                         Endereco = endereco
                     });

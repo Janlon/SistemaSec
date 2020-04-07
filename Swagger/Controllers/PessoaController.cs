@@ -4,57 +4,36 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Sec.Business;
 using Sec.Models;
 
 namespace Swagger.Controllers
 {
     public class PessoaController : ApiController
     {
-
-        /// <summary>
-        /// Retornar uma lista de informações
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Pessoa> Get()
+        public CrudResult<Pessoa> Get()
         {
-            return new List<Pessoa>();
+            return Engine.Pessoas.List();
         }
 
-        /// <summary>
-        /// Retornar o registro selecionado
-        /// </summary>
-        /// <param name="id">{id}</param>
-        /// <returns></returns>
-        public Pessoa Get(int id)
+        public CrudResult<Pessoa> Get(int id)
         {
-            return new Pessoa() { Id = id };
+            return Engine.Pessoas.Find(new object[] { id });
         }
 
-        /// <summary>
-        /// Cadastrar um novo registro
-        /// </summary>
-        /// <param name="pessoa"></param>
-        public void Post([FromBody] Pessoa pessoa)
+        public CrudResult<Pessoa> Post(Pessoa obj)
         {
-
+            return Engine.Pessoas.Insert(obj);
         }
 
-        /// <summary>
-        /// Alterar o registro selecionado
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pessoa"></param>
-        public void Put(int id, [FromBody]Pessoa pessoa)
+        public CrudResult<Pessoa> Put(Pessoa obj)
         {
+            return Engine.Pessoas.Update(obj);
         }
 
-        /// <summary>
-        /// Apagar o registro selecionado
-        /// </summary>
-        /// <param name="id"></param>
-        public void Delete(int id)
+        public CrudResult<Pessoa> Delete(int id)
         {
-
+            return Engine.Pessoas.Delete(Engine.Pessoas.Find(new object[] { id }).Result.FirstOrDefault());
         }
     }
 }

@@ -14,8 +14,9 @@
         public int Id { get; set; }
 
         [Required(ErrorMessage ="{0} é requerido")]
-        [StringLength(80, ErrorMessage ="{0} deve ter entre {2} e {1} caracteres", MinimumLength = 1)]
-        [Column(TypeName ="varchar")]
+        [StringLength(100, ErrorMessage ="{0} deve ter entre {2} e {1} caracteres", MinimumLength = 3)]
+        [MaxLength(100)]
+        [Column("Descricao", TypeName = "VARCHAR")]
         public string Descricao { get; set; }
 
     }

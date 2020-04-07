@@ -23,17 +23,16 @@
         [Column(TypeName = "Text")]
         public string Descricao { get; set; }
 
+        [ScaffoldColumn(false)]
         [Display(Name = "Cadastro", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Cadastro", Description = "Data de cadastro")]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
-        DateTime Cadastro { get; set; }
+        public DateTime Cadastro { get; set; } = DateTime.Now;
 
         [Display(Name = "Execução", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Execução", Description = "Data de execução")]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
-        DateTime Execucao { get; set; }
-
-
+        public DateTime Execucao { get; set; } = DateTime.Now;
 
         [ForeignKey("ItemId")]
         public virtual ItemDaOrdemDeServico Item { get; set; }

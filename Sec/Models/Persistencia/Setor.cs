@@ -16,14 +16,16 @@
 
         [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(50, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
-        [Index(IsUnique = true)]
+        [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
+        [MaxLength(100)]
+        [Column("Descricao", TypeName = "VARCHAR")]
         public string Descricao { get; set; }
 
         [Display(Name = "Sigla", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Sigla")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
-        [Index(IsUnique = true)]
+        [MaxLength(10)]
+        [Column("Sigla", TypeName = "VARCHAR")]
         public string Sigla { get; set; }
 
         [ForeignKey("IdEmpresa")]

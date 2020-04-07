@@ -411,7 +411,8 @@
                     string ppt = PropertyNameByAttribute();
                     temp.AddRange( ApplyFilter(temp, ppt, true) );
                 }
-                ret.SetResult(temp);
+                ret.Result.AddRange(temp);
+                //ret.SetResult(temp);
                 ret.SetAffected(temp.Count);
             }
             catch (DataException ex) { ret.AddError(ex); }

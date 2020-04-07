@@ -1,0 +1,42 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<ItensDasOrdensDeServicos>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+
+        columns.Bound(p => p.Equipamento);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Group(g => g.Add(c => c.OrdemDeServico)).Group(g => g.Add(c => c.Servico))
+        .Read(read => read.Action("Read", "ItensDasOrdensDeServicos", new { id = ViewBag.Id }))
+        .Create(update => update.Action("Create", "ItensDasOrdensDeServicos"))
+        .Update(update => update.Action("Update", "ItensDasOrdensDeServicos"))
+        .Destroy(update => update.Action("Destroy", "ItensDasOrdensDeServicos"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification()
+    .Name("popupNotification").Deferred(true)
+)
+
+@Scripts.Render("~/bundles/Web")

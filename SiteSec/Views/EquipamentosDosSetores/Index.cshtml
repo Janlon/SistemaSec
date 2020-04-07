@@ -1,0 +1,40 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<EquipamentosDosSetores>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+            columns.Bound(p => p.Setor);
+            columns.Bound(p => p.Equipamento);
+            columns.Command(command =>
+            {
+                command.Edit().Text("Alterar");
+                command.Destroy().Text("Apagar");
+
+            });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Read(read => read.Action("Read", "EquipamentosDosSetores"))
+        .Create(update => update.Action("Create", "EquipamentosDosSetores"))
+        .Update(update => update.Action("Update", "EquipamentosDosSetores"))
+        .Destroy(update => update.Action("Destroy", "EquipamentosDosSetores"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification()
+    .Name("popupNotification").Deferred(true)
+)
+
+@Scripts.Render("~/bundles/Web")

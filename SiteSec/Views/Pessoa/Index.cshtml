@@ -1,0 +1,49 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<Pessoa>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Nome);
+        columns.Bound(p => p.CPF);
+        columns.Bound(p => p.Email);
+        columns.Bound(p => p.Atividade);
+         columns.Bound(p => p.Id).ClientTemplate("<a href='" + @Url.Action("Index", "documento", new { id = "#=Id#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>  Documento</a>" ).Width(90);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .PageSize(150)
+    .Events(events => events.Error("Error"))
+    .Events(events => events.RequestEnd("RequestEnd"))
+    .Events(events => events.Change("Change"))
+    .Model(model => model.Id(p => p.Id))
+    .Read(read => read.Action("Read", "Pessoa", new { id = ViewBag.Id }))
+    .Create(update => update.Action("Create", "Pessoa"))
+    .Update(update => update.Action("Update", "Pessoa"))
+    .Destroy(update => update.Action("Destroy", "Pessoa"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+
+@Scripts.Render("~/bundles/Web")
+
+<script>
+    function alterarPessoa(e) {
+       // alert("teste");
+        //let chekado = document.getElementsByName("PessoaFisica");
+        console.log(e);
+    }
+</script>

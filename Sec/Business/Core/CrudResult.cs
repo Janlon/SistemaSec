@@ -59,7 +59,7 @@
         /// <summary>
         /// Resultado (sempre uma lista).
         /// </summary>
-        public List<T> Result { get; internal set; } = new List<T>();
+        public List<T> Result { get;  set; } = new List<T>();
         /// <summary>
         /// Item de origem do processamento.
         /// </summary>

@@ -26,11 +26,11 @@
         [Display(Name = "CPF")]
         public string CPF { get; set; }
 
-        [Required]
-        [Display(Name = "Conta")]
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,100}$", ErrorMessage = "Números e caracteres especiais não são permitidos na conta.")]
-        [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
-        public string NickName { get; set; } = "";
+        //[Required]
+        //[Display(Name = "Conta")]
+        //[RegularExpression(@"^[a-zA-Z''-'\s]{1,100}$", ErrorMessage = "Números e caracteres especiais não são permitidos na conta.")]
+        //[StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
+        //public string NickName { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]

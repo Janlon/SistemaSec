@@ -32,7 +32,8 @@
         /// </summary>
         [Display(Name = "Observações", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Observações", Description = "Digite se houver uma observação a fazer")]
         [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
-        [Column(TypeName = "Text")]
+        [MaxLength(100)]
+        [Column("Descricao", TypeName = "VARCHAR")]
         public string Descricao { get; set; }
 
         /// <summary>
@@ -41,7 +42,7 @@
         [Display(Name = "Cadastro", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Cadastro", Description = "Data de cadastro")]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
-        DateTime Cadastro { get; set; }
+        public DateTime Cadastro { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Data dde entrega (data da entrega).
@@ -49,7 +50,7 @@
         [Display(Name = "Execução", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Execução", Description = "Data de execução")]
         [DataType(DataType.DateTime)]
         [Column(TypeName = "DateTime")]
-        DateTime Execucao { get; set; }
+        public DateTime Execucao { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Registro de item.

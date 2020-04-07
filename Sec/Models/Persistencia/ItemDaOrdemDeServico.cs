@@ -10,19 +10,14 @@
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        [ScaffoldColumn(false)]
-        
+        [ScaffoldColumn(false)]    
         public int OrdemId { get; set; }
 
         [ScaffoldColumn(false)]
-
         public int ServicoId { get; set; }
 
         [ScaffoldColumn(false)]
         public int EquipamentoId { get; set; }
-
-
-
 
         [Display(Name = "Ordem de Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de Serviço")]
         [Required(ErrorMessage = "{0} é obrigatório.")]

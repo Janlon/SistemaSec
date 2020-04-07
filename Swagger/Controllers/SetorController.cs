@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sec.Business;
+using Sec.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +11,31 @@ namespace Swagger.Controllers
 {
     public class SetorController : ApiController
     {
-        // GET: api/Setor
-        public IEnumerable<string> Get()
+
+        public CrudResult<Setor> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Engine.Setores.List();
+        }
+       
+        public CrudResult<Setor> Get(int id)
+        {
+            return Engine.Setores.Find(new object[] { id });
+        }
+ 
+        public CrudResult<Setor> Post(Setor obj)
+        {
+            return Engine.Setores.Insert(obj);
         }
 
-        // GET: api/Setor/5
-        public string Get(int id)
+        public CrudResult<Setor> Put(Setor obj)
         {
-            return "value";
+            return Engine.Setores.Insert(obj);
         }
 
-        // POST: api/Setor
-        public void Post([FromBody]string value)
+        public CrudResult<Setor> Delete(int id)
         {
+            return Engine.Setores.Delete(Engine.Setores.Find(new object[] { id }).Result.FirstOrDefault());
         }
 
-        // PUT: api/Setor/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Setor/5
-        public void Delete(int id)
-        {
-        }
     }
 }

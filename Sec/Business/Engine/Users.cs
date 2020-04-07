@@ -32,8 +32,6 @@
         public static class Users
         {
 
-
-
             [Obsolete()]
             public static async Task<CrudResult<RegisterViewModel>> Register(RegisterViewModel model)
             {
@@ -74,11 +72,10 @@
                                     {
                                         pessoa = new Pessoa()
                                         {
-                                            Apelido = model.NickName.Trim().ToUpper(),
-                                            Ativo = true,
+                                            //Apelido = model.NickName.Trim().ToUpper(),
+                                            //Ativo = true,
                                             Cadastro = DateTime.Now,
                                             Email = model.Email.Trim().ToLower(),
-                                            Nascimento = model.Nascimento,
                                             Nome = model.Name,
                                             CPF =model.CPF
                                         };

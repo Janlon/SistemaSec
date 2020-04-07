@@ -94,14 +94,10 @@ namespace Sec.Business.Models
         public dynamic Result { get; set; }
         Dictionary<string, string> Errors { get; set; } = new Dictionary<string, string>();
     }
-
-
-
     public class CEP
     {
         public string Codigo { get; set; }
     }
-
     public class FiltroViewModel
     {
         public string Descricao { get; set; } = "";

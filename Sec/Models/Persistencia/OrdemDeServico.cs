@@ -16,12 +16,20 @@
         public int EmpresaId { get; set; }
 
         [Required(ErrorMessage = "{0} é obrigatório.")]
+        [MaxLength(20)]
+        [Column("Numero", TypeName = "VARCHAR")]
         public string Numero { get; set; }
 
-        [DataType(DataType.Date)]
+        [ScaffoldColumn(false)]
+        [Display(Name = "Emissao", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Emissão", Description = "Data de emissão")]
+        [DataType(DataType.DateTime)]
+        [Column(TypeName = "DateTime")]
         public DateTime Emissao { get; set; } = DateTime.Now;
 
-        [DataType(DataType.Date)]
+        [ScaffoldColumn(false)]
+        [Display(Name = "Validade", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Validade", Description = "Data de validade")]
+        [DataType(DataType.DateTime)]
+        [Column(TypeName = "DateTime")]
         public DateTime Validade { get; set; } = DateTime.Now.AddDays(7);
 
 

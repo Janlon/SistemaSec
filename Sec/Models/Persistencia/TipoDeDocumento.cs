@@ -26,7 +26,9 @@
         /// </summary>
         [Display(Name = "Tipo de documento", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Tipo de documento", Description = "RG, CPF, CNPJ...")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(50, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
+        [MaxLength(100)]
+        [Column("Descricao", TypeName = "VARCHAR")]
         public string Descricao { get; set; }
 
         /// <summary>
@@ -35,11 +37,9 @@
         [Display(Name = "Sigla", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Sigla", Description = "Sigla do documento")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
+        [MaxLength(10)]
+        [Column("Sigla", TypeName = "VARCHAR")]
         public string Sigla { get; set; }
-
-        [Display(Name = "Ativo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ativo", Description = "Indica se este documento est[a ou não ativo.")]
-        [Activation()]
-        public bool Ativo { get; set; } = true;
 
         /// <summary>
         /// Destino do tipo de documento.
@@ -55,10 +55,5 @@
         [DefaultValue(true)]
         public bool Identificador { get; set; } = true;
 
-        /// <summary>
-        /// Lista de documentos deste tipo que estão cadastrados.
-        /// </summary>
-        [Display(Name = "Documentos", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Documentos", Description = "Documentos do tipo cadastrados")]
-        public virtual List<Documento> Documentos { get; set; } = new List<Documento>();
     }
 }

@@ -116,7 +116,7 @@
     <Compile Include="Business\Engine\Cargos.cs" />
     <Compile Include="Business\Engine\Contatos.cs" />
     <Compile Include="Business\Engine\Documentos.cs" />
-    <Compile Include="Business\Engine\DocumentosDasPessoas.cs" />
+    <Compile Include="Business\Engine\Empresas.cs" />
     <Compile Include="Business\Engine\Enderecos.cs" />
     <Compile Include="Business\Engine\EnderecosDasPessoas.cs" />
     <Compile Include="Business\Engine\Engine.cs" />
@@ -127,10 +127,10 @@
     <Compile Include="Business\Engine\Imagens.cs" />
     <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
+    <Compile Include="Business\Engine\Pessoas.cs" />
     <Compile Include="Business\Engine\Retiradas.cs" />
     <Compile Include="Business\Engine\Setores.cs" />
     <Compile Include="Business\Engine\TiposDeDocumentos.cs" />
-    <Compile Include="Business\Engine\Users.cs" />
     <Compile Include="Business\Engine\Usuarios.cs" />
     <Compile Include="Business\IdentityGroup\AppicationOAuthProvider.cs" />
     <Compile Include="Business\IdentityGroup\ApplicationManager.cs" />
@@ -167,12 +167,12 @@
     <Compile Include="Models\Abstratos\Atividade.cs" />
     <Compile Include="Models\Abstratos\EntidadeBase.cs" />
     <Compile Include="Models\Abstratos\IEntdadeBase.cs" />
+    <Compile Include="Models\Persistencia\Empresa.cs" />
     <Compile Include="Models\Persistencia\Usuario.cs" />
     <Compile Include="Models\Transporte.cs" />
     <Compile Include="Models\Enumeracoes.cs" />
     <Compile Include="Models\Persistencia\Contato.cs" />
     <Compile Include="Models\Persistencia\Documento.cs" />
-    <Compile Include="Models\Persistencia\DocumentoDaPessoa.cs" />
     <Compile Include="Models\Persistencia\Endereco.cs" />
     <Compile Include="Models\Persistencia\EnderecosDasPessoas.cs" />
     <Compile Include="Models\Persistencia\EntregaDoItemDaOrdemDeServico.cs" />

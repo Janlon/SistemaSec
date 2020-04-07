@@ -16,32 +16,30 @@ namespace Sec.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        [MaxLength(100)]
+        [Column("Nome", TypeName = "VARCHAR")]
+        [Display(Name = "Nome", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Nome da imagem")]
         public string Nome { get; set; }
 
-        [ScaffoldColumn(false)]
-        [NotMapped]
-        public string Caminho { get; set; }
-
-        [ScaffoldColumn(false)]
-        [NotMapped]
-        public string Tipo { get; set; }
-
-        [ScaffoldColumn(false)]
-        [NotMapped]
-        public string Tamanho { get; set; }
-
-        [Display(Name = "Ativo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ativo")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
+        [Required]
         [DefaultValue(true)]
-        public bool Ativo { get; set; } = true;
+        [Display(Name = "Referencia", AutoGenerateField = true, AutoGenerateFilter = true, Description ="Imagem de referência", Prompt = "Principal")]
+        public bool Principal { get; set; } = false;
 
-        //    [Display(Name = "Equipamento", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Equipamento")]
-        //    [Required(ErrorMessage = "{0} é obrigatório.")]
-        //    [ForeignKey("Equipamento")]
-        //    public int EquipamentosId { get; set; }
-        //    public virtual Equipamento Equipamento { get; set; }
+        [NotMapped()]
+        public byte[] Foto
+        {
+            get
+            {
+                return Convert.FromBase64String(Foto64);
+            }
+        }
 
+        [Required]
+        [MaxLength(256)]
+        [Column("Imagem", TypeName = "VARCHAR")]
+        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        public string Foto64 { get; set; }
 
         [Display(Name ="Pessoas")]
         public virtual List<Pessoa> Pessoas { get; set; } = new List<Pessoa>();
