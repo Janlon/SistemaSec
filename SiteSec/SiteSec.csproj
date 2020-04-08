@@ -245,6 +245,8 @@
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Empresa\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Atividades\Index.cshtml" />
+    <Content Include="Views\Equipamento\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Setor\EditorTemplates\Template.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

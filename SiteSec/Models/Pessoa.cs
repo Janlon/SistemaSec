@@ -24,6 +24,11 @@ namespace SiteSec.Models
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string CPF { get; set; } = "";
 
+        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        public int ImagemId { get; set; }
+
+        public Imagem imagem { get; set; }
+
     }
 }
 

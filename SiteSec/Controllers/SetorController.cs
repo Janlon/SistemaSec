@@ -14,20 +14,32 @@ namespace SiteSec.Controllers
     public class SetorController : Controller
     {
         readonly Api api = new Api();
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request)
+        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<Setor> resultado = new List<Setor>();
-            var apiRetorno = api.Use(HttpMethod.Get, new Setor(), "api/Setor");
+            var apiRetorno = api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Setor>>(str);
             if (obj != null)
                 resultado = obj.OrderBy(p => p.Descricao);
 
             return Json(resultado.ToDataSourceResult(request));
+        }
+        public ActionResult SetoresDaEmpresa([DataSourceRequest]DataSourceRequest request, int id)
+        {
+            if (id < 1)
+                return Json(new[] { new Setor() }.ToDataSourceResult(request));
+
+            var apiRetorno = api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{id}/setores");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            var obj = JsonConvert.DeserializeObject<List<Setor>>(str);
+
+            return Json(obj.ToDataSourceResult(request));
         }
         public ActionResult Create([DataSourceRequest]DataSourceRequest request, Setor obj)
         {

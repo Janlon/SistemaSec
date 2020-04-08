@@ -19,6 +19,12 @@ namespace Swagger.Controllers
             return Engine.Equipamentos.Find(new object[] { id });
         }
 
+        [Route("~/api/Equipamento/{id:int}/qrcode")]
+        public CrudResult<Equipamento> GetQrCodeDoEquipamento(int id)
+        {
+            return Engine.Equipamentos.QrCode(new object[] { id });
+        }
+
         public CrudResult<Equipamento> Post(Equipamento obj)
         {
             return Engine.Equipamentos.Insert(obj);

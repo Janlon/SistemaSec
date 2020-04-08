@@ -1,0 +1,93 @@
+﻿@model SiteSec.Models.Equipamento
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImagemId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().Upload()
+                    .Name("files").
+                    TemplateId("ImagemId")
+                    .Async(a => a
+                        //.Save("Save", "Upload")
+                        //.Remove("Remove", "Upload")
+                        .AutoUpload(false))//, ,.Events(events => events.Select("onSelect"))
+                )
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sigla, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sigla, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sigla, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("EmpresaId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                              .Name("EmpresaId")
+                              .DataTextField("NomeFantasia")
+                              .DataValueField("Id")
+                              //.OptionLabel("Selecione...")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:100%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Custom()
+                                      .ServerFiltering(true)
+                                      .Type("aspnetmvc-ajax")
+                                      .Transport(transport => { transport.Read("Read", "Empresa"); })
+                                      .Schema(schema => { schema.Data("Data").Total("Total"); });
+                              })
+                //.Events(e => { e.Change("onChange"); })
+                )
+                @Html.ValidationMessage("EmpresaId", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("SetorId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownList()
+                              .Name("SetorId")
+                              .DataTextField("Descricao")
+                              .DataValueField("Id")
+                              //.OptionLabel("Selecione...")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:100%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("Read", "Setor").Data("filtrarSetor");
+                                  })
+                                  .ServerFiltering(true);
+                              })
+                              .Enable(false)
+                              .AutoBind(false)
+                              .CascadeFrom("EmpresaId")
+                //.Events(e => { e.Change("onChange"); })
+                )
+                @Html.ValidationMessage("SetorId", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+
+}

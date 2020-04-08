@@ -51,6 +51,15 @@
                     ret = db.Delete(value);
                 return ret;
             }
+
+            public static CrudResult<Equipamento> QrCode(object[] keys)
+            {
+                CrudResult<Equipamento> ret;
+                using (EquipamentosFactory db = new EquipamentosFactory())
+                    ret = db.GetById(keys);
+
+                return ret;
+            }
         }
     }
 }

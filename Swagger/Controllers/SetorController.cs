@@ -21,7 +21,13 @@ namespace Swagger.Controllers
         {
             return Engine.Setores.Find(new object[] { id });
         }
- 
+
+        [Route("~/api/Setor/{empresaId:int}/setores")]
+        public CrudResult<Setor> GetSetoresDaEmpresa(int empresaId)
+        {
+            return Engine.Setores.Filter(p => p.EmpresaId.Equals(empresaId));
+        }
+
         public CrudResult<Setor> Post(Setor obj)
         {
             return Engine.Setores.Insert(obj);
@@ -29,7 +35,7 @@ namespace Swagger.Controllers
 
         public CrudResult<Setor> Put(Setor obj)
         {
-            return Engine.Setores.Insert(obj);
+            return Engine.Setores.Update(obj);
         }
 
         public CrudResult<Setor> Delete(int id)

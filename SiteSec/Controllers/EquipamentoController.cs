@@ -14,14 +14,15 @@ namespace SiteSec.Controllers
     public class EquipamentoController : Controller
     {
         readonly Api api = new Api();
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request)
+        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<Equipamento> resultado = new List<Equipamento>();
-            var apiRetorno = api.Use(HttpMethod.Get, new Equipamento(), "api/Equipamento");
+            var apiRetorno = api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str);
             if (obj != null)

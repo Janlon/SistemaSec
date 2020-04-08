@@ -16,10 +16,10 @@ namespace SiteSec.Controllers
         readonly Api api = new Api();
         public ActionResult Index(int? id)
         {
-            ViewBag.Id = id == null ? 0 : id;
+            ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request, int id)
+        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<Documento> resultado = new List<Documento>();
             var apiRetorno = api.Use(HttpMethod.Get, new Documento(), $"api/Documento/{id}");
@@ -55,7 +55,7 @@ namespace SiteSec.Controllers
             var apiRetorno = api.Use(HttpMethod.Put, obj, "api/Documento");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, int id)
+        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, string id)
         {
             var apiRetorno = api.Use(HttpMethod.Delete, new Documento(), $"api/Documento/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));

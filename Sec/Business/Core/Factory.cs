@@ -147,7 +147,6 @@
         }
         #endregion
 
-
         #region Métodos públicos
         public CrudResult<T> GetById(dynamic keys)
         {

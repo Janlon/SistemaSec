@@ -12,7 +12,7 @@
         public int Id { get; set; }
 
         [ScaffoldColumn(false)]
-        public int IdEmpresa { get; set; }
+        public int EmpresaId { get; set; }
 
         [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
@@ -28,7 +28,7 @@
         [Column("Sigla", TypeName = "VARCHAR")]
         public string Sigla { get; set; }
 
-        [ForeignKey("IdEmpresa")]
+        [ForeignKey("EmpresaId")]
         public virtual Empresa Empresa { get; internal set; }
 
         public virtual List<Equipamento> Equipamentos { get; internal set; } = new List<Equipamento>();
