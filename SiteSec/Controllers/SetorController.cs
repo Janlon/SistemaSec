@@ -46,7 +46,7 @@ namespace SiteSec.Controllers
             var apiRetorno = api.Use(HttpMethod.Delete, new Setor(), $"api/Setor/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public async Task<JsonResult> SetoresDaEmpresaAsync(int empresaId)
+        public async Task<JsonResult> SetoresDaEmpresa(int empresaId)
         {
             if (empresaId < 1)
                 return Json(new[] { new Setor() }, JsonRequestBehavior.AllowGet);
