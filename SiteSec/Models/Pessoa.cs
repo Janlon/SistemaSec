@@ -4,7 +4,6 @@ namespace SiteSec.Models
 {
     public class Pessoa 
     {
-        [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;
 
         [Display(Name = "Nome completo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Nome Completo")]
@@ -28,6 +27,9 @@ namespace SiteSec.Models
         public int ImagemId { get; set; }
 
         public Imagem imagem { get; set; }
+
+        public int DocumentoId { get; set; }
+        public Documento documento { get; set; }
 
     }
 }

@@ -19,28 +19,18 @@ namespace Sec.Models
         [MaxLength(100)]
         [Column("Nome", TypeName = "VARCHAR")]
         [Display(Name = "Nome", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Nome da imagem")]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = "";
 
         [Required]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [Display(Name = "Referencia", AutoGenerateField = true, AutoGenerateFilter = true, Description ="Imagem de referência", Prompt = "Principal")]
         public bool Principal { get; set; } = false;
 
-        [NotMapped()]
-        public byte[] Foto
-        {
-            get
-            {
-                return Convert.FromBase64String(Foto64);
-            }
-        }
-
         [Required]
-        [MaxLength(256)]
-        [Column("Imagem", TypeName = "VARCHAR")]
+        [Column("Imagem")]
         [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
-        public string Foto64 { get; set; }
-
+        public byte[] File { get; set; }
+       
         [Display(Name ="Pessoas")]
         public virtual List<Pessoa> Pessoas { get; set; } = new List<Pessoa>();
 

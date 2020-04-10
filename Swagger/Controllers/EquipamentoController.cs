@@ -25,6 +25,17 @@ namespace Swagger.Controllers
             return Engine.Equipamentos.QrCode(new object[] { id });
         }
 
+        /// <summary>
+        /// Retorna a lista de imagens de um equipamento
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("~/api/Equipamento/{id:int}/imagens")]
+        public CrudResult<Equipamento> GetImagensDoEquipamento(int id)
+        {   
+             return Engine.Equipamentos.Find(new object[] { id  });
+        }
+
         public CrudResult<Equipamento> Post(Equipamento obj)
         {
             return Engine.Equipamentos.Insert(obj);

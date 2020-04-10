@@ -4,18 +4,17 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 public class Api
 {
-    internal ApiRetorno ConsumirApiLista<T>(HttpMethod metodo, T obj, int id = 0)
+    internal async Task<string> Use<T>(HttpMethod metodo, T obj, int id = 0)
     {
-
-        ApiRetorno apiRetorno = new ApiRetorno();
         try
         {
             HttpResponseMessage response;
             string controller = obj.GetType().Name;
-            string endereço = string.Format("https://{0}/{1}/{2}", ConfigurationManager.AppSettings["Api"].ToString(), controller, id == 0 ? "" : id.ToString());
+            string endereço = string.Format("https://{0}api/{1}/{2}", ConfigurationManager.AppSettings["Api"].ToString(), controller, id == 0 ? "" : id.ToString());
             string output = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(output, Encoding.UTF8, "application/json");
 
@@ -24,13 +23,13 @@ public class Api
                 case "Post":
                     using (var client = new HttpClient())
                     {
-                        response = client.PostAsync(endereço, content).Result;
+                        response = await client.PostAsync(endereço, content);
                         break;
                     }
                 default:
                     using (var client = new HttpClient())
                     {
-                        response = client.GetAsync(endereço).Result;
+                        response = await client.GetAsync(endereço);
                         break;
                     }
             }
@@ -38,19 +37,17 @@ public class Api
             var contents = response.Content.ReadAsStringAsync().Result;
             if (response.IsSuccessStatusCode)
             {
-                apiRetorno.mensagem = JsonConvert.DeserializeObject(contents).ToString();
-                return apiRetorno;
-            };
+                return JsonConvert.DeserializeObject(contents).ToString();
+            }
 
-            return apiRetorno;
+            return "";
         }
         catch (Exception ex)
         {
-            apiRetorno.mensagem = ex.Message;
-            return apiRetorno;
+            return ex.Message;
         }
     }
-    internal ApiRetorno Use<T>(HttpMethod http, T obj, string metodo)
+    internal async Task<ApiRetorno> Use<T>(HttpMethod http, T obj, string metodo)
     {
         ApiRetorno apiRetorno = new ApiRetorno();
         try
@@ -65,25 +62,25 @@ public class Api
                 case "POST":
                     using (var client = new HttpClient())
                     {
-                        response = client.PostAsync(url, content).Result;
+                        response = await client.PostAsync(url, content);
                         break;
                     }
                 case "PUT":
                     using (var client = new HttpClient())
                     {
-                        response = client.PutAsync(url, content).Result;
+                        response = await client.PutAsync(url, content);
                         break;
                     }
                 case "DELETE":
                     using (var client = new HttpClient())
                     {
-                        response =  client.DeleteAsync(url).Result;
+                        response = await client.DeleteAsync(url);
                         break;
                     }
                 default:
                     using (var client = new HttpClient())
                     {
-                        response =  client.GetAsync(url).Result;
+                        response = await client.GetAsync(url);
                         break;
                     }
             }

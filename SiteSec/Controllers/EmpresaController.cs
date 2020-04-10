@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using SiteSec.Models;
+using System.Threading.Tasks;
 
 namespace SiteSec.Controllers
 {
@@ -19,10 +20,10 @@ namespace SiteSec.Controllers
             ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string id)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<Empresa> resultado = new List<Empresa>();
-            var apiRetorno = api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}");
+            var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Empresa>>(str);
             if (obj != null)

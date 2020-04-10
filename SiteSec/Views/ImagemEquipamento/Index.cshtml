@@ -1,21 +1,18 @@
 ﻿@using SiteSec.Models
 
-@(Html.Kendo().Grid<Documento>()
+@(Html.Kendo().Grid<Imagem>()
     .Name("grid")
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Sigla);
-        columns.Bound(p => p.Descricao);
-        columns.Bound(p => p.Identificador);
-        columns.Bound(p => p.Numero);
-        columns.Bound(p => p.Serie);
-        columns.Command(command =>
-        {
-            command.Edit().Text("Alterar");
-            command.Destroy().Text("Apagar");
+            columns.Bound(p => p.File).Encoded(true).Width(200);
+            columns.Bound(p => p.Nome);
+            columns.Command(command =>
+            {
+                command.Edit().Text("Alterar");
+                command.Destroy().Text("Apagar");
 
-        });
+            });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
@@ -30,10 +27,10 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
-        .Read(read => read.Action("Read", "Documento", new { PessoaId = ViewBag.PessoaId })) //DocumentosPeloIdDaPessoa
-    .Create(update => update.Action("Create", "Documento"))
-    .Update(update => update.Action("Update", "Documento"))
-    .Destroy(update => update.Action("Destroy", "Documento"))
+        .Read(read => read.Action("Read", "ImagemEquipamento", new { EquipamentoId = ViewBag.EquipamentoId }))
+        .Create(update => update.Action("Create", "ImagemEquipamento"))
+        .Update(update => update.Action("Update", "ImagemEquipamento"))
+        .Destroy(update => update.Action("Destroy", "ImagemEquipamento"))
     ).Deferred(true)
 )
 

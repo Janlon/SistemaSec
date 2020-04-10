@@ -9,7 +9,7 @@ namespace SiteSec.Models
     public class Documento
     {
         [ScaffoldColumn(false)]
-        public int Id { get; set; }
+        public int Id { get;  set; }
 
         [Display(Name = "Número", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Número", Description = "Documento")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
@@ -25,12 +25,17 @@ namespace SiteSec.Models
 
         [Display(Name = "Validade", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Validade", Description = "Data de Validade")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        public DateTime Validade { get; set; } 
+        public DateTime Validade { get; set; }
 
-        public int TipoDeDocumentoId { get; set; }
-        public virtual TipoDocumento Tipo { get; set; }
+      
+        [ScaffoldColumn(false)]
+        public int TipoDeDocumentoId { get;  set; }
+        public string Sigla { get; internal set; }
+        public string Descricao { get; internal set; }
+        public bool Identificador { get; internal set; }
 
-        public int PessoaId { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
+
+        [ScaffoldColumn(false)]
+        public int PessoaId { get;  set; }
     }
 }

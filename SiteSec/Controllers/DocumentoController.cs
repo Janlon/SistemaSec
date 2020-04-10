@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,37 +15,41 @@ namespace SiteSec.Controllers
     public class DocumentoController : Controller
     {
         readonly Api api = new Api();
-        public ActionResult Index(int? id)
+        public ActionResult Index(int id)
         {
-            ViewBag.Id = id == null ? "" : id.ToString();
+            ViewBag.PessoaId = id;
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string id)
+        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request, int PessoaId)
         {
-            IEnumerable<Documento> resultado = new List<Documento>();
-            var apiRetorno = api.Use(HttpMethod.Get, new Documento(), $"api/Documento/{id}");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Documento>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Id);
+            try
+            {
+                //trazendo o objeto "documento"
+                var apiRetorno = await api.Use(HttpMethod.Get, new Documento(), $"api/Documento/{PessoaId}/documentos");
+                var str = JsonConvert.SerializeObject(apiRetorno.result);
+                var documentos = JsonConvert.DeserializeObject<List<Documento>>(str);
 
-            return Json(resultado.ToDataSourceResult(request));
-        }
+                foreach (var item in documentos)
+                {
+                    //trazendo o objeto "tipo de documento"
+                    apiRetorno = await api.Use(HttpMethod.Get, new TipoDocumento(), $"api/TipoDocumento/{item.TipoDeDocumentoId}");
+                    str = JsonConvert.SerializeObject(apiRetorno.result);
+                    var tipodocumento = JsonConvert.DeserializeObject<List<TipoDocumento>>(str).FirstOrDefault();
+                    
+                    item.Sigla = tipodocumento.Sigla;
+                    item.Descricao = tipodocumento.Descricao;
+                    item.Identificador = tipodocumento.Identificador;
+                }
 
-        public ActionResult DocumentosPorPessoa([DataSourceRequest]DataSourceRequest request, int id)
-        {
-            if(id < 1)
+                return Json(documentos.ToDataSourceResult(request));
+            }
+            catch (Exception)
+            {
                 return Json(new[] { new Documento() }.ToDataSourceResult(request));
-
-            IEnumerable<Documento> resultado = new List<Documento>();
-            var apiRetorno = api.Use(HttpMethod.Get, new Documento(), $"api/Documento/{id}/documentos");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Documento>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Id);
-
-            return Json(resultado.ToDataSourceResult(request));
+            }
+          
         }
+
         public ActionResult Create([DataSourceRequest]DataSourceRequest request, Documento obj)
         {
             var apiRetorno = api.Use(HttpMethod.Post, obj, "api/Documento");

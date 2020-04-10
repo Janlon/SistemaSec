@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using SiteSec.Models;
+using System.Threading.Tasks;
 
 namespace SiteSec.Controllers
 {
@@ -18,11 +19,11 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request, bool? PessoaFisica = true)
+        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request, bool? PessoaFisica = true)
         {
             IEnumerable<Cargo> resultado = new List<Cargo>();
-            var apiRetorno = api.ConsumirApiLista(HttpMethod.Get, new Cargo());
-            var obj = JsonConvert.DeserializeObject<List<Cargo>>(apiRetorno.mensagem);
+            var retorno = await api.Use(HttpMethod.Get, new Cargo());
+            var obj = JsonConvert.DeserializeObject<List<Cargo>>(retorno);
             if (obj != null)
                 resultado = obj.OrderBy(p => p.Descricao).Where(p => p.PessoaFisica.Equals(PessoaFisica));
 

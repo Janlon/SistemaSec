@@ -1,18 +1,20 @@
 ﻿@using SiteSec.Models
 
+<div id="janela" name="janela"></div>
+
 @(Html.Kendo().Grid<Equipamento>()
     .Name("grid")
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        //columns.Bound(p => p.imagem.Foto64).Encoded(false).Width(100);
-        columns.Bound(p => p.Sigla).Width(200);
         columns.Bound(p => p.Descricao);
+        columns.Bound(p => p.Sigla).Width(200);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-
+            command.Custom("a").Text("Imagem").Click("redirect");
+            //command.Custom("addImage").Text("<span class='fa fa-add'></span> Imagem").Click("openWindow").HtmlAttributes(new { @id = "addImage", @title = "Adicionar imagens no equipamento" });
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
@@ -39,8 +41,42 @@
 @Scripts.Render("~/bundles/Web")
 
 <script>
+    /*
+     *Função que é usada para tranferir valor de um dropdowlist
+     */
     function filtrarSetor()
     {
         return { empresaId : $("#EmpresaId").val() };
+    }
+
+    /*
+     *Função para abrir a janela para adicionar as imagens
+     */
+    function openWindow(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/equipamento/ViewUpload/" + dataItem.Id;
+        let wnd = $("#janela").data("kendoWindow");
+
+        if (!wnd) {
+            wnd = $("#janela").kendoWindow({
+                actions: ["Close"],
+                title: "Equipamento: " + dataItem.Descricao + " [" + dataItem.Sigla + "]" ,
+                content: direction,
+                visible: false,
+            }).data("kendoWindow");
+        }
+        wnd.center();
+        wnd.open();
+    }
+
+    /*
+    *Função para abrir a janela para adicionar as imagens
+    */
+    function redirect(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/ImagemEquipamento/Index/" + dataItem.Id;
+        window.location.href = direction;
     }
 </script>

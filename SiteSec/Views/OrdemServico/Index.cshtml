@@ -5,7 +5,7 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Emissao);
+        columns.Bound(p => p.Emissao).Format("{0: dd/MM/yyyy HH:mm:ss}");
         columns.Bound(p => p.Id).ClientTemplate("<a href='" + @Url.Action("Index", "ItensDasOrdensDeServicos", new { id = "#=Id#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>Detalhar</a>").Width(90);
         columns.Command(command =>
         {

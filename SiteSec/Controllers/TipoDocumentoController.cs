@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SiteSec.Controllers
 {
@@ -16,10 +17,10 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request)
+        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request)
         {
             IEnumerable<TipoDocumento> resultado = new List<TipoDocumento>();
-            var apiRetorno = api.Use(HttpMethod.Get, new TipoDocumento(), "api/TipoDocumento");
+            var apiRetorno = await api.Use(HttpMethod.Get, new TipoDocumento(), "api/TipoDocumento");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<TipoDocumento>>(str);
             if (obj != null)

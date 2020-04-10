@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -21,17 +22,24 @@ namespace SiteSec.Models
         [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
         public string Sigla { get; set; }
 
-        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
-        public int ImagemId { get; set; }
-        public Imagem imagem { get; set; }
+     
 
         [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
         public int SetorId { get; set; }
-        public Setor setor { get; set; }
+  
+
 
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
         public int EmpresaId { get; set; }
-        public Empresa empresa { get; set; }
+
+
+
+
+        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        public byte[] Files { get; set; }
+
+        [ScaffoldColumn(false)]
+        public List<Imagem> Imagens { get;  set; }
 
     }
 }

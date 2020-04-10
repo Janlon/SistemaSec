@@ -2,18 +2,40 @@
 
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
 
         <div class="form-group">
-            @Html.Label("TipoDeDocumentoId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownListFor(model => model.PessoaId)
+                      .DataTextField("Nome")
+                      .DataValueField("Id")
+                      .OptionLabel("Selecione um item")
+                      .HtmlAttributes(new { style = "width:100%;" })
+                   .DataSource(source =>
+                   {
+                       source.Custom()
+                           .ServerFiltering(true)
+                           .Type("aspnetmvc-ajax")
+                           .Transport(transport => { transport.Read("Read", "Pessoa", new { id = ViewBag.PessoaId }); })
+                           .Schema(schema => { schema.Data("Data").Total("Total"); });
+                   })
+                )
+                @Html.ValidationMessage("PessoaId", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tipo de documento", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @(Html.Kendo().DropDownList()
                               .Name("TipoDeDocumentoId")
                               .DataTextField("Descricao")
                               .DataValueField("Id")
-                              //.OptionLabel("Selecione...")
+                              .OptionLabel("Selecione um item")
                               .Filter("contains")
                               .HtmlAttributes(new { style = "width:100%;" })
                               .DataSource(source =>
@@ -24,7 +46,6 @@
                                       .Transport(transport => { transport.Read("Read", "TipoDocumento"); })
                                       .Schema(schema => { schema.Data("Data").Total("Total"); });
                               })
-                //.Events(e => { e.Change("onChange"); })
                 )
                 @Html.ValidationMessage("TipoDeDocumentoId", "", new { @class = "text-danger" })
             </div>
@@ -61,6 +82,7 @@
                 @Html.ValidationMessageFor(model => model.Validade, "", new { @class = "text-danger" })
             </div>
         </div>
-
     </div>
 }
+
+
