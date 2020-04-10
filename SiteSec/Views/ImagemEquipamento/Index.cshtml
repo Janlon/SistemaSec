@@ -5,14 +5,14 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-            columns.Bound(p => p.File).Encoded(true).Width(200);
-            columns.Bound(p => p.Nome);
-            columns.Command(command =>
-            {
-                command.Edit().Text("Alterar");
-                command.Destroy().Text("Apagar");
+        columns.Bound(p => p.File).Encoded(true).Width(200);
+        columns.Bound(p => p.Nome);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
 
-            });
+        });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
