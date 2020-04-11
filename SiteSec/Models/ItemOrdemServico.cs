@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SiteSec.Models
 {
-    public class ItemDaOrdemDeServico
+    public class ItemOrdemServico
     {
 
         public int Id { get;  set; }

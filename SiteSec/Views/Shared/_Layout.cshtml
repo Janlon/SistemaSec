@@ -35,58 +35,57 @@
           .Items(items =>
           {
               items.Add()
-                  .Text("Cadastros")
-                  .Items(children =>
-                  {
-                      children.Add().Text("Pessoas")
-                              .Items(innerChildren =>
-                              {
-                                  innerChildren.Add().Text("Pessoa").Action("Index", "pessoa");
-                                  innerChildren.Add().Text("Usuário").Action("Index", "usuario");
-                                  innerChildren.Add().Text("Documento da pessoa").Action("Index", "documento");
+                .Text("Home").Action("Index", "Home");
 
-                              });
-                      children.Add().Separator(true);
-                      children.Add().Text("Ordem de Serviços")
-                              .Items(innerChildren =>
-                              {
-                                  innerChildren.Add().Text("Cadastro").Action("Index", "ordemdeservico");
-                                  innerChildren.Add().Text("Itens").Action("Index", "itensdasordensdeservicos");
-                                  innerChildren.Add().Text("Entrega").Action("Index", "ordemdeservicos");
-                                  innerChildren.Add().Text("Retirada").Action("Index", "ordemdeservicos");
-                              });
-                      children.Add().Separator(true);
-                      children.Add().Text("Equipamentos")
-                              .Items(innerChildren =>
-                              {
-                                  innerChildren.Add().Text("QrCode").Action("Index", "setor");
-                              });
-                      children.Add().Separator(true);
-                      children.Add().Text("Tipos")
-                              .Items(innerChildren =>
-                              {
-                                  innerChildren.Add().Text("Documento").Action("Index", "tipodocumento");
-                                  innerChildren.Add().Text("Equipamento").Action("Index", "equipamento");
-                                  innerChildren.Add().Text("Serviço").Action("Index", "tiposervico");
-                                  innerChildren.Add().Text("Setor").Action("Index", "setor");
-                              });
-
-                  });
-
-              items.Add().Text("Movimentação")
-                    .Items(children =>
+              items.Add()
+                .Text("Cadastros")
+                .Items(children =>
+                {
+                    children.Add().Text("Pessoas").Action("Index", "pessoa")
+                    .Items(innerChildren =>
                     {
-                        children.Add().Text("Ordem de Serviços")
-                                .Items(innerChildren =>
-                                {
-                                    innerChildren.Add().Text("Entrada");
-                                    innerChildren.Add().Text("Saída");
-                                    innerChildren.Add().Text("Cancelado");
 
-                                });
-
+                        innerChildren.Add().Text("Usuários").Action("Index", "usuario");
+                        innerChildren.Add().Text("Documentos").Action("Index", "documento");
 
                     });
+                    children.Add().Text("Empresas").Action("Index", "empresa");
+                    children.Add().Separator(true);
+                    children.Add().Text("Ordem de Serviços").Action("Index", "ordemservico")
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("Itens").Action("Index", "itemordemservico");
+                                innerChildren.Add().Text("Entrega").Action("Index", "entrega");
+                                innerChildren.Add().Text("Retirada").Action("Index", "retirada");
+                            });
+                    children.Add().Separator(true);
+                    children.Add().Text("Equipamentos").Action("Index", "equipamento")
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("QrCode").Action("Index", "qrcode");
+                            });
+                    children.Add().Separator(true);
+                    children.Add().Text("Serviços").Action("Index", "servico");
+                         
+                    children.Add().Separator(true);
+                    children.Add().Text("Setores").Action("Index", "setor");
+   
+                });
+
+              items.Add().Text("Movimentação")
+                .Items(children =>
+                {
+                    children.Add().Text("Ordem de Serviços")
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("Entrada");
+                                innerChildren.Add().Text("Saída");
+                                innerChildren.Add().Text("Cancelado");
+
+                            });
+
+
+                });
 
               items.Add()
                  .Text("Relatórios")
@@ -123,6 +122,14 @@
                                   innerChildren.Add().Text("Setor");
                               });
 
+                 });
+
+              items.Add()
+                 .Text("Login")
+                 .Items(children =>
+                 {
+                     children.Add().Text("Configurações");
+                     children.Add().Text("Sair");
                  });
 
           }).Deferred(true)

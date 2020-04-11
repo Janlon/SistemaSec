@@ -20,7 +20,7 @@ namespace SiteSec.Controllers
             ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request, string id)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<OrdemServico> resultado = new List<OrdemServico>();
             var apiRetorno = await api.Use(HttpMethod.Get, new OrdemServico(), $"api/OrdemServico/{id}");
@@ -31,19 +31,19 @@ namespace SiteSec.Controllers
 
             return Json(resultado.ToDataSourceResult(request));
         }
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, OrdemServico obj)
+        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, OrdemServico obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Post, obj, "api/OrdemServico");
+            var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/OrdemServico");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, OrdemServico obj)
+        public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, OrdemServico obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Put, obj, "api/OrdemServico");
+            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/OrdemServico");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, string id)
+        public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, string id)
         {
-            var apiRetorno = api.Use(HttpMethod.Delete, new OrdemServico(), $"api/OrdemServico/{id}");
+            var apiRetorno = await api.Use(HttpMethod.Delete, new OrdemServico(), $"api/OrdemServico/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
     }

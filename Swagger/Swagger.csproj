@@ -258,6 +258,7 @@
     <Compile Include="Controllers\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagemController.cs" />
+    <Compile Include="Controllers\ItemDaOrdemDeServicoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />

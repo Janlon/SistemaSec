@@ -49,26 +49,26 @@
         return { empresaId : $("#EmpresaId").val() };
     }
 
-    /*
-     *Função para abrir a janela para adicionar as imagens
-     */
-    function openWindow(e) {
-        e.preventDefault();
-        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        let direction = "/equipamento/ViewUpload/" + dataItem.Id;
-        let wnd = $("#janela").data("kendoWindow");
+    ///*
+    // *Função para abrir a janela para adicionar as imagens
+    // */
+    //function openWindow(e) {
+    //    e.preventDefault();
+    //    let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    //    let direction = "/equipamento/ViewUpload/" + dataItem.Id;
+    //    let wnd = $("#janela").data("kendoWindow");
 
-        if (!wnd) {
-            wnd = $("#janela").kendoWindow({
-                actions: ["Close"],
-                title: "Equipamento: " + dataItem.Descricao + " [" + dataItem.Sigla + "]" ,
-                content: direction,
-                visible: false,
-            }).data("kendoWindow");
-        }
-        wnd.center();
-        wnd.open();
-    }
+    //    if (!wnd) {
+    //        wnd = $("#janela").kendoWindow({
+    //            actions: ["Close"],
+    //            title: "Equipamento: " + dataItem.Descricao + " [" + dataItem.Sigla + "]" ,
+    //            content: direction,
+    //            visible: false,
+    //        }).data("kendoWindow");
+    //    }
+    //    wnd.center();
+    //    wnd.open();
+    //}
 
     /*
     *Função para abrir a janela para adicionar as imagens

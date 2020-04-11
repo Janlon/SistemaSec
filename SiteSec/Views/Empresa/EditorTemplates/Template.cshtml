@@ -37,7 +37,7 @@
                               .Name("Atividade")
                               .DataTextField("Descricao")
                               .DataValueField("Id")
-                              //.OptionLabel("Selecione...")
+                              .OptionLabel("Selecione")
                               .Filter("contains")
                               .HtmlAttributes(new { style = "width:100%;" })
                               .DataSource(source =>
@@ -48,7 +48,6 @@
                                       .Transport(transport => { transport.Read("Read", "Cargo", new { PessoaFisica = false }); })
                                       .Schema(schema => { schema.Data("Data").Total("Total"); });
                               })
-                //.Events(e => { e.Change("onChange"); })
                 )
                 @Html.ValidationMessage("Atividade", "", new { @class = "text-danger" })
             </div>

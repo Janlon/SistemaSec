@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagemEquipamentoController.cs" />
     <Compile Include="Controllers\ImagemPessoaController.cs" />
+    <Compile Include="Controllers\ItemOrdemServicoController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Models\EquipamentoDoSetor.cs" />
     <Compile Include="Models\Helpers\Helper.cs" />
     <Compile Include="Models\Imagem.cs" />
-    <Compile Include="Models\ItemDaOrdemDeServico.cs" />
+    <Compile Include="Models\ItemOrdemServico.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Retorno.cs" />
@@ -227,7 +228,7 @@
     <Content Include="Views\Documento\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Equipamento\Index.cshtml" />
     <Content Include="Views\EquipamentosDosSetores\Index.cshtml" />
-    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\ItemOrdemServico\Index.cshtml" />
     <Content Include="Views\OrdemServico\EditorTemplates\Template.cshtml" />
     <Content Include="Views\OrdemServico\Index.cshtml" />
     <Content Include="Views\Empresa\Index.cshtml" />

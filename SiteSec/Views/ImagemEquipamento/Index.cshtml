@@ -1,12 +1,12 @@
 ﻿@using SiteSec.Models
 
-@(Html.Kendo().Grid<Imagem>()
+@(Html.Kendo().Grid<Equipamento>()
     .Name("grid")
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.File).Encoded(true).Width(200);
-        columns.Bound(p => p.Nome);
+       // columns.Bound(p => p.File).Encoded(true).Width(200);
+        columns.Bound(p => p.Descricao);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");

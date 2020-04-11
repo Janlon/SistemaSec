@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteSec.Models
 {
     public class Pessoa 
     {
+        [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;
 
         [Display(Name = "Nome completo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Nome Completo")]
@@ -23,10 +25,14 @@ namespace SiteSec.Models
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string CPF { get; set; } = "";
 
-        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
-        public int ImagemId { get; set; }
 
-        public Imagem imagem { get; set; }
+
+        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        public byte[] Files { get; set; }
+
+        [ScaffoldColumn(false)]
+        public List<Imagem> Imagens { get; set; }
+
 
         public int DocumentoId { get; set; }
         public Documento documento { get; set; }

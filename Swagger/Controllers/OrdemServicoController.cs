@@ -20,6 +20,17 @@ namespace Swagger.Controllers
             return Engine.OrdensDeServicos.Find(new object[] { id });
         }
 
+        /// <summary>
+        /// Retorna a lista de itens de uma ordem de serviço
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("~/api/OrdemServico/{id:int}/itens")]
+        public CrudResult<OrdemDeServico> GetItensDaOrdemServico(int id)
+        {
+            return Engine.OrdensDeServicos.Filter(p => p.Itens.Equals(id));
+        }
+
         public CrudResult<OrdemDeServico> Post(OrdemDeServico obj)
         {
             return Engine.OrdensDeServicos.Insert(obj);

@@ -1,6 +1,6 @@
 ﻿@using SiteSec.Models
 
-@(Html.Kendo().Grid<ItensDasOrdensDeServicos>()
+@(Html.Kendo().Grid<ItemOrdemServico>()
     .Name("grid")
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
@@ -28,15 +28,13 @@
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
         .Group(g => g.Add(c => c.OrdemDeServico)).Group(g => g.Add(c => c.Servico))
-        .Read(read => read.Action("Read", "ItensDasOrdensDeServicos", new { id = ViewBag.Id }))
-        .Create(update => update.Action("Create", "ItensDasOrdensDeServicos"))
-        .Update(update => update.Action("Update", "ItensDasOrdensDeServicos"))
-        .Destroy(update => update.Action("Destroy", "ItensDasOrdensDeServicos"))
+        .Read(read => read.Action("Read", "ItemOrdemServico", new { id = ViewBag.Id }))
+        .Create(update => update.Action("Create", "ItemOrdemServico"))
+        .Update(update => update.Action("Update", "ItemOrdemServico"))
+        .Destroy(update => update.Action("Destroy", "ItemOrdemServico"))
     ).Deferred(true)
 )
 
-@(Html.Kendo().Notification()
-    .Name("popupNotification").Deferred(true)
-)
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
 @Scripts.Render("~/bundles/Web")

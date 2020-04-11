@@ -20,7 +20,7 @@ namespace SiteSec.Controllers
             ViewBag.PessoaId = id;
             return View();
         }
-        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request, int PessoaId)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, int PessoaId)
         {
             try
             {
@@ -49,7 +49,6 @@ namespace SiteSec.Controllers
             }
           
         }
-
         public ActionResult Create([DataSourceRequest]DataSourceRequest request, Documento obj)
         {
             var apiRetorno = api.Use(HttpMethod.Post, obj, "api/Documento");
