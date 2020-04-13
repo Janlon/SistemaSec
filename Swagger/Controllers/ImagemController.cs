@@ -29,28 +29,6 @@ namespace Swagger.Controllers
         }
 
         /// <summary>
-        /// Retorna a lista de imagens de uma pessoa
-        /// </summary>
-        /// <param name="pessoaId"></param>
-        /// <returns></returns>
-        [Route("~/api/Imagem/{pessoaId:int}/pessoas")]
-        public CrudResult<Imagem> GetImagensDaPessoa(int pessoaId)
-        {
-            return Engine.Imagens.Filter(p => p.Pessoas.Equals(pessoaId));
-        }
-
-        /// <summary>
-        /// Retorna a lista de imagens de um equipamento
-        /// </summary>
-        /// <param name="equipamentoId"></param>
-        /// <returns></returns>
-        [Route("~/api/Imagem/{equipamentoId:int}/equipamentos")]
-        public CrudResult<Imagem> GetImagensDoEquipamento(int equipamentoId)
-        {
-            return Engine.Imagens.Filter(p => p.Equipamentos.Equals(equipamentoId));
-        }
-
-        /// <summary>
         /// Cadastra uma imagem
         /// </summary>
         /// <param name="obj"></param>

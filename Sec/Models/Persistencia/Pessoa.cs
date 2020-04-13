@@ -66,7 +66,7 @@
         public virtual List<Contato> Contatos { get; internal set; } = new List<Contato>();
 
         [Display(Name = "Imagens")]
-        public virtual List<Imagem> Imagens { get; internal set; } = new List<Imagem>();
+        public virtual List<Imagem> Imagens { get;  set; } = new List<Imagem>();
 
         [Display(Name = "Ordens de Serviço entregues")]
         public virtual List<EntregaDoItemDaOrdemDeServico> OrdensDeServicoEntregues { get; internal set; } = new List<EntregaDoItemDaOrdemDeServico>();

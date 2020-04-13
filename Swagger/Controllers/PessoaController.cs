@@ -21,6 +21,28 @@ namespace Swagger.Controllers
             return Engine.Pessoas.Find(new object[] { id });
         }
 
+        /// <summary>
+        /// Retorna a lista de imagens de uma pessoa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("~/api/Imagem/{Id:int}/imagens")]
+        public CrudResult<Pessoa> GetImagensDaPessoa(int id)
+        {
+            var imagens = Engine.Imagens.Filter(p => p.Pessoas.FirstOrDefault().Id.Equals(id)).Result;
+            if (imagens.Count < 1)
+                return new CrudResult<Pessoa>();
+
+            var pessoas = Engine.Pessoas.Find(new object[] { id });
+            foreach (var item in pessoas.Result)
+            {
+                item.Imagens = imagens;
+            }
+
+            return pessoas;
+        }
+
+
         public CrudResult<Pessoa> Post(Pessoa obj)
         {
             return Engine.Pessoas.Insert(obj);
