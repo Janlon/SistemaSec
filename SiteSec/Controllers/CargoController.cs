@@ -19,7 +19,7 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request, bool? PessoaFisica = true)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, bool? PessoaFisica = true)
         {
             IEnumerable<Cargo> resultado = new List<Cargo>();
             var retorno = await api.Use(HttpMethod.Get, new Cargo());

@@ -2,7 +2,7 @@
 
 <div id="janela" name="janela"></div>
 
-@(Html.Kendo().Grid<Equipamento>()
+@(Html.Kendo().Grid<Pessoa>()
     .Name("grid")
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
@@ -29,10 +29,10 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
-        .Read(read => read.Action("Read", "ImagemEquipamento", new { EquipamentoId = ViewBag.EquipamentoId }))
-        .Create(update => update.Action("Create", "ImagemEquipamento"))
-        .Update(update => update.Action("Update", "ImagemEquipamento"))
-        .Destroy(update => update.Action("Destroy", "ImagemEquipamento"))
+        .Read(read => read.Action("Read", "ImagemPessoa", new { PessoaId = ViewBag.PessoaId }))
+        .Create(update => update.Action("Create", "ImagemPessoa"))
+        .Update(update => update.Action("Update", "ImagemPessoa"))
+        .Destroy(update => update.Action("Destroy", "ImagemPessoa"))
     ).Deferred(true)
 )
 
@@ -56,11 +56,11 @@
             wnd = $("#janela").kendoWindow({
                 actions: ["Close"],
                 title: "Imagem: " + dataItem.Nome,
+                content: direction,
                 visible: false,
             }).data("kendoWindow");
         }
         wnd.center();
-        wnd.refresh(direction);
         wnd.open();
    
     }

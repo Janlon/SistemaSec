@@ -31,7 +31,7 @@ namespace SiteSec.Models
         public byte[] Files { get; set; }
 
         [ScaffoldColumn(false)]
-        public List<Imagem> Imagens { get; set; }
+        public List<Imagen> Imagens { get; set; }
 
 
         public int DocumentoId { get; set; }

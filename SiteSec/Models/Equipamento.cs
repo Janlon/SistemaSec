@@ -7,6 +7,7 @@ using System.Web;
 
 namespace SiteSec.Models
 {
+
     public class Equipamento
     {
         [ScaffoldColumn(false)]
@@ -22,11 +23,17 @@ namespace SiteSec.Models
         [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
         public string Sigla { get; set; }
 
-     
+
+        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
+        public byte[] Files { get; set; }
+
+
+
 
         [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
         public int SetorId { get; set; }
-  
+
+
 
 
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
@@ -34,12 +41,9 @@ namespace SiteSec.Models
 
 
 
-
-        [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
-        public byte[] Files { get; set; }
-
         [ScaffoldColumn(false)]
-        public List<Imagem> Imagens { get;  set; }
+        public List<Imagen> Imagens { get; set; }
 
+       
     }
 }

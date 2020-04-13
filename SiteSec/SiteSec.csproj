@@ -173,6 +173,7 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagemController.cs" />
     <Compile Include="Controllers\ImagemEquipamentoController.cs" />
     <Compile Include="Controllers\ImagemPessoaController.cs" />
     <Compile Include="Controllers\ItemOrdemServicoController.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Models\Equipamento.cs" />
     <Compile Include="Models\EquipamentoDoSetor.cs" />
     <Compile Include="Models\Helpers\Helper.cs" />
-    <Compile Include="Models\Imagem.cs" />
+    <Compile Include="Models\Imagen.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
@@ -238,9 +239,12 @@
     <Content Include="Views\Setor\EditorTemplates\Template.cshtml" />
     <None Include="Properties\PublishProfiles\sistemasec - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sistemasec - Web Deploy.pubxml" />
-    <Content Include="Views\Equipamento\ViewUpload.cshtml" />
     <Content Include="Views\ImagemEquipamento\Index.cshtml" />
-    <Content Include="Views\ImagemEquipamento\ViewUpload.cshtml" />
+    <Content Include="Views\ImagemEquipamento\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Imagem\Index.cshtml" />
+    <Content Include="Views\ImagemPessoa\Index.cshtml" />
+    <Content Include="Views\ImagemPessoa\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Equipamento\ViewQrCode.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,7 +1,8 @@
-﻿using Sec;
+﻿using Newtonsoft.Json;
+using Sec;
 using Sec.Business;
 using Sec.Models;
-
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -30,10 +31,20 @@ namespace Swagger.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("~/api/Equipamento/{id:int}/imagens")]
+        [Route("~/api/Equipamento/{Id:int}/Imagens")]
         public CrudResult<Equipamento> GetImagensDoEquipamento(int id)
-        {   
-             return Engine.Equipamentos.Find(new object[] { id  });
+        {         
+            var imagens =  Engine.Imagens.Filter(p => p.Equipamentos.FirstOrDefault().Id.Equals(id) ).Result;
+            if (imagens.Count < 1)
+                return new CrudResult<Equipamento>();
+
+            var equipamentos = Engine.Equipamentos.Find(new object[] { id });
+            foreach (var item in equipamentos.Result)
+            {
+                item.Imagens = imagens;
+            }
+
+            return equipamentos;
         }
 
         public CrudResult<Equipamento> Post(Equipamento obj)

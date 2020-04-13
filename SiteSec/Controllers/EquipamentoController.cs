@@ -23,13 +23,6 @@ namespace SiteSec.Controllers
             ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-        public async Task<ActionResult> ViewUpload(int id)
-        {
-            var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{id}");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str);
-            return PartialView(obj.FirstOrDefault());
-        }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             IEnumerable<Equipamento> resultado = new List<Equipamento>();
@@ -56,37 +49,13 @@ namespace SiteSec.Controllers
             var apiRetorno = await api.Use(HttpMethod.Delete, new Equipamento(), $"api/Equipamento/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public async Task<ActionResult> Upload(IEnumerable<HttpPostedFileBase> files, int id)
+        public async Task<ActionResult> ViewQrCode(int Id)
         {
-            if (files != null)
-            {
-                foreach (var file in files)
-                {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        file.InputStream.CopyTo(ms);
-                        byte[] img = ms.GetBuffer();
+            var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{Id}");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
 
-                        var imagem = new Imagem()
-                        {
-                            File = img,
-                            Nome = file.FileName
-                        };
-
-                        var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{id}");
-                        var str = JsonConvert.SerializeObject(apiRetorno.result);
-                        var equipamento = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
-                            equipamento.Imagens.Add(imagem);
-
-                        await api.Use(HttpMethod.Put, equipamento, "api/Equipamento");
-                    }
-                   
-                }
-            }
-
-            // Return an empty string to signify success.
-            return Content("");
+            return PartialView(obj);
         }
-
     }
 }

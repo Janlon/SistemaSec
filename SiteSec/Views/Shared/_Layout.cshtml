@@ -42,13 +42,12 @@
                 .Items(children =>
                 {
                     children.Add().Text("Pessoas").Action("Index", "pessoa")
-                    .Items(innerChildren =>
-                    {
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("Usuários").Action("Index", "usuario");
+                                innerChildren.Add().Text("Documentos").Action("Index", "documento");
 
-                        innerChildren.Add().Text("Usuários").Action("Index", "usuario");
-                        innerChildren.Add().Text("Documentos").Action("Index", "documento");
-
-                    });
+                            });
                     children.Add().Text("Empresas").Action("Index", "empresa");
                     children.Add().Separator(true);
                     children.Add().Text("Ordem de Serviços").Action("Index", "ordemservico")
@@ -59,14 +58,9 @@
                                 innerChildren.Add().Text("Retirada").Action("Index", "retirada");
                             });
                     children.Add().Separator(true);
-                    children.Add().Text("Equipamentos").Action("Index", "equipamento")
-                            .Items(innerChildren =>
-                            {
-                                innerChildren.Add().Text("QrCode").Action("Index", "qrcode");
-                            });
+                    children.Add().Text("Equipamentos").Action("Index", "equipamento");
                     children.Add().Separator(true);
-                    children.Add().Text("Serviços").Action("Index", "servico");
-                         
+                    children.Add().Text("Serviços").Action("Index", "servico");                        
                     children.Add().Separator(true);
                     children.Add().Text("Setores").Action("Index", "setor");
    

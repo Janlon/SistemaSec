@@ -10,7 +10,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("Files").Async(a => a.Save("Upload", "Equipamento", new { id = @Html.DisplayFor(model => model.Id) }).AutoUpload(true))
+                @Html.Kendo().Upload().Name("Files").Async(a => a.Save("Upload", "ImagemEquipamento", new { id = @ViewBag.EquipamentoId }).AutoUpload(true))
             </div>
         </div>
 

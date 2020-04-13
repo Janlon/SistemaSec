@@ -11,9 +11,9 @@
             <div class="col-md-10">
                 @(Html.Kendo().DropDownList()
                               .Name("EmpresaId")
-                              .DataTextField("NomeFantasia")
+                              .DataTextField("RazaoSocial")
                               .DataValueField("Id")
-                              //.OptionLabel("Selecione...")
+                              .OptionLabel("Selecione")
                               .Filter("contains")
                               .HtmlAttributes(new { style = "width:100%;" })
                               .DataSource(source =>
@@ -24,7 +24,6 @@
                                       .Transport(transport => { transport.Read("Read", "Empresa"); })
                                       .Schema(schema => { schema.Data("Data").Total("Total"); });
                               })
-                //.Events(e => { e.Change("onChange"); })
                 )
                 @Html.ValidationMessage("EmpresaId", "", new { @class = "text-danger" })
             </div>

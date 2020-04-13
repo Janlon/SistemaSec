@@ -1,6 +1,6 @@
 ﻿@model SiteSec.Models.Equipamento
 
-@using (Html.BeginForm("Create", "Equipamento", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
 
     @Html.AntiForgeryToken()
@@ -28,9 +28,9 @@
             <div class="col-md-10">
                 @(Html.Kendo().DropDownList()
                               .Name("EmpresaId")
-                              .DataTextField("NomeFantasia")
+                              .DataTextField("RazaoSocial")
                               .DataValueField("Id")
-                              //.OptionLabel("Selecione...")
+                              .OptionLabel("Selecione")
                               .Filter("contains")
                               .HtmlAttributes(new { style = "width:100%;" })
                               .DataSource(source =>
@@ -53,7 +53,7 @@
                               .Name("SetorId")
                               .DataTextField("Descricao")
                               .DataValueField("Id")
-                              //.OptionLabel("Selecione...")
+                              .OptionLabel("Selecione")
                               .Filter("contains")
                               .HtmlAttributes(new { style = "width:100%;" })
                               .DataSource(source =>

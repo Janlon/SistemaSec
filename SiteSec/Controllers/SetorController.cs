@@ -31,19 +31,19 @@ namespace SiteSec.Controllers
 
             return Json(resultado.ToDataSourceResult(request));
         }       
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, Setor obj)
+        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Setor obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Post, obj, "api/Setor");
+            var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Setor");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, Setor obj)
+        public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, Setor obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Put, obj, "api/Setor");
+            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/Setor");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, int id)
+        public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, int id)
         {
-            var apiRetorno = api.Use(HttpMethod.Delete, new Setor(), $"api/Setor/{id}");
+            var apiRetorno = await api.Use(HttpMethod.Delete, new Setor(), $"api/Setor/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
         public async Task<JsonResult> SetoresDaEmpresa(int empresaId)

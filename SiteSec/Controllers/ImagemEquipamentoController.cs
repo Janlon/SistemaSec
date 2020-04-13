@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using SiteSec.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,17 +21,50 @@ namespace SiteSec.Controllers
             ViewBag.EquipamentoId = id == null ? "" : id.ToString();
             return View();
         }
+
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string equipamentoId)
         {
-            IEnumerable<Imagem> resultado = new List<Imagem>();
-            var apiRetorno = await api.Use(HttpMethod.Get, new Imagem(), $"api/Imagem/{equipamentoId}/equipamentos");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Imagem>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Nome);
+            ViewBag.EquipamentoId = equipamentoId;
 
-            return Json(resultado.ToDataSourceResult(request));
+            var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{equipamentoId}/Imagens");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
+
+            return Json(obj.Imagens.ToDataSourceResult(request));
         }
+
+        public async Task<ActionResult> Upload(IEnumerable<HttpPostedFileBase> files, int id)
+        {
+            if (files != null && id > 0)
+            {
+                foreach (var file in files)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        file.InputStream.CopyTo(ms);
+                        byte[] img = ms.GetBuffer();
+
+                        var imagem = new Imagen()
+                        {
+                            File = img,
+                            Nome = file.FileName
+                        };
+
+                        var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{id}");
+                        var str = JsonConvert.SerializeObject(apiRetorno.result);
+                        var equipamento = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
+                        equipamento.Imagens.Add(imagem);
+
+                        await api.Use(HttpMethod.Put, equipamento, "api/Equipamento");
+                    }
+
+                }
+            }
+
+            // Return an empty string to signify success.
+            return Content("");
+        }
+
 
     }
 }

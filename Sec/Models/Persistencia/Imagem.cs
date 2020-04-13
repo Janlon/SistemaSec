@@ -30,9 +30,15 @@ namespace Sec.Models
         [Column("Imagem")]
         [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
         public byte[] File { get; set; }
-       
+
+
+
+
         [Display(Name ="Pessoas")]
         public virtual List<Pessoa> Pessoas { get; set; } = new List<Pessoa>();
+
+
+
 
         [Display(Name = "Equipamentos")]
         public virtual List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
