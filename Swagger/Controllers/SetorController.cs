@@ -22,10 +22,22 @@ namespace Swagger.Controllers
             return Engine.Setores.Find(new object[] { id });
         }
 
+        /// <summary>
+        /// preciso trocar de setor e passar para empresa
+        /// </summary>
+        /// <param name="empresaId"></param>
+        /// <returns></returns>
         [Route("~/api/Setor/{empresaId:int}/setores")]
         public CrudResult<Setor> GetSetoresDaEmpresa(int empresaId)
         {
             return Engine.Setores.Filter(p => p.EmpresaId.Equals(empresaId));
+        }
+
+
+        [Route("~/api/Setor/{Id:int}/Equipamentos")]
+        public CrudResult<Equipamento> GetEquipamentosDoSetor(int Id)
+        {
+            return Engine.Equipamentos.Filter(p => p.SetorId.Equals(Id));
         }
 
         public CrudResult<Setor> Post(Setor obj)

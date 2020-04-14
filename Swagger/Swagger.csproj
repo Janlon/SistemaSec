@@ -263,6 +263,7 @@
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
+    <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />

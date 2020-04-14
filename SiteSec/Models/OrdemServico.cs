@@ -23,6 +23,9 @@ namespace SiteSec.Models
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Razão Social", Description = "razão Social da Empresa")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public int EmpresaId { get; set; } = 0;
+
+        [ScaffoldColumn(false)]
+        public List<ItemOrdemServico> ItensOrdemservico { get; set; }
     }
 
 }

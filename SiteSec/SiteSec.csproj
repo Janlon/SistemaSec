@@ -172,6 +172,7 @@
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
+    <Compile Include="Controllers\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagemController.cs" />
     <Compile Include="Controllers\ImagemEquipamentoController.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Controllers\ItemOrdemServicoController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
+    <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -192,6 +194,7 @@
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Equipamento.cs" />
     <Compile Include="Models\EquipamentoDoSetor.cs" />
+    <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\Helpers\Helper.cs" />
     <Compile Include="Models\Imagen.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
@@ -245,6 +248,8 @@
     <Content Include="Views\ImagemPessoa\Index.cshtml" />
     <Content Include="Views\ImagemPessoa\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Equipamento\ViewQrCode.cshtml" />
+    <Content Include="Views\ItemOrdemServico\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Servico\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -255,6 +260,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+    <Folder Include="Views\Geo\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using SiteSec.Models;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace SiteSec.Controllers
 {
@@ -22,28 +23,42 @@ namespace SiteSec.Controllers
         }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
-            IEnumerable<Empresa> resultado = new List<Empresa>();
+            List<Empresa> resultado = new List<Empresa>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Empresa>>(str);
             if (obj != null)
-                resultado = obj.OrderBy(p => p.RazaoSocial);
+                resultado = obj.OrderBy(p => p.RazaoSocial).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, Empresa obj)
+        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Empresa obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Post, obj, "api/Empresa");
+            Endereco endereco = new Endereco()
+            {
+                CEP = obj.CEP,
+                UF = obj.UF,
+                Localidade = obj.Localidade,
+                Bairro = obj.Bairro,
+                Logradouro = obj.Logradouro,
+                Complemento = obj.Complemento
+            };
+            obj.Endereco = endereco;
+
+            var somenteNumero = string.Join("", Regex.Split(obj.CNPJ, @"[^\d]"));
+            obj.CNPJ = somenteNumero;
+
+            var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Empresa");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, Empresa obj)
+        public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, Empresa obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Put, obj, "api/Empresa");
+            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/Empresa");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, string id)
+        public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, string id)
         {
-            var apiRetorno = api.Use(HttpMethod.Delete, new Empresa(), $"api/Empresa/{id}");
+            var apiRetorno = await api.Use(HttpMethod.Delete, new Empresa(), $"api/Empresa/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
     }

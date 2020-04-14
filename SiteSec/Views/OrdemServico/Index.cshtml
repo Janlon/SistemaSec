@@ -8,11 +8,11 @@
         columns.Bound(p => p.EmpresaId);
         columns.Bound(p => p.Numero);
         columns.Bound(p => p.Emissao).Format("{0: dd/MM/yyyy HH:mm:ss}");
-        columns.Bound(p => p.Id).ClientTemplate("<a href='" + @Url.Action("Index", "ItensDasOrdensDeServicos", new { id = "#=Id#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>Detalhar</a>").Width(90);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
+            command.Custom("a").Text("Item").Click("redirect");
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
@@ -41,10 +41,13 @@
 @Scripts.Render("~/bundles/Web")
 
 <script>
-    function onChange() {
-        let item = $("#Pessoa").data("kendoDropDownList");
-        let id = item.value();
-        let nome = item.text();
-        console.log(nome, id);
+    /*
+    *Função para  redirecionar para outra pagina
+    */
+    function redirect(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/ItemOrdemServico/Index/" + dataItem.Id;
+        window.location.href = direction;
     }
 </script>

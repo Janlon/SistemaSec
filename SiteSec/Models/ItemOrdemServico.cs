@@ -8,14 +8,38 @@ namespace SiteSec.Models
 {
     public class ItemOrdemServico
     {
+        [ScaffoldColumn(false)]
+        public int Id { get; set; } = 0;
 
-        public int Id { get;  set; }
-        public string Equipamento { get;  set; }
-        public int EquipamentoId { get;  set; }
-        public string Servico { get;  set; }
-        public int ServicoId { get;  set; }
-        public int OrdemId { get;  set; }
-        public string Sigla { get;  set; }
-        public string OrdemDeServico { get;  set; }
+      
+
+        [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Razão Social", Description = "Razão Social da Empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public int EmpresaId { get; set; } = 0;
+
+
+
+        [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor", Description = "Setor da Empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public List<int> SetorId { get; set; }
+
+
+
+
+        [Display(Name = "Equipamento", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Equipamento", Description = "Equipamento alvo da ordem de serviço")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public List<int> EquipamentoId { get;  set; }
+
+
+
+        [Display(Name = "Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Serviço", Description = "Serviço a realizar")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public List<int> ServicoId { get;  set; }
+
+
+        [Display(Name = "Ordem de serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de serviço", Description = "Número da ordem de serviço")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public int OrdemId { get; set; }
+
     }
 }

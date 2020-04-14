@@ -23,8 +23,35 @@ namespace SiteSec.Models
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string CNPJ { get; set; } = "";
 
+
+
+
         [Display(Name = "Endereço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public int EnderecoId { get; set; } = 0;
+
+        [Display(Name = "CEP", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public string CEP { get; set; } = "";
+
+        [Display(Name = "Endereço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public string Logradouro { get; set; } = "";
+
+        public string Complemento { get; set; } = "";
+
+        [Display(Name = "Bairro", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public string Bairro { get; set; } = "";
+
+        [Display(Name = "Cidade", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public string Localidade { get; set; } = "";
+
+        [Display(Name = "UF", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Endereço da empresa")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public string UF { get; set; } = "";
+
+        public Endereco Endereco { get; set; }
     }
 }

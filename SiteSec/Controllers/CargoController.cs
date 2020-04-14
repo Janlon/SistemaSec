@@ -22,7 +22,7 @@ namespace SiteSec.Controllers
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, bool? PessoaFisica = true)
         {
             IEnumerable<Cargo> resultado = new List<Cargo>();
-            var retorno = await api.Use(HttpMethod.Get, new Cargo());
+            var retorno = await api.UseSimple(HttpMethod.Get, new Cargo());
             var obj = JsonConvert.DeserializeObject<List<Cargo>>(retorno);
             if (obj != null)
                 resultado = obj.OrderBy(p => p.Descricao).Where(p => p.PessoaFisica.Equals(PessoaFisica));

@@ -17,20 +17,32 @@ namespace SiteSec.Controllers
         readonly Api api = new Api();
         public ActionResult Index(int? id)
         {
-            ViewBag.Id = id == null ? 0 : id;
+            ViewBag.OrdemServicoId = id == null ? 0 : id;
             return View();
         }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, int id)
         {
-           // IEnumerable<ItemOrdemServico> resultado = new List<ItemOrdemServico>();
+           
             var apiRetorno = await api.Use(HttpMethod.Get, new ItemOrdemServico(), $"api/ItemDaOrdemDeServico/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<ItemOrdemServico>>(str);
-           // if (obj != null)
-             //   resultado = obj.OrderBy(p => p.Id);
 
             return Json(obj.ToDataSourceResult(request));
         }
+
+
+        public async Task<ActionResult> Itens([DataSourceRequest]DataSourceRequest request, int OrdemServicoId)
+        {
+            ViewBag.OrdemServicoId = OrdemServicoId;
+
+            var apiRetorno = await api.Use(HttpMethod.Get, new ItemOrdemServico(), $"/api/OrdemDeServico/{OrdemServicoId}/Itens");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            var itens = JsonConvert.DeserializeObject<List<ItemOrdemServico>>(str);
+
+            return Json(itens.ToDataSourceResult(request));
+        }
+        
+
         public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, ItemOrdemServico obj)
         {
             var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/ItemDaOrdemDeServico");

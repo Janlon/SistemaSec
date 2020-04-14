@@ -22,12 +22,12 @@ namespace SiteSec.Controllers
         }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
-            IEnumerable<Setor> resultado = new List<Setor>();
+           List<Setor> resultado = new List<Setor>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Setor>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Descricao);
+            if (obj.Count > 0)
+                resultado = obj.OrderBy(p => p.Descricao).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }       

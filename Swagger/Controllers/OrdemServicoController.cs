@@ -25,10 +25,10 @@ namespace Swagger.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("~/api/OrdemServico/{id:int}/itens")]
-        public CrudResult<OrdemDeServico> GetItensDaOrdemServico(int id)
+        [Route("~/api/OrdemDeServico/{Id:int}/Itens")]
+        public CrudResult<ItemDaOrdemDeServico> GetItensDaOrdemDeServico(int id)
         {
-            return Engine.OrdensDeServicos.Filter(p => p.Itens.Equals(id));
+            return Engine.ItensDasOrdensDeServicos.Filter(p => p.OrdemId.Equals(id));        
         }
 
         public CrudResult<OrdemDeServico> Post(OrdemDeServico obj)

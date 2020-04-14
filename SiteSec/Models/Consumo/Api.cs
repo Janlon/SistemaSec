@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public class Api
 {
-    internal async Task<string> Use<T>(HttpMethod metodo, T obj, int id = 0)
+    internal async Task<string> UseSimple<T>(HttpMethod http, T obj, int? id = 0)
     {
         try
         {
@@ -18,9 +18,9 @@ public class Api
             string output = JsonConvert.SerializeObject(obj);
             StringContent content = new StringContent(output, Encoding.UTF8, "application/json");
 
-            switch (metodo.Method)
+            switch (http.Method)
             {
-                case "Post":
+                case "POST":
                     using (var client = new HttpClient())
                     {
                         response = await client.PostAsync(endereço, content);

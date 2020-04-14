@@ -30,12 +30,12 @@ namespace SiteSec.Controllers
 
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
-            IEnumerable<Pessoa> resultado = new List<Pessoa>();
+            List<Pessoa> resultado = new List<Pessoa>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Pessoa(), $"api/Pessoa/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<Pessoa>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Nome);
+            if (obj.Count > 0)
+                resultado = obj.OrderBy(p => p.Nome).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }

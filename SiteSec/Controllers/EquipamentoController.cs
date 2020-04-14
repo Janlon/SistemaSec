@@ -57,5 +57,18 @@ namespace SiteSec.Controllers
 
             return PartialView(obj);
         }
+        public async Task<JsonResult> EquipamentosDoSetor(int setorId)
+        {
+            if (setorId < 1)
+                return Json(new[] { new Equipamento() }, JsonRequestBehavior.AllowGet);
+
+            var apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{setorId}/Equipamentos");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str);
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
