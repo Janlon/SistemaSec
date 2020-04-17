@@ -34,8 +34,6 @@ namespace SiteSec.Models
         public int SetorId { get; set; }
 
 
-
-
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
         public int EmpresaId { get; set; }
 
@@ -44,6 +42,7 @@ namespace SiteSec.Models
         [ScaffoldColumn(false)]
         public List<Imagen> Imagens { get; set; }
 
-       
+
+        public List<Servico> Servicos { get;  set; }
     }
 }

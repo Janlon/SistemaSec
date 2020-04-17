@@ -28,7 +28,7 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
-        // .Group(g => g.Add(c => c.Pessoa.Nome)).Group(g => g.Add(c => c.Numero))
+        .Group(g => g.Add(c => c.EmpresaId)).Group(g => g.Add(c => c.Numero))
         .Read(read => read.Action("Read", "OrdemServico", new { id = ViewBag.Id }))
         .Create(update => update.Action("Create", "OrdemServico"))
         .Update(update => update.Action("Update", "OrdemServico"))

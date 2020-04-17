@@ -13,7 +13,6 @@ namespace Swagger.Controllers
 
         public CrudResult<Usuario> Get(int id) => Engine.Usuarios.Find(new object[] { id });
 
-        [AllowAnonymous()]
         public CrudResult<Usuario> Post(Usuario obj) => Engine.Usuarios.Insert(obj);
 
         public CrudResult<Usuario> Put(Usuario obj) => Engine.Usuarios.Update(obj);

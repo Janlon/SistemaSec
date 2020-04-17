@@ -28,7 +28,7 @@ namespace Swagger.Controllers
         [Route("~/api/OrdemDeServico/{Id:int}/Itens")]
         public CrudResult<ItemDaOrdemDeServico> GetItensDaOrdemDeServico(int id)
         {
-            return Engine.ItensDasOrdensDeServicos.Filter(p => p.OrdemId.Equals(id));        
+            return Engine.ItensDasOrdensDeServicos.Filter(p => p.OrdemDeServicoId.Equals(id));        
         }
 
         public CrudResult<OrdemDeServico> Post(OrdemDeServico obj)

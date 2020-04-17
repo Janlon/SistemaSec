@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteSec.Models
 {
     public class Setor
     {
+
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
@@ -26,5 +29,10 @@ namespace SiteSec.Models
         public string RazaoSocial { get; set; }
 
         public virtual Empresa Empresa { get; set; }
+
+
+
+        public List<Equipamento> Equipamentos { get; set; }
+
     }
 }

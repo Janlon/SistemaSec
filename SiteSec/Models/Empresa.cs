@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteSec.Models
 {
@@ -53,5 +54,15 @@ namespace SiteSec.Models
         public string UF { get; set; } = "";
 
         public Endereco Endereco { get; set; }
+
+
+
+
+        public List<Setor> Setores { get; set; }
+
+
+
+
+
     }
 }

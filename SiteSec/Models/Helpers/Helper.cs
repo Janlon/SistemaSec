@@ -55,4 +55,16 @@ using System.Web;
         return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
 
     }
+
+    /// <summary>
+    /// Remover caracteres não numéricos de uma string
+    /// E retorna caractes numéricos
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static string ApenasNumeros(string str)
+    {
+        var apenasDigitos = new Regex(@"[^\d]");
+        return apenasDigitos.Replace(str, "");
+    }
 }

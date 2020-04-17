@@ -85,14 +85,14 @@ namespace Sec.IdentityGroup
                 try
                 {
                     am = new ApplicationManager();
-                    ApplicationUser usuario = am.UM.FindByEmail("iosystems@hotmail.com");
+                    ApplicationUser usuario = am.UM.FindByEmail("janloncavalchi@msn.com");
                     if (usuario == null)
                     {
-                        results.Add(am.UM.Create(new ApplicationUser() { Email = "iosystems@hotmail.com", UserName = "iosystems@hotmail.com" }, "Senha@123"));
+                        results.Add(am.UM.Create(new ApplicationUser() { Email = "janloncavalchi@msn.com", UserName = "janloncavalchi@msn.com" }, "Senha@123"));
                         am.Commit();
                         am.Dispose();
                         am = new ApplicationManager();
-                        usuario = am.UM.FindByEmail("iosystems@hotmail.com");
+                        usuario = am.UM.FindByEmail("janloncavalchi@msn.com");
                         am.Commit();
                         am.Dispose();
                     }

@@ -26,6 +26,7 @@ namespace SiteSec.Models
 
         [ScaffoldColumn(false)]
         public List<ItemOrdemServico> ItensOrdemservico { get; set; }
+        public Empresa Empresa { get; internal set; }
     }
 
 }

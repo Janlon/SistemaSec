@@ -62,7 +62,17 @@
                         Nome = "Janlon de Carvalho Rodrigues",
                         Email = "janloncavalchi@msn.com",
                         Atividade = ((pf == null) ? "" : pf.Descricao.Trim().ToUpper()),
-                        CPF = "37930464008"               
+                        CPF = "81285060130"               
+                    });
+                    context.SaveChanges();
+
+
+                    context.Pessoas.Add(new Pessoa()
+                    {
+                        Nome = "Fulano de Tal",
+                        Email = "fulano@email.com",
+                        Atividade = ((pf == null) ? "" : pf.Descricao.Trim().ToUpper()),
+                        CPF = "37930464008"
                     });
                     context.SaveChanges();
                 }
@@ -88,6 +98,25 @@
                         Endereco = endereco
                     });
                     context.SaveChanges();
+
+
+                    Endereco endereco1 = new Endereco() { Localidade = "Praia Grande", Bairro = "Vila Mirim", CEP = "11704700", Complemento = "Casa 1077", Logradouro = "Av. 31 de Março", UF = "SP" };
+                    context.Enderecos.Add(endereco1);
+                    context.SaveChanges();
+
+
+                    context.Empresas.Add(
+                    new Empresa()
+                    {
+                        RazaoSocial = "Hospital Municipal Irmã Dulce",
+                        NomeFantasia = "Irmã Dulce",
+                        Atividade = ((pj == null) ? "" : pj.Descricao.Trim().ToUpper()),
+                        CNPJ = "25503424000108",
+                        Endereco = endereco1
+                    });
+                    context.SaveChanges();
+
+
                 }
             }
             catch (Exception ex) { ex.Log(); }    

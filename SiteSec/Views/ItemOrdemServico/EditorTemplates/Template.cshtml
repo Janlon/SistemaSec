@@ -6,124 +6,73 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-
-        <div class="form-group">
-            @Html.LabelFor(p => p.OrdemId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @(Html.Kendo().DropDownListFor(model => model.OrdemId)
-                      .DataTextField("Numero")
-                      .DataValueField("Id")
-                      .OptionLabel("Selecione")
-                      .HtmlAttributes(new { style = "width:100%;" })
-                   .DataSource(source =>
-                   {
-                       source.Custom()
-                           .ServerFiltering(true)
-                           .Type("aspnetmvc-ajax")
-                           .Transport(transport => { transport.Read("Read", "OrdemServico", new { id = ViewBag.OrdemServicoId }); })
-                           .Schema(schema => { schema.Data("Data").Total("Total"); });
-                   })
-                )
-                @Html.ValidationMessageFor(model => model.OrdemId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpresaId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @(Html.Kendo().DropDownListFor(model => model.EmpresaId)
-                    .DataTextField("RazaoSocial")
-                    .DataValueField("Id")
-                    .OptionLabel("Selecione")
-                    .Filter("contains")
-                    .Events(evt => { evt.Change("CascadeFromEmpresa"); })
-                    .HtmlAttributes(new { style = "width:100%;" })
-                    .DataSource(source =>
-                    {
-                        source.Custom()
-                            .ServerFiltering(true)
-                            .Type("aspnetmvc-ajax")
-                            .Transport(transport => { transport.Read("Read", "Empresa"); })
-                            .Schema(schema => { schema.Data("Data").Total("Total"); });
-                    })
-
-                )
-                @Html.ValidationMessageFor(model => model.EmpresaId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SetorId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @(Html.Kendo().MultiSelectFor(model => model.SetorId)
-                    .DataTextField("Descricao")
-                    .DataValueField("Id")
-                    .Placeholder("Selecione")
-                    .Filter("contains")
-                    .HtmlAttributes(new { style = "width:100%;" })
-                    .DataSource(source =>
-                    {
-                        source.Custom()
-                            .ServerFiltering(true)
-                            .Type("aspnetmvc-ajax")
-                            .Transport(transport => { transport.Read("Read", "Setor"); })
-                            .Schema(schema => { schema.Data("Data").Total("Total"); });
-                    })
-                )
-                @Html.ValidationMessageFor(model => model.SetorId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.SetorId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @(Html.Kendo().MultiSelectFor(model=> model.SetorId)
-                              .DataTextField("Descricao")
-                              .DataValueField("Id")
-                              .Placeholder("Selecione")
-                              .Filter("contains")
-                              .HtmlAttributes(new { style = "width:100%;" })
-                              .DataSource(source =>
-                              {
-                                  source.Read(read =>
-                                  {
-                                      read.Action("Read", "Setor");//.Data("filtrarSetor");
-                                  })
-                                  .ServerFiltering(true);
-
-                              })
-                              //.Enable(false)
-                              .AutoBind(true)
-                )
-                @Html.ValidationMessageFor(model => model.SetorId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ServicoId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @(Html.Kendo().MultiSelectFor(model => model.ServicoId)
-                    .DataTextField("Descricao")
-                    .DataValueField("Id")
-                    .Placeholder("Selecione")
-                    .Filter("contains")
-                    .HtmlAttributes(new { style = "width:100%;" })
-                    .AutoBind(false)
-                    .DataSource(source =>
-                    {
-                        source.Custom()
-                            .ServerFiltering(true)
-                            .Type("aspnetmvc-ajax")
-                            .Transport(transport => { transport.Read("Read", "Servico"); })
-                            .Schema(schema => { schema.Data("Data").Total("Total"); });
-                    })
-                )
-                @Html.ValidationMessageFor(model => model.ServicoId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        @Html.HiddenFor(model=>model.ListaResultados)
+        <div id="treeview"></div>
     </div>
-
-
 }
+
+<script>
+
+    $(document).ready(function () {
+
+        function checkedNodeIds(nodes, checkedNodes) {
+            for (var i = 0; i < nodes.length; i++) {
+
+                if (nodes[i].checked) 
+                    checkedNodes.push(nodes[i].id);
+                
+                if (nodes[i].hasChildren) 
+                    checkedNodeIds(nodes[i].children.view(), checkedNodes);          
+            }
+        }
+
+        function onCheck() {
+            var checkedNodes = [],
+                treeView = $("#treeview").data("kendoTreeView"),
+                message;
+
+            checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+
+            if (checkedNodes.length > 0) {
+                message = checkedNodes.join(",");
+            }
+
+            $("#ListaResultados").val(message).trigger("change");
+        }
+
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: '@Url.Action("EquipamentosDosSetoresDaEmpresa", "ItemOrdemServico")',
+            data: { ordemId : @ViewBag.OrdemServicoId },
+            contentType: "json",
+            success: function (data)
+            {
+                var setores = new Array();
+                for (var i in data) {
+                    var equipamentos = new Array();
+                    for (var x in data[i].Equipamentos) {
+                        var servicos = new Array();
+                        for (var z in data[i].Equipamentos[x].Servicos) {
+
+                            var idSetor = data[i].Id;
+                            var idEquipamento = data[i].Equipamentos[x].Id;
+                            var idServico = data[i].Equipamentos[x].Servicos[z].Id;
+
+                            servicos.push({ 'id': 'setorId=' + idSetor + ';equipamentoId=' + idEquipamento + ';servicoId=' + idServico, 'text': data[i].Equipamentos[x].Servicos[z].Descricao });
+                        }
+                        equipamentos.push({ 'id': data[i].Equipamentos[x].Id, 'text': data[i].Equipamentos[x].Descricao, 'items': servicos });
+                    }
+                    setores.push({ 'id': data[i].Id, 'text': data[i].Descricao, 'items': equipamentos });
+                }
+                var ds = new kendo.data.HierarchicalDataSource({ data : setores });
+                $("#treeview").kendoTreeView({
+                    dataSource: ds,
+                    check: onCheck,
+                    checkboxes: { checkChildren: true },
+                });    
+            }
+        });
+    });
+
+</script>
