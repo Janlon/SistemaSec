@@ -30,8 +30,9 @@ namespace SiteSec.Models
         [Display(Name = "Imagem", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Imagem")]
         public byte[] Files { get; set; }
 
+
         [ScaffoldColumn(false)]
-        public List<Imagen> Imagens { get; set; }
+        public List<Imagem> Imagens { get; set; }
 
 
         public int DocumentoId { get; set; }

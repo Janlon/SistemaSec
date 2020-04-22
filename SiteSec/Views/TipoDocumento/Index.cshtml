@@ -7,7 +7,7 @@
     {
         columns.Bound(p => p.Sigla).Width(200);
         columns.Bound(p => p.Descricao);
-        columns.Bound(p => p.PessoaFisica).Width(200);
+        columns.Bound(p => p.PessoaFisica).Width(200).ClientTemplate("#= PessoaFisica ? 'Sim' : 'Não' #");
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
@@ -35,5 +35,3 @@
 )
 
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
-
-@Scripts.Render("~/bundles/Web")

@@ -6,33 +6,47 @@ namespace SiteSec.Models
 {
     public class Setor
     {
+        #region propriedades de persitência
 
         [ScaffoldColumn(false)]
-        public int Id { get; set; }
-
-        [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(50, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
-        public string Descricao { get; set; }
-
-        [Display(Name = "Sigla", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Sigla")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
-        public string Sigla { get; set; }
-
+        public int Id { get; set; } = 0;
 
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        public int EmpresaId { get; set; }
+        [ScaffoldColumn(false)]
+        public int EmpresaId { get; set; } = 0;
 
-        [Display(Name = "Razão Social", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
-        public string RazaoSocial { get; set; }
+        [ScaffoldColumn(false)]
+        public int TipoDeSetorId { get; set; } = 0;
 
-        public virtual Empresa Empresa { get; set; }
+        #endregion
 
+        #region propriedades de visualização
 
+        [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
+        public string Empresa { get; set; }
 
+        /// <summary>
+        /// propriedades de visualizacao da view
+        /// </summary>
+        [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
+        public string Descricao { get; set; }
+
+        [Display(Name = "Sigla do setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Sigla")]
+        public string Sigla { get; set; }
+
+        #endregion
+
+        #region propriedades de transferência
+
+        [Display(Name = "Tipo de Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Tipo de Setor")]
+        [Required(ErrorMessage = "{0} é obrigatório.")]
+        public List<TipoSetor> TiposDeSetores { get; set; }
+
+        [ScaffoldColumn(false)]
         public List<Equipamento> Equipamentos { get; set; }
+
+        #endregion
 
     }
 }

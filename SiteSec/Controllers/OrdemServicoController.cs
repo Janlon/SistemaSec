@@ -20,14 +20,21 @@ namespace SiteSec.Controllers
             ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
-
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             var apiRetorno = await api.Use(HttpMethod.Get, new OrdemServico(), $"api/OrdemServico/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var ordemServico = JsonConvert.DeserializeObject<List<OrdemServico>>(str);
+            List<OrdemServico> ordemServicos = JsonConvert.DeserializeObject<List<OrdemServico>>(str);
+            foreach (var item in ordemServicos)
+            {
+                apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{item.EmpresaId}");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                Empresa empresa = JsonConvert.DeserializeObject<List<Empresa>>(str).FirstOrDefault();
 
-            return Json(ordemServico.ToDataSourceResult(request));
+                item.Empresa = empresa.RazaoSocial;
+            }
+
+            return Json(ordemServicos.ToDataSourceResult(request));
         }
         public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, OrdemServico obj)
         {

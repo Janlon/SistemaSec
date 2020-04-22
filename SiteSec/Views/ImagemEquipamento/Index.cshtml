@@ -11,9 +11,8 @@
         columns.Bound(p => p.Imagens.FirstOrDefault().Nome);
         columns.Command(command =>
         {
-            command.Custom("a").Text("Vizualizar").Click("openWindow");
             command.Destroy().Text("Apagar");
-
+            command.Custom("a").Text("<span class='k-icon k-i-eye'> </span> Vizualizar").Click("openWindow");
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
@@ -35,33 +34,45 @@
         .Destroy(update => update.Action("Destroy", "ImagemEquipamento"))
     ).Deferred(true)
 )
-
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
-
-@Scripts.Render("~/bundles/Web")
 
 
 <script>
-     /*
-     *Função para abrir a janela para adicionar as imagens
-     */
+    /*
+    *Função para abrir a janela para adicionar as imagens
+    */
     function openWindow(e) {
         e.preventDefault();
         let wnd = null;
         let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         let direction = "/Imagem/Index/" + dataItem.Id;
         wnd = $("#janela").data("kendoWindow");
-       
+
         if (!wnd) {
             wnd = $("#janela").kendoWindow({
                 actions: ["Close"],
                 title: "Imagem: " + dataItem.Nome,
                 visible: false,
+                resizable: false,
             }).data("kendoWindow");
         }
         wnd.center();
         wnd.refresh(direction);
         wnd.open();
-   
+
+    }
+    /*
+    *Função de retorno da mensagem de Erro
+    */
+    function onError(e) {
+        console.log(e);
+        popupNotification("Ocorreu um erro ao inserir o registro", false);
+    }
+    /*
+    *Função de retorno da mensagem de Sucesso
+    */
+    function onSuccess(e) {
+        popupNotification("Registro inserido com sucesso", true);
+        location.reload(true);
     }
 </script>

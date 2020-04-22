@@ -26,11 +26,16 @@ namespace SiteSec.Controllers
         {
             ViewBag.EquipamentoId = equipamentoId;
 
+            var Imagens = new List<Imagem>();
+
             var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{equipamentoId}/Imagens");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
+            Equipamento equipamento = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
 
-            return Json(obj.Imagens.ToDataSourceResult(request));
+            if (equipamento != null)
+                Imagens = equipamento.Imagens;
+            
+            return Json(Imagens.ToDataSourceResult(request));
         }
 
         public async Task<ActionResult> Upload(IEnumerable<HttpPostedFileBase> files, int id)
@@ -44,7 +49,7 @@ namespace SiteSec.Controllers
                         file.InputStream.CopyTo(ms);
                         byte[] img = ms.GetBuffer();
 
-                        var imagem = new Imagen()
+                        var imagem = new Imagem()
                         {
                             File = img,
                             Nome = file.FileName
@@ -53,18 +58,16 @@ namespace SiteSec.Controllers
                         var apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{id}");
                         var str = JsonConvert.SerializeObject(apiRetorno.result);
                         var equipamento = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
+
                         equipamento.Imagens.Add(imagem);
 
                         await api.Use(HttpMethod.Put, equipamento, "api/Equipamento");
                     }
 
-                }
+                }             
             }
-
             // Return an empty string to signify success.
             return Content("");
         }
-
-
     }
 }

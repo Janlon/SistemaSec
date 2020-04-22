@@ -42,9 +42,9 @@
         [DataType(DataType.Date)]
         public DateTime? Validade { get; set; } = DateTime.Now.AddDays(1);
 
-        [Display(Name = "Tipo", AutoGenerateField = true, AutoGenerateFilter = true, Description = "Tipo de documento", Prompt = "Tipo")]
+        [Display(Name = "Tipo De Documento", AutoGenerateField = true, AutoGenerateFilter = true, Description = "Tipo de documento", Prompt = "Tipo")]
         [ForeignKey("TipoDeDocumentoId")]
-        public virtual TipoDeDocumento Tipo { get; set; }
+        public virtual TipoDeDocumento TipoDeDocumento { get; set; }
 
         [Display(Name = "Pessoa", AutoGenerateField = true, AutoGenerateFilter = true, Description = "Nome da pessoa", Prompt = "Pessoa")]
         [ForeignKey("PessoaId")]

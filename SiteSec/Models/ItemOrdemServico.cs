@@ -8,55 +8,113 @@ namespace SiteSec.Models
 {
     public class ItemOrdemServico
     {
-      
+
+        #region propriedades de persitência
+
+        /// <summary>
+        /// Identificador do objeto ItemOrdemServico
+        /// </summary>
         [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;
 
-     
-        [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Razão Social", Description = "Razão Social da Empresa")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        public int EmpresaId { get; set; } = 0;
-        public Empresa Empresa { get; set; }
-
-
-
-
-        [Display(Name = "Ordem de serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de serviço", Description = "Número da ordem de serviço")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
+        /// <summary>
+        /// representa o Indetificador da Ordem de serviço que esta associado
+        /// </summary>
+        [ScaffoldColumn(false)]
         public int OrdemDeServicoId { get; set; } = 0;
-        public OrdemServico OrdemDeServico { get; set; }
 
+        [ScaffoldColumn(false)]
+        public int EquipamentoId { get;  set; }
 
-
-
-        [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor", Description = "Setor da Empresa")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        public int SetorId { get; set; } = 0;
-        public Setor Setor { get; set; }
-
-
-
-
-        [Display(Name = "Equipamento", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Equipamento", Description = "Equipamento alvo da ordem de serviço")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        public int EquipamentoId { get; set; } = 0;
-        public Equipamento Equipamento { get; set; }
-
-
-
-
-
-        [Display(Name = "Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Serviço", Description = "Serviço a realizar")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
+        [ScaffoldColumn(false)]
         public int ServicoId { get;  set; }
-        public Servico Servico { get; set; }
 
+        #endregion
 
-
-
+        #region propriedades de tranferência
 
         [ScaffoldColumn(false)]
         public string ListaResultados { get; set; } = "";
 
+        #endregion
+
+        #region propriedade de vizualizacao
+
+        /// <summary>
+        /// É usado no template no objeto treeview
+        /// não retorna valor
+        /// </summary>
+        public List<ItemSetor> ItensOrdemServico { get; set; }
+
+        /// <summary>
+        /// é usado na view ItemOrdemServico
+        /// nao retorna valor
+        /// </summary>
+        [Display(Name = "Ordem de serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de serviço")]
+        public string OS { get; internal set; }
+
+        /// <summary>
+        /// é usado na view ItemOrdemServico
+        /// nao retorna valor
+        /// </summary>
+        public string Equipamento { get; set; }
+
+        /// <summary>
+        /// é usado na view ItemOrdemServico
+        /// nao retorna valor
+        /// </summary>
+        public string Setor { get; set; }
+
+        /// <summary>
+        /// é usado na view ItemOrdemServico
+        /// nao retorna valor
+        /// </summary>
+        public string Serviço { get; internal set; }
+
+        /// <summary>
+        /// é usado na view ItemOrdemServico
+        /// nao retorna valor
+        /// </summary>
+        public string Empresa { get; internal set; }
+
+        #endregion
     }
+
+    public class ItemSetor
+    {
+        /// <summary>
+        /// representa o identificador do objeto Setor
+        /// </summary>
+        [ScaffoldColumn(false)]
+        public int SetorId { get; set; }
+
+        /// <summary>
+        /// representa a descricao do objeto tipo de setor
+        /// </summary>
+        [ScaffoldColumn(false)]
+        public string TipoSetorDescricao { get; set; }
+
+        public List<ItemEquipamento> ItensEquipamentos { get; set; }
+    }
+
+    public class ItemEquipamento
+    {
+        /// <summary>
+        /// Representa o identificador do objeto equipamento
+        /// </summary>
+        [ScaffoldColumn(false)]
+        public int EquipamentoId { get; set; }
+
+        /// <summary>
+        /// Representa a descrição do objeto do tipo de equipamento
+        /// </summary>
+        [ScaffoldColumn(false)]
+        public string TipoEquipamentoDescricao { get; set; }
+
+        /// <summary>
+        /// Lista de serviços
+        /// </summary>
+        public List<Servico> Servicos { get; set; }
+    }
+
 }

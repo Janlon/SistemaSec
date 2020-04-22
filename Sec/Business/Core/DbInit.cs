@@ -14,8 +14,7 @@
     {
         protected override void Seed(Db context)
         {
-            IEnumerable<Models.Atividade> Atividades = Engine.Cargos.Atividades();
-            // Tipos de documento padrão:
+            // TipoDeDocumento
             try
             {
                 List<TipoDeDocumento> documentos = new List<TipoDeDocumento>
@@ -50,10 +49,60 @@
                 context.SaveChanges();
             }
             catch (Exception ex) { ex.Log(); }
+            // TipoDeEquipamento
+            try
+            {
+                List<TipoDeEquipamento> equipamentos = new List<TipoDeEquipamento>
+                {
+                    new TipoDeEquipamento { Descricao = "Aparelho de raio X", Sigla = "RX"},
+                    new TipoDeEquipamento { Descricao = "Aparelho de hemodiálise", Sigla = "HMD"},
+                    new TipoDeEquipamento { Descricao = "Cardioversor", Sigla = "CV"},
+                    new TipoDeEquipamento { Descricao = "Central de monitorização", Sigla = "CM"},
+                    new TipoDeEquipamento { Descricao = "Desfibrilador", Sigla = "DFI"},
+                    new TipoDeEquipamento { Descricao = "Incubadora", Sigla = "ICB"},
+                    new TipoDeEquipamento { Descricao = "Oxicapnógrafo", Sigla = "OXCP"}
 
+                };
+                context.TiposDeEquipamentos.AddRange(equipamentos);
+                context.SaveChanges();
+            }
+            catch (Exception ex) { ex.Log(); }
+            // TipoDeSetor
+            try
+            {
+                List<TipoDeSetor> setores = new List<TipoDeSetor>
+                {
+                    new TipoDeSetor { Descricao = "Ambulatório", Sigla = "AMB"},
+                    new TipoDeSetor { Descricao = "Unidade de Terapia Intensiva", Sigla = "UTI"},
+                    new TipoDeSetor { Descricao = "Setor de Traumatologia", Sigla = "TRM"},
+                    new TipoDeSetor { Descricao = "Consultório Médico", Sigla = "CM"},
+                    new TipoDeSetor { Descricao = "Farmácia", Sigla = "FM"},
+                    new TipoDeSetor { Descricao = "Pediatria", Sigla = "PD"},
+                    new TipoDeSetor { Descricao = "Almoxarifado", Sigla = "ALMX"}
+
+                };
+                context.TiposDeSetores.AddRange(setores);
+                context.SaveChanges();
+            }
+            catch (Exception ex) { ex.Log(); }
+            // Servico
+            try
+            {
+                List<Servico> servicos = new List<Servico>
+                {
+                    new Servico { Descricao = "Limpeza"},
+                    new Servico { Descricao = "Manutenção"},
+                    new Servico { Descricao = "Teste"},
+                    new Servico { Descricao = "Orçamento"}
+                };
+                context.Servicos.AddRange(servicos);
+                context.SaveChanges();
+            }
+            catch (Exception ex) { ex.Log(); }
             // Pessoa
             try
             {
+                IEnumerable<Models.Atividade> Atividades = Engine.Cargos.Atividades();
                 if (context.Pessoas.Count() == 0)
                 {
                     Models.Atividade pf = Atividades.Where(p => p.Id.StartsWith("21240")).FirstOrDefault();
@@ -69,8 +118,8 @@
 
                     context.Pessoas.Add(new Pessoa()
                     {
-                        Nome = "Fulano de Tal",
-                        Email = "fulano@email.com",
+                        Nome = "Olga Cavalchi de Carvalho",
+                        Email = "olga@email.com",
                         Atividade = ((pf == null) ? "" : pf.Descricao.Trim().ToUpper()),
                         CPF = "37930464008"
                     });
@@ -81,6 +130,7 @@
             // Empresa
             try
             {
+                IEnumerable<Models.Atividade> Atividades = Engine.Cargos.Atividades();
                 if (context.Empresas.Count() == 0)
                 {
                     Endereco endereco = new Endereco() { Localidade = "Santos", Bairro = "Jabaquara", CEP = "11075900", Complemento = "", Logradouro = "Av. Dr. Cláudio Luís da Costa, 50", UF = "SP" };
@@ -115,11 +165,9 @@
                         Endereco = endereco1
                     });
                     context.SaveChanges();
-
-
                 }
             }
-            catch (Exception ex) { ex.Log(); }    
+            catch (Exception ex) { ex.Log(); }      
         }
     }
 }

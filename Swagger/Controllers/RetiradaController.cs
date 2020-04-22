@@ -19,6 +19,13 @@ namespace Swagger.Controllers
             return Engine.Retiradas.Find(new object[] { id });
         }
 
+        [Route("~/api/Retirada/{ItemId:int}/Item")]
+        public CrudResult<RetiradaDoItemDaOrdemDeServico> GetItemRetirado(int ItemId)
+        {
+            return Engine.Retiradas.Filter(p => p.ItemDaOrdemDeServicoId.Equals(ItemId));
+        }
+
+
         public CrudResult<RetiradaDoItemDaOrdemDeServico> Post(RetiradaDoItemDaOrdemDeServico obj)
         {
             return Engine.Retiradas.Insert(obj);

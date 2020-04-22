@@ -132,6 +132,8 @@
     <Compile Include="Business\Engine\Retiradas.cs" />
     <Compile Include="Business\Engine\Servicos.cs" />
     <Compile Include="Business\Engine\Setores.cs" />
+    <Compile Include="Business\Engine\TiposDeEquipamentos.cs" />
+    <Compile Include="Business\Engine\TiposDeSetores.cs" />
     <Compile Include="Business\Engine\TiposDeDocumentos.cs" />
     <Compile Include="Business\Engine\Usuarios.cs" />
     <Compile Include="Business\Extensoes\Equipamento.cs" />
@@ -171,6 +173,8 @@
     <Compile Include="Models\Abstratos\EntidadeBase.cs" />
     <Compile Include="Models\Abstratos\IEntdadeBase.cs" />
     <Compile Include="Models\Persistencia\Empresa.cs" />
+    <Compile Include="Models\Persistencia\TipoDeEquipamento.cs" />
+    <Compile Include="Models\Persistencia\TipoDeSetor.cs" />
     <Compile Include="Models\Persistencia\Usuario.cs" />
     <Compile Include="Models\Transporte.cs" />
     <Compile Include="Models\Enumeracoes.cs" />

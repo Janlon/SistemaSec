@@ -1,5 +1,6 @@
 ﻿namespace Sec.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,9 @@
         [MaxLength(100)]
         [Column("Descricao", TypeName = "VARCHAR")]
         public string Descricao { get; set; }
+
+        [Display(Name = "Itens da Ordem de Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Itens da Ordem de Serviço")]
+        public virtual List<ItemDaOrdemDeServico> Itens { get; set; } = new List<ItemDaOrdemDeServico>();
 
     }
 }

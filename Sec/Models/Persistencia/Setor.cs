@@ -14,23 +14,18 @@
         [ScaffoldColumn(false)]
         public int EmpresaId { get; set; }
 
-        [Display(Name = "Setor", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Setor")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 3)]
-        [MaxLength(100)]
-        [Column("Descricao", TypeName = "VARCHAR")]
-        public string Descricao { get; set; }
+        [ScaffoldColumn(false)]
+        public int TipoDeSetorId { get; set; }
 
-        [Display(Name = "Sigla", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Sigla")]
-        [Required(ErrorMessage = "{0} é obrigatório.")]
-        [StringLength(10, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 2)]
-        [MaxLength(10)]
-        [Column("Sigla", TypeName = "VARCHAR")]
-        public string Sigla { get; set; }
-
+        [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Description = "Empresa", Prompt = "Empresa")]
         [ForeignKey("EmpresaId")]
         public virtual Empresa Empresa { get; internal set; }
 
+        [Display(Name = "Tipo De Setor", AutoGenerateField = true, AutoGenerateFilter = true, Description = "Tipo de documento", Prompt = "Tipo")]
+        [ForeignKey("TipoDeSetorId")]
+        public virtual TipoDeSetor TipoDeSetor { get; internal set; }
+
         public virtual List<Equipamento> Equipamentos { get; internal set; } = new List<Equipamento>();
+
     }
 }

@@ -44,7 +44,7 @@ namespace SiteSec.Controllers
                         file.InputStream.CopyTo(ms);
                         byte[] img = ms.GetBuffer();
 
-                        var imagem = new Imagen()
+                        var imagem = new Imagem()
                         {
                             File = img,
                             Nome = file.FileName

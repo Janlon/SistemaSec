@@ -174,6 +174,7 @@
     <Compile Include="Controllers\CargoController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\EntregaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -187,6 +188,8 @@
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
+    <Compile Include="Controllers\TipoEquipamentoController.cs" />
+    <Compile Include="Controllers\TipoSetorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -197,11 +200,12 @@
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\Entrega.cs" />
     <Compile Include="Models\Equipamento.cs" />
     <Compile Include="Models\EquipamentoDoSetor.cs" />
     <Compile Include="Models\Geo.cs" />
     <Compile Include="Models\Helpers\Helper.cs" />
-    <Compile Include="Models\Imagen.cs" />
+    <Compile Include="Models\Imagem.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
@@ -210,10 +214,18 @@
     <Compile Include="Models\Servico.cs" />
     <Compile Include="Models\Setor.cs" />
     <Compile Include="Models\TipoDocumento.cs" />
+    <Compile Include="Models\TipoEquipamento.cs" />
+    <Compile Include="Models\TipoSetor.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\fonts.css" />
+    <Content Include="Content\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="Content\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Content\QrCode-icon.png" />
+    <Content Include="Content\Shared.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
@@ -226,6 +238,25 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="Content\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="Content\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="Content\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="Content\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="Content\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="Content\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="Content\fonts\glyphs\WebComponentsIcons.woff" />
     <None Include="Properties\PublishProfiles\8081Desenv.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
@@ -254,12 +285,16 @@
     <Content Include="Views\Imagem\Index.cshtml" />
     <Content Include="Views\ImagemPessoa\Index.cshtml" />
     <Content Include="Views\ImagemPessoa\EditorTemplates\Template.cshtml" />
-    <Content Include="Views\Equipamento\ViewQrCode.cshtml" />
+    <Content Include="Views\Equipamento\QrCode.cshtml" />
     <Content Include="Views\ItemOrdemServico\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Servico\Index.cshtml" />
     <Content Include="Views\Retirada\Index.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Retirada\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\TipoSetor\Index.cshtml" />
+    <Content Include="Views\TipoEquipamento\Index.cshtml" />
+    <Content Include="Views\Entrega\Index.cshtml" />
+    <Content Include="Views\Entrega\EditorTemplates\Template.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -269,8 +304,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
-    <Folder Include="Views\Geo\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

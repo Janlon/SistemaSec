@@ -5,14 +5,15 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.EmpresaId);
-        columns.Bound(p => p.Numero);
+        columns.Bound(p => p.Numero).Width(200);
         columns.Bound(p => p.Emissao).Format("{0: dd/MM/yyyy HH:mm:ss}");
+        columns.Bound(p => p.Validade).Format("{0: dd/MM/yyyy HH:mm:ss}");
+        columns.Bound(p => p.Situacao);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-            command.Custom("a").Text("Item").Click("redirect");
+            command.Custom("a").Text("<span class='k-icon k-i-insert-up'> </span> Item").Click("redirect");
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
@@ -28,7 +29,7 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
-        .Group(g => g.Add(c => c.EmpresaId)).Group(g => g.Add(c => c.Numero))
+        .Group(g => g.Add(c => c.Empresa))
         .Read(read => read.Action("Read", "OrdemServico", new { id = ViewBag.Id }))
         .Create(update => update.Action("Create", "OrdemServico"))
         .Update(update => update.Action("Update", "OrdemServico"))
@@ -38,7 +39,6 @@
 
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
-@Scripts.Render("~/bundles/Web")
 
 <script>
     /*
@@ -48,6 +48,6 @@
         e.preventDefault();
         let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         let direction = "/ItemOrdemServico/Index/" + dataItem.Id;
-        window.location.href = direction;
+         window.location.href = direction;
     }
 </script>

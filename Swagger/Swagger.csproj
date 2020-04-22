@@ -267,6 +267,8 @@
     <Compile Include="Controllers\RetiradaController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
+    <Compile Include="Controllers\TipoEquipamentoController.cs" />
+    <Compile Include="Controllers\TipoSetorController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">

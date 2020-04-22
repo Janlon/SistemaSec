@@ -1,0 +1,38 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<Entrega>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        // columns.Bound(p => p.ItemId);
+        columns.Bound(p => p.PessoaId);
+        columns.Bound(p => p.Descricao);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("Read", "Entrega", new { ItemId = ViewBag.Id }))
+        .Create(update => update.Action("Create", "Entrega", new { ItemId = ViewBag.Id }))
+        .Update(update => update.Action("Update", "Entrega"))
+        .Destroy(update => update.Action("Destroy", "Entrega"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))

@@ -19,6 +19,12 @@ namespace Swagger.Controllers
             return Engine.Entregas.Find(new object[] { id });
         }
 
+        [Route("~/api/Entrega/{ItemId:int}/Item")]
+        public CrudResult<EntregaDoItemDaOrdemDeServico> GetItemEntregue(int ItemId)
+        {
+            return Engine.Entregas.Filter(p => p.ItemDaOrdemDeServicoId.Equals(ItemId));
+        }
+
         public CrudResult<EntregaDoItemDaOrdemDeServico> Post(EntregaDoItemDaOrdemDeServico obj)
         {
             return Engine.Entregas.Insert(obj);

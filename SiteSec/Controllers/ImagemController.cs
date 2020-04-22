@@ -18,11 +18,21 @@ namespace SiteSec.Controllers
 
         public async Task<ActionResult> Index(int Id)
         {
-            var apiRetorno = await api.Use(HttpMethod.Get, new Imagen(), $"api/Imagem/{Id}/");
+            var apiRetorno = await api.Use(HttpMethod.Get, new Imagem(), $"api/Imagem/{Id}/");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Imagen>>(str).FirstOrDefault();
+            var obj = JsonConvert.DeserializeObject<List<Imagem>>(str).FirstOrDefault();
             ViewBag.Imagem = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(obj.File));
             return PartialView();
+        }
+        public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, Imagem obj)
+        {
+            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/Imagem");
+            return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
+        }
+        public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, int id)
+        {
+            var apiRetorno = await api.Use(HttpMethod.Delete, new Imagem(), $"api/Imagem/{id}");
+            return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
 
     }

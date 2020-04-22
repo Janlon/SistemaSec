@@ -25,6 +25,8 @@
     internal class ServicosFactory : Factory<Servico> { }
     internal class SetoresFactory : Factory<Setor> { }
     internal class TiposDeDocumentosFactory : Factory<TipoDeDocumento> { }
+    internal class TiposDeEquipamentosFactory : Factory<TipoDeEquipamento> { }
+    internal class TiposDeSetoresFactory : Factory<TipoDeSetor> { }
     internal class RolesFactory : Factory<IdentityRole> { }
     internal class UsersFactory : Factory<IdentityUser> { }
     internal class AppUsersFactory : Factory<ApplicationUser> { }

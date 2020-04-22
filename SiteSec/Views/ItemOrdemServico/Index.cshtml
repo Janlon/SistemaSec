@@ -5,15 +5,15 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.OrdemDeServicoId);
-        columns.Bound(p => p.ServicoId);
-        columns.Bound(p => p.EquipamentoId);
+        columns.Bound(p => p.Empresa);
+        columns.Bound(p => p.Setor);
+        columns.Bound(p => p.Equipamento);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-            command.Custom("a").Text("Retirada").Click("redirect");
-            command.Custom("b").Text("Entrega");
+            command.Custom("a").Text("<span class='k-icon k-i-login'> </span> Retirar").Click("redirect");
+            command.Custom("b").Text("<span class='k-icon k-i-logout'> </span> Devolver").Click("redirect");
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
@@ -29,7 +29,7 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
-        .Group(g => g.Add(c => c.OrdemDeServicoId)).Group(g => g.Add(c => c.ServicoId))
+        .Group(g => g.Add(c => c.OS)).Group(g => g.Add(c => c.Serviço))
         .Read(read => read.Action("Itens", "ItemOrdemServico", new { OrdemServicoId = ViewBag.OrdemServicoId }))
         .Create(update => update.Action("Create", "ItemOrdemServico"))
         .Update(update => update.Action("Update", "ItemOrdemServico"))
@@ -38,7 +38,7 @@
 )
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
-    <script>
+<script>
     /*
     *Função para  redirecionar para outra pagina
     */
@@ -48,4 +48,4 @@
         let direction = "/Retirada/Index/" + dataItem.Id;
         window.location.href = direction;
     }
-    </script>
+</script>

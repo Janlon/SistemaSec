@@ -5,14 +5,14 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-            columns.Bound(p => p.Sigla).Width(200);
-            columns.Bound(p => p.Descricao);
-            columns.Command(command =>
-            {
-                command.Edit().Text("Alterar");
-                command.Destroy().Text("Apagar");
-
-            });
+        columns.Bound(p => p.Sigla);
+        columns.Bound(p => p.Descricao);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+            command.Custom("a").Text("<span class='k-icon k-i-toggle-full-screen-mode'> </span> Equipamento").Click("redirect");
+        });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
@@ -27,15 +27,23 @@
         .Events(events => events.RequestEnd("RequestEnd"))
         .Events(events => events.Change("Change"))
         .Model(model => model.Id(p => p.Id))
+        .Group(g => g.Add(c => c.Empresa))
         .Read(read => read.Action("Read", "Setor"))
         .Create(update => update.Action("Create", "Setor"))
         .Update(update => update.Action("Update", "Setor"))
         .Destroy(update => update.Action("Destroy", "Setor"))
     ).Deferred(true)
 )
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
-@(Html.Kendo().Notification()
-    .Name("popupNotification").Deferred(true)
-)
-
-@Scripts.Render("~/bundles/Web")
+<script>
+    /*
+    *Função para  redirecionar para outra pagina
+    */
+    function redirect(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/Equipamento/Index/" + dataItem.Id;
+        window.location.href = direction;
+    } 
+</script>

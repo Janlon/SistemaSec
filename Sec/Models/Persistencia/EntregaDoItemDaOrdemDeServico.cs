@@ -19,7 +19,7 @@
         /// Identificação do item.
         /// </summary>
         [ScaffoldColumn(false)]
-        public int ItemId { get; set; }
+        public int ItemDaOrdemDeServicoId { get; set; }
 
         /// <summary>
         /// Identificação da pessoa RESPONSÁVEL pela entrega (funcionário que entregou o item).
@@ -52,16 +52,14 @@
         [Column(TypeName = "DateTime")]
         public DateTime Execucao { get; set; } = DateTime.Now;
 
-        /// <summary>
-        /// Registro de item.
-        /// </summary>
-        [ForeignKey("ItemId")]
+        //[Display(Name = "Item", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Item da ordem de serviço")]
+        //[Required(ErrorMessage = "{0} é obrigatório.")]
+        [ForeignKey("ItemDaOrdemDeServicoId")]
         public virtual ItemDaOrdemDeServico Item { get; set; }
 
-        /// <summary>
-        /// Registro do entregador.
-        /// </summary>
-        [ForeignKey("PessoaId")]
-        public virtual Pessoa Pessoa { get; set; }
+        //[Display(Name = "Pessoa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Pessoa")]
+        //[Required(ErrorMessage = "{0} é obrigatório.")]
+        //[ForeignKey("PessoaId")]
+        //public virtual Pessoa Pessoa { get; set; }
     }   
 }

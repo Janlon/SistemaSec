@@ -41,7 +41,7 @@
 
             modelBuilder.Entity<Empresa>()
                 .HasMany(p => p.Setores)
-                .WithRequired(p=>p.Empresa)
+                .WithRequired(p => p.Empresa)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Equipamento>()
@@ -54,15 +54,15 @@
                     m.MapRightKey("ImagemId");
                 });
 
-            modelBuilder.Entity<EntregaDoItemDaOrdemDeServico>()
-                .HasRequired(p => p.Pessoa)
-                .WithMany(p => p.OrdensDeServicoEntregues)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<EntregaDoItemDaOrdemDeServico>()
+            //    .HasRequired(p => p.Pessoa)
+            //    .WithMany(p => p.OrdensDeServicoEntregues)
+            //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<RetiradaDoItemDaOrdemDeServico>()
-                .HasRequired(p => p.Pessoa)
-                .WithMany(p => p.OrdensDeServicoRetiradas)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<RetiradaDoItemDaOrdemDeServico>()
+            //    .HasRequired(p => p.Pessoa)
+            //    .WithMany(p => p.OrdensDeServicoRetiradas)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Contato>()
                 .MapToStoredProcedures(s => s
@@ -148,11 +148,24 @@
                 .Delete(d => d.HasName("del_Setor"))
                 .Insert(i => i.HasName("ins_Setor")));
 
+            modelBuilder.Entity<TipoDeSetor>()
+              .MapToStoredProcedures(s => s
+              .Update(u => u.HasName("upd_TipoDeSetor"))
+              .Delete(d => d.HasName("del_TipoDeSetor"))
+              .Insert(i => i.HasName("ins_TipoDeSetor")));
+
             modelBuilder.Entity<TipoDeDocumento>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_TipoDeDocumento"))
                 .Delete(d => d.HasName("del_TipoDeDocumento"))
                 .Insert(i => i.HasName("ins_TipoDeDocumento")));
+
+            modelBuilder.Entity<TipoDeEquipamento>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_TipoDeEquipamento"))
+                .Delete(d => d.HasName("del_TipoDeEquipamento"))
+                .Insert(i => i.HasName("ins_TipoDeEquipamento")));
+
         }
         #endregion
 
@@ -172,7 +185,9 @@
         public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Setor> Setores { get; set; }
+        public DbSet<TipoDeSetor> TiposDeSetores { get; set; }
         public DbSet<TipoDeDocumento> TiposDeDocumentos { get; set; }
+        public DbSet<TipoDeEquipamento> TiposDeEquipamentos { get; set; }
         #endregion
 
         #region Extensões
@@ -247,7 +262,6 @@
         {
             SendEmail(body, subject, from.Address, from.DisplayName, toMail, toName);
         }
-
         /// <summary>
         /// Enviar emails para endereços.
         /// </summary>
@@ -261,7 +275,6 @@
             foreach (MailAddress to in toMails)
                 SendEmail(body, subject, fromMail, fromName, to.Address, to.DisplayName);
         }
-
         /// <summary>
         /// Enviar um email usando as configurações.
         /// </summary>

@@ -17,30 +17,31 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request)
         {
-            IEnumerable<TipoDocumento> resultado = new List<TipoDocumento>();
+            List<TipoDocumento> resultado = new List<TipoDocumento>();
+
             var apiRetorno = await api.Use(HttpMethod.Get, new TipoDocumento(), "api/TipoDocumento");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             var obj = JsonConvert.DeserializeObject<List<TipoDocumento>>(str);
             if (obj != null)
-                resultado = obj.OrderBy(p => p.Descricao);
+                resultado = obj.OrderBy(p => p.Descricao).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, TipoDocumento obj)
+        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, TipoDocumento obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Post, obj, "api/TipoDocumento");
+            var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/TipoDocumento");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, TipoDocumento obj)
+        public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, TipoDocumento obj)
         {
-            var apiRetorno = api.Use(HttpMethod.Put, obj, "api/TipoDocumento");
+            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/TipoDocumento");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, int id)
+        public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, int id)
         {
-            var apiRetorno = api.Use(HttpMethod.Delete, new TipoDocumento(), $"api/TipoDocumento/{id}");
+            var apiRetorno = await api.Use(HttpMethod.Delete, new TipoDocumento(), $"api/TipoDocumento/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
     }

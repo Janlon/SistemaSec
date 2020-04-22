@@ -1,5 +1,6 @@
 ﻿namespace Sec.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,9 +20,10 @@
         [ScaffoldColumn(false)]
         public int EquipamentoId { get; set; }
 
+
         //[Display(Name = "Ordem de Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de Serviço")]
         //[Required(ErrorMessage = "{0} é obrigatório.")]
-        //[ForeignKey("OrdemId")]
+        //[ForeignKey("OrdemDeServicoId")]
         //public virtual OrdemDeServico OrdemDeServico { get; set; }
 
         //[Display(Name = "Tipo de Serviço", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Ordem de Serviço")]
