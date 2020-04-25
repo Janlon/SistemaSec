@@ -64,7 +64,6 @@ function Error(e) {
     }
 }
 
-
 /**
  * Função para mudar o alert feio do windows
  * Essa função é chamada quando clica no botão excluir da grid
@@ -87,4 +86,3 @@ function onExcluir(e) {
         //TODO caso queira fazer qnd o usuário cancelar
     });
 }
-

@@ -16,6 +16,7 @@
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
     .AutoBind(true)
     .Pageable()
+    .Mobile(MobileMode.Auto)
     .Sortable()
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
@@ -35,4 +36,3 @@
 
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
-@Scripts.Render("~/bundles/Web")

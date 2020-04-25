@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CEP, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input id="BuscaCep" class="form-control" />
+                <input id="BuscaCep" class="form-control" style="width:100%;" />
                 <input type="hidden" id="CEP" , name="CEP" />
                 @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
             </div>

@@ -13,13 +13,14 @@
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-            command.Custom("a").Text("Documento").Click("redirect");
+            command.Custom("a").Text("<span class='k-icon k-i-document-manager'></span>Documento").Click("redirect");
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
     .Pageable()
     .Sortable()
+    .Mobile(MobileMode.Auto)
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
     .DataSource(dataSource => dataSource
@@ -37,8 +38,6 @@
 )
 
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
-
-@Scripts.Render("~/bundles/Web")
 
 <script>
     /*

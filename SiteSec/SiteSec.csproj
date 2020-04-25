@@ -207,12 +207,14 @@
     <Compile Include="Models\Helpers\Helper.cs" />
     <Compile Include="Models\Imagem.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
+    <Compile Include="Models\MeetingViewModel.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Retirada.cs" />
     <Compile Include="Models\Retorno.cs" />
     <Compile Include="Models\Servico.cs" />
     <Compile Include="Models\Setor.cs" />
+    <Compile Include="Models\Agenda.cs" />
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoEquipamento.cs" />
     <Compile Include="Models\TipoSetor.cs" />
@@ -225,10 +227,44 @@
     <Content Include="Content\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="Content\fonts\glyphs\WebComponentsIcons.svg" />
     <Content Include="Content\QrCode-icon.png" />
+    <Content Include="Content\scheduler\scheduler-people.png" />
+    <Content Include="Content\scheduler\team-schedule.png" />
     <Content Include="Content\Shared.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\lang\kendo.ar-JO.js" />
+    <Content Include="Scripts\lang\kendo.cs-CZ.js" />
+    <Content Include="Scripts\lang\kendo.da-DK.js" />
+    <Content Include="Scripts\lang\kendo.de-DE.js" />
+    <Content Include="Scripts\lang\kendo.en-GB.js" />
+    <Content Include="Scripts\lang\kendo.en-US.js" />
+    <Content Include="Scripts\lang\kendo.es-EC.js" />
+    <Content Include="Scripts\lang\kendo.es-ES.js" />
+    <Content Include="Scripts\lang\kendo.es-MX.js" />
+    <Content Include="Scripts\lang\kendo.es-PA.js" />
+    <Content Include="Scripts\lang\kendo.es-PE.js" />
+    <Content Include="Scripts\lang\kendo.fa-IR.js" />
+    <Content Include="Scripts\lang\kendo.fi-FI.js" />
+    <Content Include="Scripts\lang\kendo.fr-CA.js" />
+    <Content Include="Scripts\lang\kendo.fr-FR.js" />
+    <Content Include="Scripts\lang\kendo.he-IL.js" />
+    <Content Include="Scripts\lang\kendo.hr-HR.js" />
+    <Content Include="Scripts\lang\kendo.hu-HU.js" />
+    <Content Include="Scripts\lang\kendo.it-IT.js" />
+    <Content Include="Scripts\lang\kendo.ms-MY.js" />
+    <Content Include="Scripts\lang\kendo.nb-NO.js" />
+    <Content Include="Scripts\lang\kendo.nl-BE.js" />
+    <Content Include="Scripts\lang\kendo.nl-NL.js" />
+    <Content Include="Scripts\lang\kendo.pl-PL.js" />
+    <Content Include="Scripts\lang\kendo.pt-BR.js" />
+    <Content Include="Scripts\lang\kendo.pt-PT.js" />
+    <Content Include="Scripts\lang\kendo.ro-RO.js" />
+    <Content Include="Scripts\lang\kendo.ru-RU.js" />
+    <Content Include="Scripts\lang\kendo.sk-SK.js" />
+    <Content Include="Scripts\lang\kendo.sv-SE.js" />
+    <Content Include="Scripts\lang\kendo.tr-TR.js" />
+    <Content Include="Scripts\lang\kendo.zh-CN.js" />
     <Content Include="Views\Documento\Index.cshtml" />
     <Content Include="Views\Pessoa\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Pessoa\Index.cshtml" />
@@ -269,7 +305,6 @@
     <Content Include="Views\TipoDocumento\Index.cshtml" />
     <Content Include="Views\Documento\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Equipamento\Index.cshtml" />
-    <Content Include="Views\EquipamentosDosSetores\Index.cshtml" />
     <Content Include="Views\ItemOrdemServico\Index.cshtml" />
     <Content Include="Views\OrdemServico\EditorTemplates\Template.cshtml" />
     <Content Include="Views\OrdemServico\Index.cshtml" />
@@ -295,6 +330,7 @@
     <Content Include="Views\TipoEquipamento\Index.cshtml" />
     <Content Include="Views\Entrega\Index.cshtml" />
     <Content Include="Views\Entrega\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Home\EditorTemplates\Template.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -304,6 +340,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\EquipamentosDosSetores\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

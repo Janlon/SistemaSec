@@ -34,7 +34,7 @@
         [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
         [MaxLength(100)]
         [Column("Descricao", TypeName = "VARCHAR")]
-        public string Descricao { get; set; }
+        public string Descricao { get; set; } = "Sem informações complementares";
 
         /// <summary>
         /// Data de cadastro do registro de entrega (data do cadastro da entrega).

@@ -5,20 +5,20 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        // columns.Bound(p => p.ItemId);
-        columns.Bound(p => p.PessoaId);
+        columns.Bound(p => p.Pessoa);
         columns.Bound(p => p.Descricao);
+        columns.Bound(p => p.Cadastro).Format("{0: dd/MM/yyyy HH:mm:ss}");
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
     .Pageable()
     .Sortable()
+    .Mobile(MobileMode.Auto)
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
     .DataSource(dataSource => dataSource

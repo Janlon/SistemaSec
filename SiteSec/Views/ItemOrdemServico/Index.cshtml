@@ -12,13 +12,17 @@
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
-            command.Custom("a").Text("<span class='k-icon k-i-login'> </span> Retirar").Click("redirect");
-            command.Custom("b").Text("<span class='k-icon k-i-logout'> </span> Devolver").Click("redirect");
+            command.Custom("a").Text("<span class='k-icon k-i-login'> </span> Retirar").Click("Retirar");
+            if ("#=Id#" != "0")
+            {
+                command.Custom("b").Text("<span class='k-icon k-i-logout'> </span> Devolver").Click("Entregar");
+            }
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
     .Pageable()
+    .Mobile(MobileMode.Auto)
     .Sortable()
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
@@ -42,10 +46,19 @@
     /*
     *Função para  redirecionar para outra pagina
     */
-    function redirect(e) {
+    function Retirar(e) {
         e.preventDefault();
         let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
         let direction = "/Retirada/Index/" + dataItem.Id;
+        window.location.href = direction;
+    }
+    /*
+    *Função para  redirecionar para outra pagina
+    */
+    function Entregar(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/Entrega/Index/" + dataItem.Id;
         window.location.href = direction;
     }
 </script>

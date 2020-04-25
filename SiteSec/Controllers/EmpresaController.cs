@@ -61,5 +61,13 @@ namespace SiteSec.Controllers
             var apiRetorno = await api.Use(HttpMethod.Delete, new Empresa(), $"api/Empresa/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
+        public async Task<JsonResult> Get()
+        {
+            var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            List<Empresa> empresas = JsonConvert.DeserializeObject<List<Empresa>>(str).OrderBy(p => p.RazaoSocial).ToList();
+
+            return Json(empresas, JsonRequestBehavior.AllowGet);
+        }
     }
 }

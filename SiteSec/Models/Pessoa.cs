@@ -38,6 +38,8 @@ namespace SiteSec.Models
         public int DocumentoId { get; set; }
         public Documento documento { get; set; }
 
+        public string Iniciais { get; set; }
+        public string Left { get; internal set; }
     }
 }
 

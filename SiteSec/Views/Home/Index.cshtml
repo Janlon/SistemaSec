@@ -1,31 +1,122 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model SiteSec.Models.Agenda
+
+@using (Html.BeginForm())
+{
+
+    @(Html.Kendo().DropDownListFor(model => model.OwerId)
+                .DataTextField("Nome")
+                .DataValueField("Id")
+                .OptionLabel("Filtrar pelo nome da pessoa")
+                .HtmlAttributes(new { style = "width:100%;" })
+            .DataSource(source =>
+            {
+                source.Custom()
+                    .ServerFiltering(true)
+                    .Type("aspnetmvc-ajax")
+                    .Transport(transport => { transport.Read("Read", "Pessoa"); })
+                    .Schema(schema => { schema.Data("Data").Total("Total"); });
+            }).Deferred(true)
+     )
+
+    @(Html.Kendo().Scheduler<SiteSec.Models.Agenda>()
+        .Name("scheduler")
+        .Date(DateTime.Today)
+        .Height(600)
+        .Views(views =>
+        {
+            views.DayView();
+            views.WeekView();
+            views.MonthView();
+            views.AgendaView(d => d.Selected(true));
+        })
+        //.Editable(editable => editable
+        //    .EditRecurringMode(SchedulerEditRecurringMode.Dialog)
+        //    .TemplateName("Template")
+        //    )
+        //.Selectable(true)
+        .Timezone("Etc/UTC")
+        .Resources(resource =>
+        {
+            resource.Add(m => m.OwerId)
+                .Title("Responsavel")
+                .DataTextField("Text")
+                .DataValueField("value")
+                .DataColorField("Color")
+                .BindTo(new[] {
+                    new { Text = "Alex", Value = 1, Color = "#f8a398" } ,
+                    new { Text = "Bob", Value = 2, Color = "#51a0ed" } ,
+                    new { Text = "Charlie", Value = 3, Color = "#56ca85" }
+                });
+            // .DataSource(ds => ds
+            //.Read("Get", "Pessoa")
+            // );
+        })
+        .Events(e => {  e.Edit("editar"); })
+        .Mobile(MobileMode.Auto)
+        .DataSource(d => d
+            .Model(m =>
+            {
+                m.Id(f => f.TaskId);
+                m.Field(f => f.OwerId).DefaultValue(1);
+                m.Field(f => f.Title);
+                m.Field(f => f.Description);
+                m.Field(f => f.Title).DefaultValue("No title");
+            })
+            .Read("Read", "Home")
+            .Filter(filters =>
+            {
+                filters.Add(model => model.OwerId).IsEqualTo(1).Or().IsEqualTo(2);
+            })
+        ).Deferred(true)
+)
+
+    <script id="event-template" type="text/x-kendo-template">
+        <div class="event-template">
+            <p>
+                <label>Ordem de serviço: <input name="title" /></label>
+            </p>
+            <p>
+                <label>Emissão: <input data-role="datetimepicker" name="start" /></label>
+            </p>
+            <p>
+                <label>Validade: <input data-role="datetimepicker" name="end" /></label>
+            </p>
+            <p>
+                <label>Responsável: <input id="Pessoa" name="Pessoa" /></label>
+            </p>
+        </div>
+    </script>
+
+    <script>
+        function onDataBound(e) {
+            e.sender.trigger("change");
+        }
+        function editar(e) {
+
+            //altera o nome do titulo da janela
+            e.container.data("kendoWindow").setOptions({ title: "Abrir Chamado" });
+
+            // trazer via ajax e popular o dropdownlist Pessoa
+            var dsPessoa = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: '@Url.Action("Get","Pessoa")',
+                        cache: true,
+                        dataType: "json",
+                        contentType: "application/json",
+                        type: "GET"
+                    }
+                }
+            });
+            dsPessoa.fetch(function () {
+                $("#Pessoa").kendoDropDownList({
+                    optionLabel: "Selecione",
+                    dataSource: dsPessoa,
+                    dataTextField: "Nome",
+                    dataValueField: "Id"
+                });
+            });
+        }
+    </script>
+
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>

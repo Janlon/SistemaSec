@@ -6,7 +6,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-
         <div class="form-group">
             @Html.LabelFor(model => model.PessoaId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -69,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Emissao, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Kendo().TextBoxFor(model => model.Emissao).HtmlAttributes(new { style = "width:100%;" })
+                @Html.Kendo().DatePickerFor(model => model.Emissao).HtmlAttributes(new { style = "width:100%;" })
                 @Html.ValidationMessageFor(model => model.Emissao, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -77,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Validade, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Kendo().TextBoxFor(model => model.Validade).HtmlAttributes(new { style = "width:100%;" })
+                @Html.Kendo().DatePickerFor(model => model.Validade).HtmlAttributes(new { style = "width:100%;" })
                 @Html.ValidationMessageFor(model => model.Validade, "", new { @class = "text-danger" })
             </div>
         </div>

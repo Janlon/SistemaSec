@@ -5,7 +5,7 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Numero).Width(200);
+        columns.Bound(p => p.Numero);
         columns.Bound(p => p.Emissao).Format("{0: dd/MM/yyyy HH:mm:ss}");
         columns.Bound(p => p.Validade).Format("{0: dd/MM/yyyy HH:mm:ss}");
         columns.Bound(p => p.Situacao);
@@ -19,6 +19,7 @@
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
     .Pageable()
+    .Mobile(MobileMode.Auto)
     .Sortable()
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))

@@ -31,6 +31,12 @@ namespace SiteSec.Controllers
                 foreach (var item in Entregas.Where(n => n == null))
                     Entregas = new List<Entrega>();
 
+            apiRetorno = await api.Use(HttpMethod.Get, new Pessoa(), $"api/Pessoa/{Entregas.FirstOrDefault().PessoaId}");
+            str = JsonConvert.SerializeObject(apiRetorno.result);
+            Pessoa pessoa = JsonConvert.DeserializeObject<List<Pessoa>>(str).FirstOrDefault();
+
+            Entregas.FirstOrDefault().Pessoa = pessoa.Nome;
+
             apiRetorno = await api.Use(HttpMethod.Get, new ItemOrdemServico(), $"api/ItemDaOrdemDeServico/{ItemId}");
             str = JsonConvert.SerializeObject(apiRetorno.result);
             ItemOrdemServico itemOrdemServico = JsonConvert.DeserializeObject<List<ItemOrdemServico>>(str).FirstOrDefault();

@@ -5,7 +5,7 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Sigla).Width(200);
+        columns.Bound(p => p.Sigla);
         columns.Bound(p => p.Descricao);
         columns.Command(command =>
         {
@@ -16,6 +16,7 @@
     .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
     .AutoBind(true)
     .Pageable()
+    .Mobile(MobileMode.Auto)
     .Sortable()
     .Scrollable()
     .Filterable(ftb => ftb.Mode(GridFilterMode.Row))

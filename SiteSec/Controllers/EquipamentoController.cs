@@ -118,5 +118,70 @@ namespace SiteSec.Controllers
 
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> EquipamentosDosSetoresDaEmpresa(int empresaId)
+        {
+            ItemOrdemServico itemOrdemServico = new ItemOrdemServico();
+            if (empresaId < 1)
+                return Json(new[] { itemOrdemServico }, JsonRequestBehavior.AllowGet);
+
+            //buscar o objeto servicos --- executa 1 unica vez
+            var apiRetorno = await api.Use(HttpMethod.Get, new Servico(), $"api/Servico/");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            List<Servico> servicos = JsonConvert.DeserializeObject<List<Servico>>(str);
+
+            //buscar o objeto setores da empresa --- executa 1 unica vez
+            apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Empresa/{empresaId}/setores");
+            str = JsonConvert.SerializeObject(apiRetorno.result);
+            List<Setor> setores = JsonConvert.DeserializeObject<List<Setor>>(str);
+
+            List<ItemSetor> itensSetores = new List<ItemSetor>();
+
+            //laço dos setores
+            foreach (var setor in setores)
+            {
+                //buscar o objeto tipo de setores
+                apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{setor.TipoDeSetorId}/");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                TipoSetor tiposetor = JsonConvert.DeserializeObject<List<TipoSetor>>(str).FirstOrDefault();
+
+                //buscar o ojeto equipamento que esta em cada setor
+                apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{setor.Id}/Equipamentos");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                List<Equipamento> equipamentos = JsonConvert.DeserializeObject<List<Equipamento>>(str);
+
+                List<ItemEquipamento> itensEquipamentos = new List<ItemEquipamento>();
+
+                //laço do equipamentos
+                foreach (var equipamento in equipamentos)
+                {
+                    //buscar o ojeto tipo de equipamento
+                    apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoEquipamento/{equipamento.TipoEquipamentoId}/");
+                    str = JsonConvert.SerializeObject(apiRetorno.result);
+                    TipoEquipamento tipoEquipamento = JsonConvert.DeserializeObject<List<TipoEquipamento>>(str).FirstOrDefault();
+
+                    ItemEquipamento itemEquipamento = new ItemEquipamento()
+                    {
+                        EquipamentoId = equipamento.Id,
+                        TipoEquipamentoDescricao = tipoEquipamento.Descricao,
+                        Servicos = servicos
+                    };
+
+                    itensEquipamentos.Add(itemEquipamento);
+
+                }
+
+                ItemSetor itemSetor = new ItemSetor()
+                {
+                    SetorId = setor.Id,
+                    TipoSetorDescricao = tiposetor.Descricao,
+                    ItensEquipamentos = itensEquipamentos
+                };
+                itensSetores.Add(itemSetor);
+            }
+
+            itemOrdemServico.ItensOrdemServico = itensSetores;
+
+            return Json(itemOrdemServico, JsonRequestBehavior.AllowGet);
+        }
     }
 }
