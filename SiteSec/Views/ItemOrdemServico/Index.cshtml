@@ -42,23 +42,23 @@
 )
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
-<script>
-    /*
-    *Função para  redirecionar para outra pagina
-    */
-    function Retirar(e) {
-        e.preventDefault();
-        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        let direction = "/Retirada/Index/" + dataItem.Id;
-        window.location.href = direction;
-    }
-    /*
-    *Função para  redirecionar para outra pagina
-    */
-    function Entregar(e) {
-        e.preventDefault();
-        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        let direction = "/Entrega/Index/" + dataItem.Id;
-        window.location.href = direction;
-    }
-</script>
+    <script>
+        /*
+        *Função para  redirecionar para outra pagina
+        */
+        function Retirar(e) {
+            e.preventDefault();
+            let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            let direction = "/Retirada/Index/" + dataItem.Id;
+            window.location.href = direction;
+        }
+        /*
+        *Função para  redirecionar para outra pagina
+        */
+        function Entregar(e) {
+            e.preventDefault();
+            let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            let direction = "/Entrega/Index/" + dataItem.Id;
+            window.location.href = direction;
+        }
+    </script>

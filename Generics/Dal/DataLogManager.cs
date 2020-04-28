@@ -166,7 +166,7 @@
         /// </summary>
         internal void Save()
         {
-            Append(JsonConvert.SerializeObject(ActiveAction));
+            //Append(JsonConvert.SerializeObject(ActiveAction));
         }
 
         /// <summary>

@@ -11,40 +11,53 @@ namespace SiteSec.Models
     {
         #region propriedades para uso do task
 
-        [JsonProperty("Title")]
+
         public string Title { get; set; }
 
-        [JsonProperty("Description")]
+
         public string Description { get; set; }
 
-        [JsonProperty("StartTimezone")]
+  
         public string StartTimezone { get; set; }
 
-        [JsonProperty("Start")]
+  
         public DateTime Start { get; set; }
 
-        [JsonProperty("End")]
+    
         public DateTime End { get; set; }
 
-        [JsonProperty("EndTimezone")]
+
         public string EndTimezone { get; set; }
 
-        [JsonProperty("RecurrenceRule")]
+
         public string RecurrenceRule { get; set; }
 
-        [JsonProperty("RecurrenceException")]
+
         public string RecurrenceException { get; set; }
 
-        [JsonProperty("IsAllDay")]
+
         public bool IsAllDay { get; set; }
 
         #endregion
 
         #region propriedades para uso do custom editor
 
-        public long TaskId { get; set; }
+        /// <summary>
+        /// id da ordem de serviço
+        /// </summary>
+        public int Id { get; set; }
 
-        public long OwerId { get; set; }
+        /// <summary>
+        /// Item da ordem se serviço
+        /// </summary>
+        public int ItemId { get; set; }
+
+        public int PessoaId { get; set; }
+
+        public int EmpresaId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string ListaItens { get; set; } = "";
 
         #endregion
     }

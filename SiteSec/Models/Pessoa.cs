@@ -8,6 +8,11 @@ namespace SiteSec.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;
 
+        /// <summary>
+        /// faz a mesma referencia do Id
+        /// </summary>
+        public int PessoaId => Id;
+
         [Display(Name = "Nome completo", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Nome Completo")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string Nome { get; set; } = "";
@@ -34,12 +39,9 @@ namespace SiteSec.Models
         [ScaffoldColumn(false)]
         public List<Imagem> Imagens { get; set; }
 
-
         public int DocumentoId { get; set; }
         public Documento documento { get; set; }
 
-        public string Iniciais { get; set; }
-        public string Left { get; internal set; }
     }
 }
 

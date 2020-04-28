@@ -20,7 +20,6 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-
         public async Task<JsonResult> Read([DataSourceRequest] DataSourceRequest request)
         {
             List<Agenda> eventos = new List<Agenda>();
@@ -70,18 +69,52 @@ namespace SiteSec.Controllers
 
                     Agenda agenda = new Agenda()
                     {
-                        OwerId = pessoa.Id,
-                        TaskId = item.Id,
-                        Title = "Ordem de Serviço n°: " + os.Numero + " [ " + item.Serviço + " ]",
+                        Id = item.OrdemDeServicoId,
+                        PessoaId = pessoa.Id,
+                        ItemId = item.Id,
+                        EmpresaId = empresa.Id,
+                        Title = os.Numero,
                         Description = item.Serviço + " no " + item.Equipamento + "\r\n" + "Empresa: " + item.Empresa + "\r\n" + "Setor: " + item.Setor,
                         Start = DateTime.SpecifyKind(os.Emissao, DateTimeKind.Utc),
-                        End = DateTime.SpecifyKind(os.Validade, DateTimeKind.Utc),
-                        RecurrenceRule = os.Numero
+                        End = DateTime.SpecifyKind(os.Validade, DateTimeKind.Utc)
                     };
                     eventos.Add(agenda);
                 }
             }
             return Json(eventos.ToDataSourceResult(request, ModelState));
+        }
+        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Agenda obj)
+        {
+            ApiRetorno apiRetorno = new ApiRetorno();
+            var ListaResultados = "";
+            if (string.IsNullOrEmpty(ListaResultados))
+                return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
+
+            var colecao = ListaResultados.Split(',');
+            foreach (var (equipamentoId, servicoId) in from itens in colecao
+                                                       let item = itens.Split(';')
+                                                       let equipamentoId = Helpers.ApenasNumeros(item[1]) == "" ? 0 : Convert.ToInt32(Helpers.ApenasNumeros(item[1]))
+                                                       let servicoId = Helpers.ApenasNumeros(item[2]) == "" ? 0 : Convert.ToInt32(Helpers.ApenasNumeros(item[2]))
+                                                       select (equipamentoId, servicoId))
+            {
+
+                //buscar o objeto equipamento
+                apiRetorno = await api.Use(HttpMethod.Get, new Equipamento(), $"api/Equipamento/{equipamentoId}");
+                var str = JsonConvert.SerializeObject(apiRetorno.result);
+                Equipamento equipamento = JsonConvert.DeserializeObject<List<Equipamento>>(str).FirstOrDefault();
+                //buscar o objeto servicos
+                apiRetorno = await api.Use(HttpMethod.Get, new Servico(), $"api/Servico/{servicoId}");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                Servico servico = JsonConvert.DeserializeObject<List<Servico>>(str).FirstOrDefault();
+                ItemOrdemServico itemOrdemServico = new ItemOrdemServico()
+                {
+                    EquipamentoId = equipamentoId,
+                    ServicoId = servicoId
+                };
+
+                apiRetorno = await api.Use(HttpMethod.Post, itemOrdemServico, "api/ItemDaOrdemDeServico");
+            }
+            return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
     }
 }

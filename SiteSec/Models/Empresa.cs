@@ -8,6 +8,8 @@ namespace SiteSec.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;
 
+        public int EmpresaId => Id;
+
         [Display(Name = "Razão Social", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Razão social")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string RazaoSocial { get; set; } = "";
