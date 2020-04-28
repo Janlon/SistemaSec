@@ -12,6 +12,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using SiteSec.Models.Consumo;
 
 namespace SiteSec.Controllers
 {

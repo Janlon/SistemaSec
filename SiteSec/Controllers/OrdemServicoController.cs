@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using SiteSec.Models;
 using System.Threading.Tasks;
+using SiteSec.Models.Consumo;
 
 namespace SiteSec.Controllers
 {

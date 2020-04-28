@@ -9,12 +9,14 @@ using System.Web;
 using System.Web.Mvc;
 using SiteSec.Models;
 using System.Threading.Tasks;
+using SiteSec.Models.Consumo;
 
 namespace SiteSec.Controllers
 {
     public class SetorController : Controller
     {
-        readonly Api api = new Api();
+        internal Api Api = new Api();
+
         public ActionResult Index(int? id)
         {
             ViewBag.Id = id == null ? "" : id.ToString();
@@ -23,21 +25,21 @@ namespace SiteSec.Controllers
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             //trazendo o objeto setor
-            var apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{id}");
+            var apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             List<Setor> setores = JsonConvert.DeserializeObject<List<Setor>>(str);
 
             foreach (var item in setores)
             {
                 //trazendo o objeto empresa 
-                apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{item.EmpresaId}");
+                apiRetorno = await Api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{item.EmpresaId}");
                 str = JsonConvert.SerializeObject(apiRetorno.result);
                 Empresa empresa = JsonConvert.DeserializeObject<List<Empresa>>(str).FirstOrDefault();
 
                 item.Empresa = empresa.RazaoSocial;
 
                 //trazendo o objeto tipo de setor
-                apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{item.TipoDeSetorId}");
+                apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{item.TipoDeSetorId}");
                 str = JsonConvert.SerializeObject(apiRetorno.result);
                 TipoSetor tipoSetor = JsonConvert.DeserializeObject<List<TipoSetor>>(str).FirstOrDefault();
 
@@ -58,19 +60,19 @@ namespace SiteSec.Controllers
                     EmpresaId = obj.EmpresaId
                 };
 
-               apiRetorno = await api.Use(HttpMethod.Post, s, "api/Setor");
+               apiRetorno = await Api.Use(HttpMethod.Post, s, "api/Setor");
             }
 
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
         public async Task<ActionResult> Update([DataSourceRequest]DataSourceRequest request, Setor obj)
         {
-            var apiRetorno = await api.Use(HttpMethod.Put, obj, "api/Setor");
+            var apiRetorno = await Api.Use(HttpMethod.Put, obj, "api/Setor");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
         public async Task<ActionResult> Destroy([DataSourceRequest]DataSourceRequest request, int id)
         {
-            var apiRetorno = await api.Use(HttpMethod.Delete, new Setor(), $"api/Setor/{id}");
+            var apiRetorno = await Api.Use(HttpMethod.Delete, new Setor(), $"api/Setor/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
         public async Task<JsonResult> SetoresDaEmpresa(int empresaId)
@@ -78,7 +80,7 @@ namespace SiteSec.Controllers
             if (empresaId < 1)
                 return Json(new[] { new Setor() }, JsonRequestBehavior.AllowGet);
 
-            var apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Empresa/{empresaId}/setores");
+            var apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/Empresa/{empresaId}/setores");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             List<Setor> setores = JsonConvert.DeserializeObject<List<Setor>>(str);
 
@@ -88,7 +90,7 @@ namespace SiteSec.Controllers
                 foreach (var item in setores)
                 {
                     //trazendo o objeto tipo de setor
-                    apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{item.TipoDeSetorId}");
+                    apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{item.TipoDeSetorId}");
                     str = JsonConvert.SerializeObject(apiRetorno.result);
                     TipoSetor tipoSetor = JsonConvert.DeserializeObject<List<TipoSetor>>(str).FirstOrDefault();
 
@@ -105,12 +107,12 @@ namespace SiteSec.Controllers
                 return Json(new[] { itemOrdemServico }, JsonRequestBehavior.AllowGet);
 
             //buscar o objeto servicos --- executa 1 unica vez
-            var apiRetorno = await api.Use(HttpMethod.Get, new Servico(), $"api/Servico/");
+            var apiRetorno = await Api.Use(HttpMethod.Get, new Servico(), $"api/Servico/");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
             List<Servico> servicos = JsonConvert.DeserializeObject<List<Servico>>(str);
 
             //buscar o objeto setores da empresa --- executa 1 unica vez
-            apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Empresa/{empresaId}/setores");
+            apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/Empresa/{empresaId}/setores");
             str = JsonConvert.SerializeObject(apiRetorno.result);
             List<Setor> setores = JsonConvert.DeserializeObject<List<Setor>>(str);
 
@@ -120,12 +122,12 @@ namespace SiteSec.Controllers
             foreach (var setor in setores)
             {
                 //buscar o objeto tipo de setores
-                apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{setor.TipoDeSetorId}/");
+                apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/TipoSetor/{setor.TipoDeSetorId}/");
                 str = JsonConvert.SerializeObject(apiRetorno.result);
                 TipoSetor tiposetor = JsonConvert.DeserializeObject<List<TipoSetor>>(str).FirstOrDefault();
 
                 //buscar o ojeto equipamento que esta em cada setor
-                apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{setor.Id}/Equipamentos");
+                apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/Setor/{setor.Id}/Equipamentos");
                 str = JsonConvert.SerializeObject(apiRetorno.result);
                 List<Equipamento> equipamentos = JsonConvert.DeserializeObject<List<Equipamento>>(str);
 
@@ -135,7 +137,7 @@ namespace SiteSec.Controllers
                 foreach (var equipamento in equipamentos)
                 {
                     //buscar o ojeto tipo de equipamento
-                    apiRetorno = await api.Use(HttpMethod.Get, new Setor(), $"api/TipoEquipamento/{equipamento.TipoEquipamentoId}/");
+                    apiRetorno = await Api.Use(HttpMethod.Get, new Setor(), $"api/TipoEquipamento/{equipamento.TipoEquipamentoId}/");
                     str = JsonConvert.SerializeObject(apiRetorno.result);
                     TipoEquipamento tipoEquipamento = JsonConvert.DeserializeObject<List<TipoEquipamento>>(str).FirstOrDefault();
 

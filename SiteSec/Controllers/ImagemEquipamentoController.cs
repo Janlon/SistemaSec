@@ -2,6 +2,7 @@
 using Kendo.Mvc.UI;
 using Newtonsoft.Json;
 using SiteSec.Models;
+using SiteSec.Models.Consumo;
 using System;
 using System.Collections.Generic;
 using System.IO;

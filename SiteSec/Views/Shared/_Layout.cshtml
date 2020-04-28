@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title - Sistema Sec</title>
 
+
+        <link type="text/css" rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Armata" />
+        <link type="text/css" rel="stylesheet"  href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
+        <link type="text/css" rel="stylesheet"  href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
+        <link type="text/css" rel="stylesheet"  href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
+        <link type="text/css" rel="stylesheet"  href="~/Content/Shared.css" />
+
         @Scripts.Render("~/bundles/modernizr")
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Armata" />
-        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
-        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
-        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
-        <link href="~/Content/Shared.css" rel="stylesheet" />
-
     </head>
     <body>
 
@@ -103,23 +103,21 @@
         <div class="container body-content">
             <div class="loading"></div>
             @RenderBody()
+            @*@RenderSection("scripts", required: false)*@
         </div>
 
-        <script src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
-        <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
-        <script src="https://kendo.cdn.telerik.com/2017.1.223/js/messages/kendo.messages.pt-BR.min.js"></script>
-        <script src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.aspnetmvc.min.js"></script>
-        <script src="~/Scripts/kendo.grid.notifications.js"></script>
-       
-
-        @RenderSection("scripts", required: false)
-        @Html.Kendo().DeferredScripts(true)
-
-    <script>
-        $("#menu").kendoMenu({ select: onSelect });
-        function onSelect(e) {
-            kendo.ui.progress($(".loading"), true);
-        }
-    </script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/messages/kendo.messages.pt-BR.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.aspnetmvc.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/kendo.grid.notifications.js"></script>
+        <script>
+            $("#menu").kendoMenu({ select: onSelect });
+            function onSelect(e) {
+                kendo.ui.progress($(".loading"), true);
+            }
+        </script>
+    
+            @Html.Kendo().DeferredScripts(true)
     </body>
 </html>

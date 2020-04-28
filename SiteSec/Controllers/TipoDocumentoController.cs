@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using SiteSec.Models.Consumo;
 
 namespace SiteSec.Controllers
 {

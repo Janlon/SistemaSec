@@ -207,7 +207,6 @@
     <Compile Include="Models\Helpers\Helper.cs" />
     <Compile Include="Models\Imagem.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
-    <Compile Include="Models\MeetingViewModel.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Retirada.cs" />
@@ -330,6 +329,7 @@
     <Content Include="Views\TipoEquipamento\Index.cshtml" />
     <Content Include="Views\Entrega\Index.cshtml" />
     <Content Include="Views\Entrega\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Home\EditorTemplates\Template.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -339,7 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\EquipamentosDosSetores\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

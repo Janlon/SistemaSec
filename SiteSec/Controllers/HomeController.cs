@@ -2,20 +2,31 @@
 using Kendo.Mvc.UI;
 using Newtonsoft.Json;
 using SiteSec.Models;
+using SiteSec.Models.Consumo;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SiteSec.Controllers
 {
-    public class HomeController : Controller
-    {
-        readonly Api api = new Api();
-
+    public partial class HomeController : Controller
+    {   
+        private readonly Api api = new Api();
+        protected override void Initialize(RequestContext requestContext)
+        {
+            if (!string.IsNullOrEmpty(requestContext.HttpContext.Request["culture"]))
+            {
+                Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(requestContext.HttpContext.Request["culture"]);
+            }
+            base.Initialize(requestContext);
+        }
         public ActionResult Index()
         {
             return View();
@@ -69,7 +80,7 @@ namespace SiteSec.Controllers
 
                     Agenda agenda = new Agenda()
                     {
-                        Id = item.OrdemDeServicoId,
+                        OrdemId = item.OrdemDeServicoId,
                         PessoaId = pessoa.Id,
                         ItemId = item.Id,
                         EmpresaId = empresa.Id,
@@ -83,7 +94,7 @@ namespace SiteSec.Controllers
             }
             return Json(eventos.ToDataSourceResult(request, ModelState));
         }
-        public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Agenda obj)
+        public async Task<JsonResult> Create([DataSourceRequest]DataSourceRequest request, Agenda obj)
         {
             ApiRetorno apiRetorno = new ApiRetorno();
             var ListaResultados = "";
@@ -116,5 +127,6 @@ namespace SiteSec.Controllers
             }
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
+
     }
 }

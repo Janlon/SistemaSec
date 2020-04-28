@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using SiteSec.Models;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using SiteSec.Models.Consumo;
 
 namespace SiteSec.Controllers
 {
