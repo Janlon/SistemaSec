@@ -109,15 +109,17 @@
         <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
         <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
         <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/messages/kendo.messages.pt-BR.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/cultures/kendo.culture.pt-BR.min.js"></script>
         <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.aspnetmvc.min.js"></script>
         <script type="text/javascript" src="~/Scripts/kendo.grid.notifications.js"></script>
-        <script>
+        <script defer>
+            kendo.culture("pt-BR");
             $("#menu").kendoMenu({ select: onSelect });
             function onSelect(e) {
                 kendo.ui.progress($(".loading"), true);
             }
         </script>
-    
-            @Html.Kendo().DeferredScripts(true)
+
+        @Html.Kendo().DeferredScripts(true)
     </body>
 </html>

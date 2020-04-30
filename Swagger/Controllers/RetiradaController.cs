@@ -28,6 +28,7 @@ namespace Swagger.Controllers
 
         public CrudResult<RetiradaDoItemDaOrdemDeServico> Post(RetiradaDoItemDaOrdemDeServico obj)
         {
+            obj.Cadastro = System.DateTime.Now;
             return Engine.Retiradas.Insert(obj);
         }
 

@@ -32,18 +32,20 @@ namespace SiteSec.Controllers
                 foreach (var item in retiradas.Where(n => n == null))
                     retiradas = new List<Retirada>();
 
-            apiRetorno = await api.Use(HttpMethod.Get, new Pessoa(), $"api/Pessoa/{retiradas.FirstOrDefault().PessoaId}");
-            str = JsonConvert.SerializeObject(apiRetorno.result);
-            Pessoa pessoa = JsonConvert.DeserializeObject<List<Pessoa>>(str).FirstOrDefault();
+            if (retiradas.Count > 0)
+            {
+                apiRetorno = await api.Use(HttpMethod.Get, new Pessoa(), $"api/Pessoa/{retiradas.FirstOrDefault().PessoaId}");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                Pessoa pessoa = JsonConvert.DeserializeObject<List<Pessoa>>(str).FirstOrDefault();
 
-            retiradas.FirstOrDefault().Pessoa = pessoa.Nome;
+                retiradas.FirstOrDefault().Pessoa = pessoa.Nome;
 
-            apiRetorno = await api.Use(HttpMethod.Get, new ItemOrdemServico(), $"api/ItemDaOrdemDeServico/{ItemId}");
-            str = JsonConvert.SerializeObject(apiRetorno.result);
-            ItemOrdemServico itemOrdemServico = JsonConvert.DeserializeObject<List<ItemOrdemServico>>(str).FirstOrDefault();
+                apiRetorno = await api.Use(HttpMethod.Get, new ItemOrdemServico(), $"api/ItemDaOrdemDeServico/{ItemId}");
+                str = JsonConvert.SerializeObject(apiRetorno.result);
+                ItemOrdemServico itemOrdemServico = JsonConvert.DeserializeObject<List<ItemOrdemServico>>(str).FirstOrDefault();
 
-            retiradas.FirstOrDefault().ItemDaOrdemDeServicoId = itemOrdemServico.Id;
-      
+                retiradas.FirstOrDefault().ItemDaOrdemDeServicoId = itemOrdemServico.Id;
+            }
             return Json(retiradas.ToDataSourceResult(request));
         }
         public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Retirada obj, int ItemId)

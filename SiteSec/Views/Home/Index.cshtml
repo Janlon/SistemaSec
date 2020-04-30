@@ -4,13 +4,14 @@
 {
     @(Html.Kendo().Scheduler<SiteSec.Models.Agenda>()
     .Name("scheduler")
+    .Timezone("Etc/UTC")
     .StartTime(8, 0, 0)
     .EndTime(20, 0, 0)
-    .MajorTimeHeaderTemplate("<strong>#=kendo.toString(date, 'HH:mm')#</strong>")
-    .DateHeaderTemplate("<strong>#=kendo.toString(date, 'D')#</strong>")
+    .MajorTimeHeaderTemplate("#=kendo.toString(date, 'HH:mm')#")
+    .DateHeaderTemplate("#=kendo.toString(date, 'D')#")
     .Mobile(MobileMode.Auto)
     .Deferred(true)
-    .Date(DateTime.Today)
+    .Date(DateTime.Now)
     .Height(600)
     .Views(views =>
     {
@@ -96,21 +97,21 @@
             }
         }
     function onCheck() {
-            var checkedNodes = [],
-                treeView = $("#treeview").data("kendoTreeView"),
-                message;
+        var checkedNodes = [],
+            treeView = $("#treeview").data("kendoTreeView"),
+            message;
 
-            checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+        checkedNodeIds(treeView.dataSource.view(), checkedNodes);
 
-            if (checkedNodes.length > 0) {
-                message = checkedNodes.join(",");
-            }
-
-            $("#Itens").val(message).trigger("change");
+        if (checkedNodes.length > 0) {
+            message = checkedNodes.join(",");
         }
+
+        $("#Itens").val(message).trigger("change");
+    }
     function carregarTreeview(e) {
 
-        var id = this.value();
+        id = this.value();
 
         $.ajax({
             cache: false,
@@ -145,15 +146,21 @@
 
                 $("#treeview").kendoTreeView({
                     dataSource: ds,
+                    check: onCheck,
                     checkboxes: { checkChildren: true },
                 });
-
             }
         });
     }
     function editar(e) {
         //altera o nome do titulo da janela
         e.container.data("kendoWindow").setOptions({ title: "Abrir Ordem de Serviço" });
+
+        console.log($('[data-bind="value: empresaid"]').val());
+
+        //if ($("#EmpresaId").val() != 0) {
+        //    carregarTreeview($("#EmpresaId").val())
+        //}
 
             @*// vincular o id da pessoa com a agenda
             var vmP = new kendo.observable({

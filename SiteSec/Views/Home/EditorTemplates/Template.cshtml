@@ -22,21 +22,27 @@
 
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.Title))
+    @(Html.LabelFor(m => m.Title))
 </div>
 <div data-container-for="title" class="k-edit-field">
-    @(Html.TextBoxFor(model => model.Title, new { @class = "k-textbox", data_bind = "value:title" }))
+    @(Html.TextBoxFor(m => m.Title, new { @class = "k-textbox", data_bind = "value:title", @disabled = "disabled" }))
 </div>
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.Start))
+    @(Html.LabelFor(m => m.Description))
+</div>
+<div data-container-for="description" class="k-edit-field">
+    @(Html.TextAreaFor(m => m.Description, new { @class = "k-textbox", data_bind = "value:description" }))
+</div>
+
+<div class="k-edit-label">
+    @(Html.LabelFor(m => m.Start))
 </div>
 <div data-container-for="start" class="k-edit-field">
 
-    @(Html.Kendo().DateTimePickerFor(model => model.Start)
+    @(Html.Kendo().DateTimePickerFor(m => m.Start)
         .HtmlAttributes(generateDatePickerAttributes("startDateTime", "start", "value:start,invisible:isAllDay")))
-   
-    @(Html.Kendo().DatePickerFor(model => model.Start)
+    @(Html.Kendo().DatePickerFor(m => m.Start)
         .HtmlAttributes(generateDatePickerAttributes("startDate", "start", "value:start,visible:isAllDay")))
 
     <span data-bind="text: startTimezone"></span>
@@ -45,56 +51,41 @@
 
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.End))
+    @(Html.LabelFor(m => m.End))
 </div>
 <div data-container-for="end" class="k-edit-field">
 
-    @(Html.Kendo().DateTimePickerFor(model => model.End)
-        .HtmlAttributes(generateDatePickerAttributes(
-            "endDateTime",
-            "end",
-            "value:end,invisible:isAllDay",
-            new Dictionary<string, object>() {{"data-dateCompare-msg", "End date should be greater than or equal to the start date"}})))
-   
-    @(Html.Kendo().DatePickerFor(model => model.End)
-        .HtmlAttributes(generateDatePickerAttributes(
-            "endDate",
-            "end",
-            "value:end,visible:isAllDay",
-            new Dictionary<string, object>() {{"data-dateCompare-msg", "End date should be greater than or equal to the start date"}})))
+    @(Html.Kendo().DateTimePickerFor(m => m.End)
+        .HtmlAttributes(generateDatePickerAttributes("endDateTime", "end", "value:end,invisible:isAllDay",
+            new Dictionary<string, object>() {{"data-dateCompare-msg", "A data de término deve ser maior ou igual à data de início" } })))
+    @(Html.Kendo().DatePickerFor(m => m.End)
+        .HtmlAttributes(generateDatePickerAttributes("endDate", "end","value:end,visible:isAllDay",
+            new Dictionary<string, object>() {{"data-dateCompare-msg", "A data de término deve ser maior ou igual à data de início" } })))
 
     <span data-bind="text: endTimezone"></span>
     <span data-for="end" class="k-invalid-msg"></span>
 </div>
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.IsAllDay))
+    @(Html.LabelFor(m => m.IsAllDay))
 </div>
 <div data-container-for="isAllDay" class="k-edit-field">
     <input name="isAllDay" type="checkbox" data-bind="checked:isAllDay" />
 </div>
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.RecurrenceRule))
+    @(Html.LabelFor(m => m.RecurrenceRule))
 </div>
 <div data-container-for="recurrenceRule" class="k-edit-field">
-    @(Html.Kendo().RecurrenceEditorFor(model => model.RecurrenceRule)
+    @(Html.Kendo().RecurrenceEditorFor(m => m.RecurrenceRule)
         .HtmlAttributes(new { data_bind = "value:recurrenceRule" }))
 </div>
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.Description))
-</div>
-<div data-container-for="description" class="k-edit-field">
-    @(Html.TextAreaFor(model => model.Description, new { @class = "k-textbox", data_bind = "value:description" }))
-</div>
-
-
-<div class="k-edit-label">
-    @(Html.LabelFor(model => model.Pessoas))
+    @(Html.LabelFor(m => m.Pessoas))
 </div>
 <div data-container-for="PessoaId" class="k-edit-field">
-    @(Html.Kendo().MultiSelectFor(model => model.Pessoas)
+    @(Html.Kendo().MultiSelectFor(m => m.Pessoas)
         .HtmlAttributes(new { data_bind = "value:Pessoas" })
         .DataTextField("Nome")
         .DataValueField("PessoaId")
@@ -107,10 +98,10 @@
 
 
 <div class="k-edit-label">
-    @(Html.LabelFor(model => model.EmpresaId))
+    @(Html.LabelFor(m => m.EmpresaId))
 </div>
 <div data-container-for="EmpresaId" class="k-edit-field">
-    @(Html.Kendo().DropDownListFor(model => model.EmpresaId)
+    @(Html.Kendo().DropDownListFor(m => m.EmpresaId)
         .HtmlAttributes(new { data_bind = "value:EmpresaId", style = "width: 100%" })
         .DataTextField("RazaoSocial")
         .DataValueField("Id")
@@ -118,19 +109,12 @@
         .ValuePrimitive(true)
         .Events(e=>e.Change("carregarTreeview"))
         //.Template("<span class='k-scheduler-mark' style='background-color:\\#= data.Color?Color:'' \\#'></span>\\#=Text\\#")
-        .DataSource(source =>
-         {
-             source.Custom()
-             .ServerFiltering(true)
-             .Type("aspnetmvc-ajax")
-             .Transport(transport => { transport.Read("Read", "Empresa"); })
-             .Schema(schema => { schema.Data("Data").Total("Total"); });
-         })
+        .DataSource(source => { source.Read(read => { read.Action("Get", "Empresa"); }); })
     )
 </div>
 
 <div data-container-for="Itens" class="k-edit-field">
-    @Html.HiddenFor(model => model.OrdemId)
-    @Html.HiddenFor(model => model.Itens)
-    <div id="treeview" data_bind = "value:Itens"></div>
+    @Html.HiddenFor(m => m.OrdemId)
+    @Html.HiddenFor(m => m.Itens, htmlAttributes: new { data_bind = "itens" })
+    <div id="treeview"></div>
 </div>

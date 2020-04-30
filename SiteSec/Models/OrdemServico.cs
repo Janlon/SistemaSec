@@ -54,7 +54,7 @@ namespace SiteSec.Models
         #region propriedades de transferência
 
         [ScaffoldColumn(false)]
-        public List<ItemOrdemServico> ItensOrdemservico { get; set; }
+        public List<ItemOrdemServico> ItensOrdemservico { get; set; }    
 
         #endregion
 

@@ -27,6 +27,7 @@ namespace SiteSec.Models
         public int PessoaId { get; set; } = 0;
 
         [Display(Name = "Observações", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Observações", Description = "Digite se houver uma observação a fazer")]
+        [StringLength(100, ErrorMessage = " {0} deve ter no mínimo {2} caracteres.", MinimumLength = 6)]
         public string Descricao { get; set; } = "Sem informações complementares";
 
         #endregion
