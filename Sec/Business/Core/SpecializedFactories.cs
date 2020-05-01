@@ -9,7 +9,6 @@
     #endregion
 
     internal class AtividadesFactory : Factory<Atividade> { }
-    internal class UsuariosFactory : Factory<Usuario> { }
     internal class ContatosFactory : Factory<Contato>   {    }
     internal class DocumentosFactory : Factory<Documento> {  }
     internal class EnderecosFactory : Factory<Endereco> { }
@@ -27,6 +26,7 @@
     internal class TiposDeDocumentosFactory : Factory<TipoDeDocumento> { }
     internal class TiposDeEquipamentosFactory : Factory<TipoDeEquipamento> { }
     internal class TiposDeSetoresFactory : Factory<TipoDeSetor> { }
+    internal class UsuariosFactory : Factory<Usuario> { }
     internal class RolesFactory : Factory<IdentityRole> { }
     internal class UsersFactory : Factory<IdentityUser> { }
     internal class AppUsersFactory : Factory<ApplicationUser> { }

@@ -132,7 +132,6 @@ namespace Sec.IdentityGroup
             };
             app.UseOAuthBearerTokens(OAuthOptions);
         }
-
         public void ConfigureAuth(IAppBuilder app, string tokenPath = "/Token")
         {
             PublicClientId = "self";

@@ -18,6 +18,8 @@
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
+        public string Senha { get; set; }
+
         [ForeignKey("PessoaId")]
         public virtual Pessoa Pessoa { get; set; }
 

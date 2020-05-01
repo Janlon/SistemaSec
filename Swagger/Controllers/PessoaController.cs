@@ -26,7 +26,7 @@ namespace Swagger.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("~/api/Imagem/{Id:int}/imagens")]
+        [Route("~/api/Pessoa/{Id:int}/Imagens")]
         public CrudResult<Pessoa> GetImagensDaPessoa(int id)
         {
             var imagens = Engine.Imagens.Filter(p => p.Pessoas.FirstOrDefault().Id.Equals(id)).Result;

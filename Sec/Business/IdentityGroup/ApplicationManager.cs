@@ -1,11 +1,10 @@
 ﻿namespace Sec.IdentityGroup
 {
-    using Generics.Dal;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Sec.Business;
     using System;
 
-    internal class ApplicationManager : IDisposable
+    public class ApplicationManager : IDisposable
     {
         #region Manutenção
         private bool disposedValue;

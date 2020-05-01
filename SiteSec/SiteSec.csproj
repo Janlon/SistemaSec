@@ -171,6 +171,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CargoController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Controllers\ItemOrdemServicoController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
+    <Compile Include="Controllers\RegraController.cs" />
     <Compile Include="Controllers\RetiradaController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SetorController.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Models\ItemOrdemServico.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Models\Regra.cs" />
     <Compile Include="Models\Retirada.cs" />
     <Compile Include="Models\Retorno.cs" />
     <Compile Include="Models\Servico.cs" />
@@ -330,6 +333,9 @@
     <Content Include="Views\Entrega\Index.cshtml" />
     <Content Include="Views\Entrega\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Home\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Usuario\EditorTemplates\Template.cshtml" />
+    <Content Include="Views\Regra\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -129,6 +129,7 @@
     <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Pessoas.cs" />
+    <Compile Include="Business\Engine\Regras.cs" />
     <Compile Include="Business\Engine\Retiradas.cs" />
     <Compile Include="Business\Engine\Servicos.cs" />
     <Compile Include="Business\Engine\Setores.cs" />

@@ -5,14 +5,16 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.Nome);
+        columns.Bound(p => p.Pessoa);
+        columns.Bound(p => p.User);
+        columns.Bound(p => p.RegraName);
         columns.Command(command =>
         {
             command.Edit().Text("Alterar");
             command.Destroy().Text("Apagar");
         });
     })
-    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
     .AutoBind(true)
     .Pageable()
     .Sortable()
@@ -30,6 +32,6 @@
     .Update(update => update.Action("Update", "Usuario"))
     .Destroy(update => update.Action("Destroy", "Usuario"))
     ).Deferred(true)
-)
+    )
 
-@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+    @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))

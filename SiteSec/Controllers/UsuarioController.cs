@@ -20,16 +20,34 @@ namespace SiteSec.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> ReadAsync([DataSourceRequest]DataSourceRequest request)
+        public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request)
         {
-            IEnumerable<Usuario> resultado = new List<Usuario>();
-            var apiRetorno = await api.Use(HttpMethod.Get, new Usuario(), "api/Usuario");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Usuario>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.Nome);
+            var str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), "api/Usuario")).result);
+            List<Usuario> usuarios = JsonConvert.DeserializeObject<List<Usuario>>(str);        
+            foreach (var user in usuarios)
+            {
+                //buscar as informações referente a pessoa
+                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Pessoa(), $"api/Pessoa/{user.PessoaId}")).result);
+                Pessoa pessoa = JsonConvert.DeserializeObject<List<Pessoa>>(str).FirstOrDefault();
+                user.Pessoa = pessoa.Nome;
+                user.User = pessoa.Email;
 
-            return Json(resultado.ToDataSourceResult(request));
+                //buscar as informaçoes referente a permissoes
+                List<string> regraName = new List<string>();
+                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), $"api/Usuario/{user.UserId}/Permissoes")).result);
+                bool isValid = JsonConvert.DeserializeObject<List<Regra>>(str).Any();
+                if (isValid)
+                {
+                    List<Regra> regras = JsonConvert.DeserializeObject<List<Regra>>(str);
+                    foreach (var regra in regras)
+                    {
+                        regraName.Add(regra.Name);
+                    }
+                    user.RegraName = regraName;
+                } 
+            }
+
+            return Json(usuarios.ToDataSourceResult(request));
         }
         public ActionResult Create([DataSourceRequest]DataSourceRequest request, Usuario obj)
         {

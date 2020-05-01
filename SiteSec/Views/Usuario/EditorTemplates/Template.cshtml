@@ -1,0 +1,70 @@
+﻿@model SiteSec.Models.Usuario
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PessoaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownListFor(model => model.PessoaId)
+                      .DataTextField("Nome")
+                      .DataValueField("Id")
+                      .OptionLabel("Selecione")
+                      .HtmlAttributes(new { style = "width:100%;" })
+                   .DataSource(source =>
+                   {
+                       source.Custom()
+                           .ServerFiltering(true)
+                           .Type("aspnetmvc-ajax")
+                           .Transport(transport => { transport.Read("Read", "Pessoa", new { id = ViewBag.PessoaId }); })
+                           .Schema(schema => { schema.Data("Data").Total("Total"); });
+                   })
+                )
+                @Html.ValidationMessageFor(model => model.PessoaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegraId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().MultiSelectFor(model => model.RegraId)
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .Placeholder("Selecione")
+                      .HtmlAttributes(new { style = "width:100%;" })
+                   .DataSource(source =>
+                   {
+                       source.Custom()
+                           .ServerFiltering(true)
+                           .Type("aspnetmvc-ajax")
+                           .Transport(transport => { transport.Read("Read", "Regra", new { id = ViewBag.PessoaId }); })
+                           .Schema(schema => { schema.Data("Data").Total("Total"); });
+                   })
+                )
+                @Html.ValidationMessageFor(model => model.RegraId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().TextBoxFor(model => model.Senha).HtmlAttributes(new { style = "width:100%;", type = "password" }))
+                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmeSenha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().TextBoxFor(model => model.ConfirmeSenha).HtmlAttributes(new { style = "width:100%;", type = "password" }))
+                @Html.ValidationMessageFor(model => model.ConfirmeSenha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+}

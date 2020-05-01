@@ -1,5 +1,6 @@
 ﻿namespace Sec.Business
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Sec.Business.Core;
     using Sec.Models;
     using System;

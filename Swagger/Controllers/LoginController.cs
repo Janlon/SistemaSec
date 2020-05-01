@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-
+using Sec.Business;
 using Sec.Business.Models;
 
 namespace Swagger.Controllers
@@ -8,94 +8,43 @@ namespace Swagger.Controllers
     public class LoginController : ApiController
     {
 
-        /// <summary>
-        /// Conectar o usuário.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
         [Route("api/Login")]
-        public IHttpActionResult Login(LoginViewModel login)
+        public CrudResult<LoginViewModel> Login(LoginViewModel login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok();
+            return null;
         }
 
-        /// <summary>
-        /// Desconectar o usuário.
-        /// </summary>
-        /// <returns></returns>
-        [Route("api/Login/Logout")]
-        public IHttpActionResult Logout()
+        [Route("~/api/Login/Logout")]
+        public CrudResult<LoginViewModel> Logout(LoginViewModel login)
         {
-            return Ok();
+            return null;
         }
 
-        /// <summary>
-        /// Alterar a senha do usuário.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        [Route("api/Login/Change")]
-        public IHttpActionResult Change(ChangePasswordViewModel login)
+        [Route("~/api/Login/Change")]
+        public CrudResult<LoginViewModel> Change(ChangePasswordViewModel login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok();
+            return null;
         }
 
-        /// <summary>
-        /// Apagar a senha do usuário.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        [Route("api/Login/Reset")]
-        public IHttpActionResult Reset(ResetPasswordViewModel login)
+        [Route("~/api/Login/Reset")]
+        public CrudResult<LoginViewModel> Reset(ResetPasswordViewModel login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok();
+            return null;
         }
 
-        /// <summary>
-        /// Definir a senha do usuário.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        [Route("api/Login/Set")]
-        public IHttpActionResult Set(SetPasswordViewModel login)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            return Ok();
+        [Route("~/api/Login/Set")]
+        public CrudResult<LoginViewModel> Set(SetPasswordViewModel login)
+        {
+            return null;
         }
 
-        /// <summary>
-        /// Cadastrar um novo usuário.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
+
         [AllowAnonymous]
-        [Route("api/Login/Register")]
-        public IHttpActionResult Register(RegisterViewModel login)
+        [Route("~/api/Login/Register")]
+        public CrudResult<LoginViewModel> Register(RegisterViewModel login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok();
+            return null;
         }
-
     }
 }
