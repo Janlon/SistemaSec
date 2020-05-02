@@ -33,17 +33,17 @@ namespace SiteSec.Controllers
                 user.User = pessoa.Email;
 
                 //buscar as informaçoes referente a permissoes
-                List<string> regraName = new List<string>();
-                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), $"api/Usuario/{user.UserId}/Permissoes")).result);
+                List<string> regrasName = new List<string>();
+                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), $"api/Usuario/{user.PessoaId}/Permissoes")).result);
                 bool isValid = JsonConvert.DeserializeObject<List<Regra>>(str).Any();
                 if (isValid)
                 {
                     List<Regra> regras = JsonConvert.DeserializeObject<List<Regra>>(str);
                     foreach (var regra in regras)
                     {
-                        regraName.Add(regra.Name);
+                        regrasName.Add(regra.Name);
                     }
-                    user.RegraName = regraName;
+                    user.RegrasName = regrasName;
                 } 
             }
 

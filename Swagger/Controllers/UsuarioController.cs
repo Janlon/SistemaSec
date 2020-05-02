@@ -16,6 +16,8 @@ namespace Swagger.Controllers
 {
     public class UsuarioController : ApiController
     {
+        private ApplicationManager am;
+
         public CrudResult<Usuario> Get() => Engine.Usuarios.List();
 
         public CrudResult<Usuario> Get(int id) => Engine.Usuarios.Find(new object[] { id });
@@ -24,58 +26,46 @@ namespace Swagger.Controllers
         /// <summary>
         /// Retorna a lista de permissoes de um usuário
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="PessoaId"></param>
         /// <returns></returns>
-        [Route("~/api/Usuario/{Id:int}/Permissoes")]
-        public CrudResult<IdentityRole> GetPermissoesDoUsuario(int id)
+        [Route("~/api/Usuario/{PessoaId:int}/Permissoes")]
+        public CrudResult<IdentityRole> GetPermissoesDoUsuario(int PessoaId)
         {
-            var usuarios = Engine.Usuarios.Filter(p => p.PessoaId.Equals(id)).Result;
-            return null;
+            Usuario u = Engine.Usuarios.Filter(p => p.PessoaId.Equals(PessoaId)).Result.FirstOrDefault();
+            am = new ApplicationManager();
+            ApplicationUser usuario = am.UM.FindByEmail(u.User.Email);     
+            var regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(usuario.Id));
+            return regras;
         }
 
         public CrudResult<Usuario> Post(Usuario obj)
         {
-            //List<IdentityResult> results = new List<IdentityResult>();
-            //try
-            //{
-            //    List<IdentityRole> regras = new List<IdentityRole>();
-
-            //    foreach (RegraEnum temp in Enum.GetValues(typeof(RegraEnum)))
-            //    {
-            //        regras.Add(new IdentityRole()
-            //        {
-            //            Name = temp.DisplayName()
-            //        });
-            //    }
-
-            //    am = new ApplicationManager();
-
-            //    ApplicationUser usuario = am.UM.FindByEmail(email);
-
-            //    if (usuario == null)
-            //    {
-            //        results.Add(am.UM.Create(new ApplicationUser() { Email = email, UserName = email }, senha));
-            //        am.Commit();
-            //        am.Dispose();
-            //        am = new ApplicationManager();
-            //        usuario = am.UM.FindByEmail(email);
-            //        am.Commit();
-            //        am.Dispose();
-            //    }
-            //    if (usuario != null)
-            //        if (results != null)
-            //            if (results.Count() > 0)
-            //                if (results.Last().Succeeded)
-            //                {
-            //                    am = new ApplicationManager();
-            //                    am.UM.AddToRoles(usuario.Id, regras.Select(p => p.Name).ToArray());
-            //                    am.Commit();
-            //                    am.Dispose();
-            //                }
-            //}
-            //catch (Exception ex) { ex.Log(); }
-            //return results;
+            
+            Pessoa pessoa = Engine.Pessoas.Filter(p=>p.Id.Equals(obj.PessoaId)).Result.FirstOrDefault();
+            am = new ApplicationManager();
+            ApplicationUser usuario = new ApplicationUser()
+            {
+                Email = pessoa.Email,
+                UserName = pessoa.Email
+            };
+            obj.User = usuario;
             return Engine.Usuarios.Insert(obj);
+
+            //List<IdentityRole> regras = new List<IdentityRole>();
+            //foreach (RegraEnum temp in Enum.GetValues(typeof(RegraEnum)))
+            //{
+            //    regras.Add(new IdentityRole()
+            //    {
+            //        Name = temp.DisplayName()
+            //    });
+            //}
+
+            //am.UM.AddToRoles(user.UserId, regras.Select(p => p.Name).ToArray()
+
+            //var rg = Engine.Regras.Insert(am);
+
+
+           // return Engine.Regras.Insert(am);
         }
 
         public CrudResult<Usuario> Put(Usuario obj) => Engine.Usuarios.Update(obj);

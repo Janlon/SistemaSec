@@ -31,7 +31,7 @@ namespace SiteSec.Models
 
         [Display(Name = "Permissão", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Permissão")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        public List<string> RegraName { get; set; }
+        public List<string> RegrasName { get; set; }
 
 
         [Display(Name = "Senha")]
