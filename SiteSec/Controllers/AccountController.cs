@@ -1,51 +1,63 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SiteSec.Models;
+using SiteSec.Models.Consumo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SiteSec.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
-       
+
+        private readonly Api api = new Api();
+
+        public AccountController()
+        {
+        }
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(Account obj, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
 
-        //    // Isso não conta falhas de login em relação ao bloqueio de conta
-        //    // Para permitir que falhas de senha acionem o bloqueio da conta, altere para shouldLockout: true
-        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-        //    switch (result)
-        //    {
-        //        case SignInStatus.Success:
-        //            return RedirectToLocal(returnUrl);
-        //        case SignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case SignInStatus.RequiresVerification:
-        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-        //        case SignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", "Tentativa de login inválida.");
-        //            return View(model);
-        //    }
-        //}
+                var result = JsonConvert.SerializeObject((await api.Use(HttpMethod.Post, obj, "api/Login")).result);
+            return View(obj);
+            // Isso não conta falhas de login em relação ao bloqueio de conta
+            // Para permitir que falhas de senha acionem o bloqueio da conta, altere para shouldLockout: true
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Tentativa de login inválida.");
+            //        return View(model);
+            //}
+        }
 
         ////
         //// GET: /Account/VerifyCode
@@ -436,6 +448,6 @@ namespace SiteSec.Controllers
         //        context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
         //    }
         //}
-      //  #endregion
+        //  #endregion
     }
 }

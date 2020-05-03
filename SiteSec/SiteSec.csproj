@@ -196,6 +196,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Cargo.cs" />
     <Compile Include="Models\Consumo\Api.cs" />
     <Compile Include="Models\Contato.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Content\fonts\DejaVu\LICENSE.txt" />
     <Content Include="Content\fonts\glyphs\KendoUIGlyphs.svg" />
     <Content Include="Content\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\QrCode-icon.png" />
     <Content Include="Content\scheduler\scheduler-people.png" />
     <Content Include="Content\scheduler\team-schedule.png" />
@@ -267,6 +269,7 @@
     <Content Include="Scripts\lang\kendo.sv-SE.js" />
     <Content Include="Scripts\lang\kendo.tr-TR.js" />
     <Content Include="Scripts\lang\kendo.zh-CN.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Views\Documento\Index.cshtml" />
     <Content Include="Views\Pessoa\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Pessoa\Index.cshtml" />

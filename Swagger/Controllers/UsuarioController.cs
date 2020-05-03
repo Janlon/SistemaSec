@@ -18,58 +18,105 @@ namespace Swagger.Controllers
     {
         private ApplicationManager am;
 
-        public CrudResult<Usuario> Get() => Engine.Usuarios.List();
+        public CrudResult<Usuario> Get()
+        {
+            return Engine.Usuarios.List();
+        }
 
-        public CrudResult<Usuario> Get(int id) => Engine.Usuarios.Find(new object[] { id });
-
+        public CrudResult<Usuario> Get(Guid id)
+        {
+            return Engine.Usuarios.Find(new object[] { id.ToString() });
+        }
 
         /// <summary>
         /// Retorna a lista de permissoes de um usuário
         /// </summary>
-        /// <param name="PessoaId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [Route("~/api/Usuario/{PessoaId:int}/Permissoes")]
-        public CrudResult<IdentityRole> GetPermissoesDoUsuario(int PessoaId)
+        [Route("~/api/Usuario/{id:Guid}/Permissoes")]
+        public CrudResult<IdentityRole> GetPermissoesDoUsuario(Guid id)
         {
-            Usuario u = Engine.Usuarios.Filter(p => p.PessoaId.Equals(PessoaId)).Result.FirstOrDefault();
+            CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
+            Usuario usuario = Engine.Usuarios.Filter(p => p.UserId.Equals(id.ToString())).Result.FirstOrDefault();
+            Pessoa pessoa = Engine.Pessoas.Filter(p => p.Id.Equals(usuario.PessoaId)).Result.FirstOrDefault();
             am = new ApplicationManager();
-            ApplicationUser usuario = am.UM.FindByEmail(u.User.Email);     
-            var regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(usuario.Id));
+            ApplicationUser user = am.UM.FindByEmail(pessoa.Email);   
+            if(user != null)
+            {
+                 regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(user.Id));
+            }
             return regras;
         }
 
-        public CrudResult<Usuario> Post(Usuario obj)
+
+        [Route("~/api/Login")]
+        public CrudResult<IdentityRole> Login(Usuario obj)
         {
-            
-            Pessoa pessoa = Engine.Pessoas.Filter(p=>p.Id.Equals(obj.PessoaId)).Result.FirstOrDefault();
+            CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
             am = new ApplicationManager();
-            ApplicationUser usuario = new ApplicationUser()
+            ApplicationUser user = am.UM.FindByEmail(obj.UserName);
+
+            Usuario usuario = Engine.Usuarios.Filter(p => p.UserId.Equals(user.Id.ToString())).Result.FirstOrDefault();
+            Pessoa pessoa = Engine.Pessoas.Filter(p => p.Id.Equals(usuario.PessoaId)).Result.FirstOrDefault();
+            if (user != null)
             {
-                Email = pessoa.Email,
-                UserName = pessoa.Email
-            };
-            obj.User = usuario;
-            return Engine.Usuarios.Insert(obj);
-
-            //List<IdentityRole> regras = new List<IdentityRole>();
-            //foreach (RegraEnum temp in Enum.GetValues(typeof(RegraEnum)))
-            //{
-            //    regras.Add(new IdentityRole()
-            //    {
-            //        Name = temp.DisplayName()
-            //    });
-            //}
-
-            //am.UM.AddToRoles(user.UserId, regras.Select(p => p.Name).ToArray()
-
-            //var rg = Engine.Regras.Insert(am);
-
-
-           // return Engine.Regras.Insert(am);
+                regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(user.Id));
+            }
+            return regras;
         }
 
-        public CrudResult<Usuario> Put(Usuario obj) => Engine.Usuarios.Update(obj);
 
-        public CrudResult<Usuario> Delete(int id) => Engine.Usuarios.Delete(Engine.Usuarios.Find(new object[] { id }).Result.FirstOrDefault());
+        public CrudResult<Usuario> Post(Usuario obj)
+        {
+            Pessoa pessoa = Engine.Pessoas.Filter(p => p.Id.Equals(obj.PessoaId)).Result.FirstOrDefault();
+
+            ApplicationManager am = new ApplicationManager();
+            try
+            { 
+                List<IdentityResult> results = new List<IdentityResult>();
+                try
+                {
+                    am = new ApplicationManager();
+                    ApplicationUser usuario = am.UM.FindByEmail(pessoa.Email);
+                    if (usuario == null)
+                    {
+                        results.Add(am.UM.Create(new ApplicationUser() { Email = pessoa.Email, UserName = pessoa.Email }, obj.Senha));
+                       // am.Commit();
+                        am.Dispose();
+                        am = new ApplicationManager();
+                        usuario = am.UM.FindByEmail(pessoa.Email);
+                       // am.Commit();
+                        am.Dispose();
+                    }
+                    if (usuario != null)
+                        if (results != null)
+                            if (results.Count() > 0)
+                                if (results.Last().Succeeded)
+                                {
+                                    am = new ApplicationManager();
+                                    am.UM.AddToRoles(usuario.Id, obj.Permissoes.Select(p => p.Name).ToArray());
+                                   // am.Commit();
+                                    am.Dispose();
+                                }
+                    obj.UserId = usuario.Id;
+                }
+                catch (Exception ex) { ex.Log(); }
+
+            }
+            catch (Exception ex) { ex.Log(); }
+            finally { if (am != null) am.Dispose(); }
+
+            return Engine.Usuarios.Insert(obj);
+        }
+
+        public CrudResult<Usuario> Put(Usuario obj)
+        {
+            return Engine.Usuarios.Update(obj);
+        }
+
+        public CrudResult<Usuario> Delete(Guid id)
+        {
+            return Engine.Usuarios.Delete(Engine.Usuarios.Filter(p => p.UserId.Equals(id.ToString())).Result.FirstOrDefault());
+        }
     }
 }

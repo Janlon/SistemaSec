@@ -1,6 +1,8 @@
 ﻿namespace Sec.Models
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Sec.IdentityGroup;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,13 +17,15 @@
         [Column(Order = 2), ScaffoldColumn(false)]
         public int PessoaId { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-
+        [NotMapped]
         public string Senha { get; set; }
 
-        [ForeignKey("PessoaId")]
-        public virtual Pessoa Pessoa { get; set; }
+        [NotMapped]
+        public string UserName { get; set; }
+
+        [NotMapped]
+        public List<IdentityRole> Permissoes { get; set; }
+
 
     }
 }

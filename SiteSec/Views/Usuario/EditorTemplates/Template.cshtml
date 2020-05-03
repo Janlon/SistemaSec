@@ -29,23 +29,23 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RegraId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Permissoes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @(Html.Kendo().MultiSelectFor(model => model.RegraId)
+                @(Html.Kendo().MultiSelectFor(model => model.Permissoes)
                       .DataTextField("Name")
                       .DataValueField("Id")
                       .Placeholder("Selecione")
-                      .HtmlAttributes(new { style = "width:100%;" })
+                      .HtmlAttributes(new { style = "width:99%;" })
                    .DataSource(source =>
                    {
                        source.Custom()
                            .ServerFiltering(true)
                            .Type("aspnetmvc-ajax")
-                           .Transport(transport => { transport.Read("Read", "Regra", new { id = ViewBag.PessoaId }); })
+                           .Transport(transport => { transport.Read("Read", "Regra", new { id = ViewBag.UserId }); })
                            .Schema(schema => { schema.Data("Data").Total("Total"); });
                    })
                 )
-                @Html.ValidationMessageFor(model => model.RegraId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Permissoes, "", new { @class = "text-danger" })
             </div>
         </div>
 

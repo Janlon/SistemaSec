@@ -29,7 +29,6 @@ namespace SiteSec.Models
 
         #endregion
 
-
         #region propriedades de visualização
 
         [Display(Name = "Empresa", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa")]
@@ -78,7 +77,6 @@ namespace SiteSec.Models
         public List<Servico> Servicos { get; set; }
        
         #endregion
-
 
     }
 }

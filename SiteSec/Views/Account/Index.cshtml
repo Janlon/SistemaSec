@@ -1,78 +1,59 @@
-﻿@model SiteSec.Models.Usuario
+﻿
+@model SiteSec.Models.Account
 
 @{
     Layout = null;
 }
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Armata" />
+<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
+<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
+<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/login.css" />
+<script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
 
-@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/devmedia_estilo.css" rel="stylesheet" />*@
-
-@*<script src="~/scripts/jquery-1.10.2.js"></script>
-<script src="~/scripts/bootstrap.min.js"></script>*@
-
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
-new { @class = "form-horizontal" }))
+@using (Html.BeginForm("Index", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "onSelect(event)" }))
 {
-    @Html.AntiForgeryToken();
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
 
-    <div class="container">
-        <div class="form-login">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">Login do Sistema</div>
+    <div class="center k-widget k-window">
+        <p>
+            <div class="form-horizontal">
+
+                <div class="form-group">
+
+                    <div class="loading"></div>
+
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Kendo().TextBoxFor(model => model.UserName).HtmlAttributes(new { @style = "width:100%;", @placeholder = "seuemail@email.com.br" })
+                        @Html.ValidationMessageFor(model => model.UserName, String.Empty, new { @style = "color:red; font-size:smaller;" })
+                    </div>
+
+                    <br>
+
+                    @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Kendo().TextBoxFor(model => model.Senha).HtmlAttributes(new { @style = "width:100%;", @type="password" })
+                        @Html.ValidationMessageFor(model => model.Senha, String.Empty, new { @style = "color:red; font-size:smaller;" })
+                    </div>
+
+                    <br>
+
+                    <div style="text-align:center">
+                        <button type="submit" class="k-button k-primary">Autenticar</button>
+                    </div>
+
                 </div>
 
-                <div style="padding-top:30px" class="panel-body">
-                    <div style="display:none" id="result" class="alert
-                    alert-danger col-sm-12">
-
-                    </div>
-
-                    <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon">
-                            <i class="glyphicon
-                        glyphicon-user"></i>
-                        </span>
-                        @Html.EditorFor(model => model.Email, new
-                        {
-                            htmlAttributes =
-                        new
-                             {
-                                 @class = "form-control input-lg",
-                                 placeholder =
-                        "E-mail",
-                                 autofocus = true
-                             }
-                        })
-                        @Html.ValidationMessageFor(model => model.Email, "",
-                        new { @class = "text-danger" })
-                    </div>
-
-                    <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon">
-                            <i class="glyphicon
-                        glyphicon-lock"></i>
-                        </span>
-                        @Html.EditorFor(model => model.Nome, new
-                        {
-                            htmlAttributes
-                        = new { @class = "form-control input-lg", placeholder = "Senha" }
-                        })
-                        @Html.ValidationMessageFor(model => model.Nome, "",
-                        new { @class = "text-danger" })
-                    </div>
-
-                    <div style="margin-top:10px" class="form-group">
-
-                        <div class="col-sm-12 controls">
-                            <input type="submit" value="Acessar"
-                                   class="btn primary btn-lg" />
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
+        </p>
     </div>
+    <script>
+        function onSelect(e) {
+            kendo.ui.progress($(".loading"), true);
+        }
+    </script>
+
 }

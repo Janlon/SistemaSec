@@ -31,19 +31,15 @@ namespace SiteSec.Controllers
                 Pessoa pessoa = JsonConvert.DeserializeObject<List<Pessoa>>(str).FirstOrDefault();
                 user.Pessoa = pessoa.Nome;
                 user.User = pessoa.Email;
-
+             
                 //buscar as informaçoes referente a permissoes
                 List<string> regrasName = new List<string>();
-                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), $"api/Usuario/{user.PessoaId}/Permissoes")).result);
+                str = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Usuario(), $"api/Usuario/{user.Id}/Permissoes")).result);
                 bool isValid = JsonConvert.DeserializeObject<List<Regra>>(str).Any();
                 if (isValid)
                 {
                     List<Regra> regras = JsonConvert.DeserializeObject<List<Regra>>(str);
-                    foreach (var regra in regras)
-                    {
-                        regrasName.Add(regra.Name);
-                    }
-                    user.RegrasName = regrasName;
+                    user.Permissoes = regras;
                 } 
             }
 
@@ -59,9 +55,9 @@ namespace SiteSec.Controllers
             var apiRetorno = api.Use(HttpMethod.Put, obj, "api/Usuario");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, int id)
+        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, Guid id)
         {
-            var apiRetorno = api.Use(HttpMethod.Delete, new TipoDocumento(), $"api/Usuario/{id}");
+            var apiRetorno = api.Use(HttpMethod.Delete, new Usuario(), $"api/Usuario/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
     }
