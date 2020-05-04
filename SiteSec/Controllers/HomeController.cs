@@ -16,6 +16,7 @@ using System.Web.Routing;
 
 namespace SiteSec.Controllers
 {
+   
     public partial class HomeController : Controller
     {   
         private readonly Api api = new Api();

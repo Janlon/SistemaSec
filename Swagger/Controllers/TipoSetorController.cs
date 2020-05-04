@@ -7,9 +7,10 @@ using System.Web.Http;
 
 namespace Swagger.Controllers
 {
-
+   [Authorize]
     public class TipoSetorController : ApiController
     {
+        
         public CrudResult<TipoDeSetor> Get()
         {
             return Engine.TiposDeSetores.List();

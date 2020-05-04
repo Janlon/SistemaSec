@@ -339,6 +339,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Usuario\EditorTemplates\Template.cshtml" />
     <Content Include="Views\Regra\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\SiteSistemaSec - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

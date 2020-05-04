@@ -127,6 +127,7 @@
     <Compile Include="Business\Engine\Geo.cs" />
     <Compile Include="Business\Engine\Imagens.cs" />
     <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
+    <Compile Include="Business\Engine\Login.cs" />
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Pessoas.cs" />
     <Compile Include="Business\Engine\Regras.cs" />

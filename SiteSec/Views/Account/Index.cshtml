@@ -5,9 +5,9 @@
     Layout = null;
 }
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Armata" />
-<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
-<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
-<link type="text/css" rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
+<link type="text/css" rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
+<link type="text/css" rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
+<link type="text/css" rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
 <link type="text/css" rel="stylesheet" href="~/Content/login.css" />
 <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
@@ -33,10 +33,10 @@
 
                     <br>
 
-                    @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.Kendo().TextBoxFor(model => model.Senha).HtmlAttributes(new { @style = "width:100%;", @type="password" })
-                        @Html.ValidationMessageFor(model => model.Senha, String.Empty, new { @style = "color:red; font-size:smaller;" })
+                        @Html.Kendo().TextBoxFor(model => model.Password).HtmlAttributes(new { @style = "width:100%;", @type="password" })
+                        @Html.ValidationMessageFor(model => model.Password, String.Empty, new { @style = "color:red; font-size:smaller;" })
                     </div>
 
                     <br>

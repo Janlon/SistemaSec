@@ -1,6 +1,7 @@
 ﻿namespace Sec.Models
 {
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.Owin.Security;
     using Sec.IdentityGroup;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,8 @@
         [NotMapped]
         public List<IdentityRole> Permissoes { get; set; }
 
+        [NotMapped]
+        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
     }
 }

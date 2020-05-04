@@ -26,7 +26,7 @@ namespace SiteSec.Models
 
         [Display(Name = "Permissão", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Permissão")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
-        public List<Regra> Permissoes { get; set; }
+        public List<Regra> Permissoes { get; set; } = new List<Regra>();
 
         [Display(Name = "Permissão", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Permissão")]
         [Required(ErrorMessage = "{0} é obrigatório.")]
@@ -52,9 +52,12 @@ namespace SiteSec.Models
         [Compare("Senha", ErrorMessage = "As senhas não combinam.")]
         public string ConfirmeSenha { get; set; }
 
+
+        public string AccessTokenFormat { get; internal set; }
+
         public Usuario()
         {
-            Permissoes = new List<Regra>();
+            Permissoes = new List<Regra>(); 
         }
 
     }

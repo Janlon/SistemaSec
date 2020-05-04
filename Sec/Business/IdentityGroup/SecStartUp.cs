@@ -139,8 +139,7 @@ namespace Sec.IdentityGroup
             {
                 TokenEndpointPath = new PathString(tokenPath),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath =
-                new PathString("/api/Account/ExternalLogin"),
+                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = ExpireTimespan,
                 AllowInsecureHttp = true
             };

@@ -3,11 +3,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Sec;
 using Sec.Business;
+using Sec.Business.Models;
 using Sec.IdentityGroup;
 using Sec.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Hosting;
 using System.Web.Http;
 using ApplicationManager = Sec.IdentityGroup.ApplicationManager;
@@ -37,32 +39,17 @@ namespace Swagger.Controllers
         public CrudResult<IdentityRole> GetPermissoesDoUsuario(Guid id)
         {
             CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
-            Usuario usuario = Engine.Usuarios.Filter(p => p.UserId.Equals(id.ToString())).Result.FirstOrDefault();
-            Pessoa pessoa = Engine.Pessoas.Filter(p => p.Id.Equals(usuario.PessoaId)).Result.FirstOrDefault();
-            am = new ApplicationManager();
-            ApplicationUser user = am.UM.FindByEmail(pessoa.Email);   
-            if(user != null)
-            {
-                 regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(user.Id));
-            }
-            return regras;
+            return Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(id.ToString()));
         }
 
-
-        [Route("~/api/Login")]
+        [Route("~/api/Usuario/Login")]
         public CrudResult<IdentityRole> Login(Usuario obj)
         {
-            CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
             am = new ApplicationManager();
-            ApplicationUser user = am.UM.FindByEmail(obj.UserName);
+            ApplicationUser au = am.UM.Find(obj.UserName.ToLower(), obj.Senha);
 
-            Usuario usuario = Engine.Usuarios.Filter(p => p.UserId.Equals(user.Id.ToString())).Result.FirstOrDefault();
-            Pessoa pessoa = Engine.Pessoas.Filter(p => p.Id.Equals(usuario.PessoaId)).Result.FirstOrDefault();
-            if (user != null)
-            {
-                regras = Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(user.Id));
-            }
-            return regras;
+            return null;
+
         }
 
 

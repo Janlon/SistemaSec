@@ -19,7 +19,7 @@ namespace SiteSec.Models
         [StringLength(255, ErrorMessage = "{0} Deve ter entre {2} e {1} caracteres", MinimumLength = 8)]
         [RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}$", ErrorMessage = "A senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais.")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public string Password { get; set; }
 
     }
 }

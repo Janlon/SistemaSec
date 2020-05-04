@@ -14,26 +14,22 @@ namespace Swagger
     {
         public static void Register()
         {
-            var thisAssembly = typeof(SwaggerConfig).Assembly;
-
-            var caminho = $@"{AppDomain.CurrentDomain.BaseDirectory}bin\Swagger.xml";
-
             GlobalConfiguration.Configuration
-                .EnableSwagger(c =>
-                {
-                    c.SingleApiVersion("v1", "Sistema Sec");
-                    c.IgnoreObsoleteActions();
-                    c.UseFullTypeNameInSchemaIds();
-                    c.IncludeXmlComments(caminho);
-                    c.IgnoreObsoleteProperties();
-                    c.DescribeAllEnumsAsStrings();
-                    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-                })
-                .EnableSwaggerUi(c =>
-                {
-                    c.DocumentTitle("API de Comunicação do Sistema Sec");
-                    c.DocExpansion(DocExpansion.List);
-                });
+            .EnableSwagger(c =>
+            {
+                 c.SingleApiVersion("v1", "Sistema Sec");
+                 c.IgnoreObsoleteActions();
+                 c.UseFullTypeNameInSchemaIds();
+                // c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}bin\Swagger.xml");
+                 c.IgnoreObsoleteProperties();
+                 c.DescribeAllEnumsAsStrings();
+                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            })
+            .EnableSwaggerUi(c =>
+            {
+                c.DocumentTitle("API de Comunicação do Sistema Sec");
+                c.DocExpansion(DocExpansion.List);
+            });
         }
     }
 }

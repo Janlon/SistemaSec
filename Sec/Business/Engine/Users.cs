@@ -12,22 +12,7 @@
 
     public partial class Engine
     {
-        /// <summary>
-        /// Aqui estarão os métodos para manipular acesso e regras (Identity), 
-        /// assim como: 
-        /// <para>
-        /// Clientes (Pessoa jurídica);
-        /// </para>
-        /// <para>
-        /// Fornecedores (Pessoa jurídica);
-        /// </para>
-        /// <para>
-        /// Funcionários (Pessoa física);
-        /// </para>
-        /// ATENÇÃO: <see cref="Owin"/>, <see cref="Microsoft.Owin"/>, <see cref="Microsoft.AspNet.Identity"/> estão envolvidos aqui, 
-        /// de modo que esta classe requer detalhes de acão que não são padronizxadas da mesma forma que entidades de negócio ou 
-        /// de contexto de negócio.
-        /// </summary>
+
         [Obsolete("Todas as operações desta classe precisam ser revisadas, pois parte é inerente à Pessoas (entidade simples) e parte à ApplicationUser (entidade do tipo IdentityUser, vinculada à Owin e à Microsoft.Owin)")]
         public static class Users
         {

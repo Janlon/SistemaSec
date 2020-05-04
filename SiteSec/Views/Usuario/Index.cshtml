@@ -44,12 +44,15 @@
 
 <script>
     function PermissoesTemplate(item) {
-        var template = "<ol>";
-        for (var i = 0; i < item.length; i++) {
-            var permissao = item[i];
-            template += kendo.format("<li>{0}</li>", permissao.Name);
+        if (item != null) {
+            var template = "<ol>";
+            for (var i = 0; i < item.length; i++) {
+                var permissao = item[i];
+                template += kendo.format("<li>{0}</li>", permissao.Name);
+            }
+            template += "</ol>";
+            return template;
         }
-        template += "</ol>";
-        return template;
+        return "";
     }
 </script>
