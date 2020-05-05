@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,12 +17,13 @@ using System.Web.Routing;
 
 namespace SiteSec.Controllers
 {
-   
+   [Authorize]
     public partial class HomeController : Controller
     {   
         private readonly Api api = new Api();
         public ActionResult Index()
         {
+
             return View();
         }
         public async Task<JsonResult> Read([DataSourceRequest] DataSourceRequest request)

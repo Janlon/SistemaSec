@@ -1,6 +1,7 @@
 ﻿using Generics.Extensoes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json.Linq;
 using Sec;
 using Sec.Business;
 using Sec.Business.Models;
@@ -8,7 +9,10 @@ using Sec.IdentityGroup;
 using Sec.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Web.Hosting;
 using System.Web.Http;
@@ -43,12 +47,50 @@ namespace Swagger.Controllers
         }
 
         [Route("~/api/Usuario/Login")]
-        public CrudResult<IdentityRole> Login(Usuario obj)
-        {
-            am = new ApplicationManager();
-            ApplicationUser au = am.UM.Find(obj.UserName.ToLower(), obj.Senha);
+        public CrudResult<string> Login(Usuario obj)
+        { 
+            try
+            {
+                string url = string.Format("https://{0}{1}", Url.Request.RequestUri.Authority, "/token");
+                Dictionary<string, string> p = new Dictionary<string, string>
+                {
+                    { "grant_type", "password" },
+                    { "username", obj.UserName },
+                    { "password", obj.Senha }
+                };
+                FormUrlEncodedContent formUrlEncoded = new FormUrlEncodedContent(p);
+                Uri uri = new Uri(url);
+                HttpRequestMessage httpRequest = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri(uri, "token"),
+                    Content = new StringContent("grant_type=password")
+                };
 
-            return null;
+                httpRequest.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded") { CharSet = "UTF-8" };
+                httpRequest.Content = formUrlEncoded;
+
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = client.SendAsync(httpRequest).Result;
+                    string bearerData = httpResponse.Content.ReadAsStringAsync().Result;
+
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        am = new ApplicationManager();
+                        ApplicationUser au = am.UM.Find(obj.UserName.ToLower(), obj.Senha);
+
+                        // usuario.AccessTokenFormat = JObject.Parse(bearerData)["access_token"].ToString();
+                        // usuario.UserName = JObject.Parse(bearerData)["userName"].ToString();
+                        return null;
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
         }
 

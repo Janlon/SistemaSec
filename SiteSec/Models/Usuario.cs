@@ -54,6 +54,7 @@ namespace SiteSec.Models
 
 
         public string AccessTokenFormat { get; internal set; }
+        public bool OK { get; set; } = false;
 
         public Usuario()
         {

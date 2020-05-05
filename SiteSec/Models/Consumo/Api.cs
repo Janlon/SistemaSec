@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace SiteSec.Models.Consumo
@@ -55,61 +56,12 @@ namespace SiteSec.Models.Consumo
                 return ex.Message;
             }
         }
-        internal async Task<bool> Token(Account obj)
-        {
-            Usuario usuario = new Usuario();
-            try
-            {
-                string url = string.Format("https://{0}{1}", ConfigurationManager.AppSettings["Api"].ToString(), "token");
-                Dictionary<string, string> parametros = new Dictionary<string, string>
-                {
-                    { "grant_type", "password" },
-                    { "username", obj.UserName },
-                    { "password", obj.Password }
-                };
-                FormUrlEncodedContent parametrosComEncode = new FormUrlEncodedContent(parametros);
-                Uri baseUri = new Uri(url);
-                HttpRequestMessage requestToken = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Post,
-                    RequestUri = new Uri(baseUri, "token"),
-                    Content = new StringContent("grant_type=password")
-                };
-
-                requestToken.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded") { CharSet = "UTF-8" };
-                requestToken.Content = parametrosComEncode;
-
-                using (var client = new HttpClient())
-                {
-                    var httpResponse = await client.SendAsync(requestToken);
-                    string content = httpResponse.Content.ReadAsStringAsync().Result;
-                    string bearerData = await httpResponse.Content.ReadAsStringAsync();
-
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        usuario.AccessTokenFormat = JObject.Parse(bearerData)["access_token"].ToString();
-                        usuario.UserName = JObject.Parse(bearerData)["userName"].ToString();
-                        return true;
-                    }
-
-                }
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
         internal async Task<ApiRetorno> Use<T>(HttpMethod http, T obj, string metodo)
         {
             ApiRetorno apiRetorno = new ApiRetorno();
             try
             {
-                Usuario usuario = new Usuario();
-                Account account = new Account() { UserName = "janloncavalchi@msn.com", Password = "Senha@123" };
-                var ok = Token(account);
-
+              //  Account account = new Account() { UserName = "janloncavalchi@msn.com", Senha = "Senha@123" };
 
                 HttpResponseMessage response;
                 string url = string.Format("https://{0}{1}", ConfigurationManager.AppSettings["Api"].ToString(), metodo);
@@ -121,28 +73,28 @@ namespace SiteSec.Models.Consumo
                     case "POST":
                         using (var client = new HttpClient())
                         {
-                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", usuario.Token));
+                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", ""));
                             response = await client.PostAsync(url, content);
                             break;
                         }
                     case "PUT":
                         using (var client = new HttpClient())
                         {
-                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", ""));
                             response = await client.PutAsync(url, content);
                             break;
                         }
                     case "DELETE":
                         using (var client = new HttpClient())
                         {
-                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", ""));
                             response = await client.DeleteAsync(url);
                             break;
                         }
                     default:
                         using (var client = new HttpClient())
                         {
-                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                            client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", ""));
                             response = await client.GetAsync(url);
                             break;
                         }

@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -33,9 +36,12 @@ namespace SiteSec.Controllers
             if (!ModelState.IsValid)
                 return View(obj);
 
-            bool isValido = await api.Token(obj);
-            if (isValido)
+            var apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Post, obj, "/api/Usuario/Login")).result);
+
+            if (User.IsInRole("Administrators"))
+            {
                 return Redirect("~/Home/index");
+            }
 
             return View(obj);
         }
