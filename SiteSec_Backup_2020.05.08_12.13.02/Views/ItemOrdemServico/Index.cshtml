@@ -1,0 +1,64 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<ItemOrdemServico>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Empresa);
+        columns.Bound(p => p.Setor);
+        columns.Bound(p => p.Equipamento);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+            command.Custom("a").Text("<span class='k-icon k-i-login'> </span> Retirar").Click("Retirar");
+            if ("#=Id#" != "0")
+            {
+                command.Custom("b").Text("<span class='k-icon k-i-logout'> </span> Devolver").Click("Entregar");
+            }
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Mobile(MobileMode.Auto)
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Group(g => g.Add(c => c.OS)).Group(g => g.Add(c => c.Serviço))
+        .Read(read => read.Action("Itens", "ItemOrdemServico", new { OrdemServicoId = ViewBag.OrdemServicoId }))
+        .Create(update => update.Action("Create", "ItemOrdemServico"))
+        .Update(update => update.Action("Update", "ItemOrdemServico"))
+        .Destroy(update => update.Action("Destroy", "ItemOrdemServico"))
+    ).Deferred(true)
+)
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+
+    <script>
+        /*
+        *Função para  redirecionar para outra pagina
+        */
+        function Retirar(e) {
+            e.preventDefault();
+            let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            let direction = "/Retirada/Index/" + dataItem.Id;
+            window.location.href = direction;
+        }
+        /*
+        *Função para  redirecionar para outra pagina
+        */
+        function Entregar(e) {
+            e.preventDefault();
+            let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+            let direction = "/Entrega/Index/" + dataItem.Id;
+            window.location.href = direction;
+        }
+    </script>

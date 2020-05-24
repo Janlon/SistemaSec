@@ -1,0 +1,38 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<TipoDocumento>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Sigla);
+        columns.Bound(p => p.Descricao);
+        columns.Bound(p => p.PessoaFisica).ClientTemplate("#= PessoaFisica ? 'Sim' : 'Não' #");
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
+    .AutoBind(true)
+    .Pageable()
+    .Mobile(MobileMode.Auto)
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("Read", "TipoDocumento"))
+        .Create(update => update.Action("Create", "TipoDocumento"))
+        .Update(update => update.Action("Update", "TipoDocumento"))
+        .Destroy(update => update.Action("Destroy", "TipoDocumento"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))

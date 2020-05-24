@@ -1,0 +1,74 @@
+﻿<style>
+    .k-icon-32 { font-size: 32px; }
+</style>
+
+<div id="qrcode">
+    <div id="botoes" class="box wide hidden-on-narrow">
+        <div class="box-col">
+            <button class='k-button k-icon k-i-pdf k-icon-32' id="pdf" title="Gerar PDF"></button>
+            <button class='k-button k-icon k-i-image-export k-icon-32' id="img" title="Gerar Imagem"></button>
+            <button class='k-button k-icon k-i-print k-icon-32' id="print" title="Imprimir"></button>
+        </div>
+    </div>
+    <br />
+</div>
+
+<script>
+
+        $(document).ready(function () {
+
+            //gerar qrcode
+            $("#qrcode").kendoQRCode({
+                value: "http://localhost:9010/ImagemEquipamento/Index/" + @ViewBag.Id,
+                errorCorrection: "M",
+                size: 240,
+                border: {
+                    color: "#000000",
+                    width: 3
+                }
+             });
+
+            //exportar para pdf
+            $("#pdf").click(function () {
+                kendo.drawing.drawDOM($("#qrcode"))
+                    .then(function (group) {
+                        return kendo.drawing.exportPDF(group, {
+                            paperSize: "A4",
+                            landscape: false,
+                            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+                        });
+                    })
+                    .done(function (data) {
+                        kendo.saveAs({
+                            dataURI: data,
+                            fileName: 'QRCodes' + '.pdf'
+                        });
+                    });
+            });
+
+            //exportar para imagem
+            $("#img").click(function () {
+                kendo.drawing.drawDOM($("#qrcode"))
+                    .then(function (group) {
+                        return kendo.drawing.exportImage(group);
+                    })
+                    .done(function (data) {
+                        kendo.saveAs({
+                            dataURI: data,
+                            fileName: 'QRCodes' + '.png'
+                        });
+                    });
+            });
+
+            //imprimir
+            $("#print").click(function () {
+                var divToPrint = document.getElementById("qrcode");
+                newWin = window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                newWin.print();
+                newWin.close();
+            });
+
+        });
+
+</script>

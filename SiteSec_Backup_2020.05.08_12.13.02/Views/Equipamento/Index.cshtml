@@ -1,0 +1,90 @@
+﻿@using SiteSec.Models
+
+<style>
+    .qr-code {
+        background-image: url("../../Content/QrCode-icon.png");
+        filter: invert(100%);
+    }
+</style>
+
+<div id="janela" name="janela"></div>
+
+@(Html.Kendo().Grid<Equipamento>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Sigla);
+        columns.Bound(p => p.Descricao);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+            command.Custom("a").Text("<span class='k-icon k-i-image'> </span> Imagem").Click("redirect");
+            command.Custom("b").Text("<span class='k-icon qr-code'></span> QrCode").Click("openWindow");
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Mobile(MobileMode.Auto)
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Group(g => g.Add(c => c.Empresa)).Group(g => g.Add(c => c.Setor))
+        .Read(read => read.Action("Read", "Equipamento", new { id = ViewBag.Id }))
+        .Create(update => update.Action("Create", "Equipamento"))
+        .Update(update => update.Action("Update", "Equipamento"))
+        .Destroy(update => update.Action("Destroy", "Equipamento"))
+    ).Deferred(true)
+)
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+
+
+<script>
+    /*
+        *Função que é usada para tranferir valor de um dropdowlist
+        */
+    function filtrarSetor() {
+        return { empresaId: $("#EmpresaId").val() };
+    }
+    /*
+    *Função para  redirecionar para outra pagina
+    */
+    function redirect(e) {
+        e.preventDefault();
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/ImagemEquipamento/Index/" + dataItem.Id;
+        window.location.href = direction;
+    }
+    /*
+        *Função para abrir a janela para adicionar as imagens
+        */
+    function openWindow(e) {
+        e.preventDefault();
+        let wnd = null;
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/Equipamento/QrCode/" + dataItem.Id;
+        wnd = $("#janela").data("kendoWindow");
+
+        if (!wnd) {
+            wnd = $("#janela").kendoWindow({
+                actions: ["Close"],
+                title: dataItem.Descricao,
+                visible: false,
+                resizable: false,
+            }).data("kendoWindow");
+        }
+        wnd.center();
+        wnd.refresh(direction);
+        wnd.open();
+
+    }
+</script>

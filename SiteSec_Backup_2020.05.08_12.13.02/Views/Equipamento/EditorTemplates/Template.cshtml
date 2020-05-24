@@ -1,0 +1,83 @@
+﻿@model SiteSec.Models.Equipamento
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmpresaId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownListFor(model => model.EmpresaId)
+                              .DataTextField("RazaoSocial")
+                              .DataValueField("Id")
+                              .OptionLabel("Selecione")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:100%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Custom()
+                                      .ServerFiltering(true)
+                                      .Type("aspnetmvc-ajax")
+                                      .Transport(transport => { transport.Read("Read", "Empresa"); })
+                                      .Schema(schema => { schema.Data("Data").Total("Total"); });
+                              })
+                )
+                @Html.ValidationMessageFor(model => model.EmpresaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TipoSetorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownListFor(model => model.TipoSetorId)
+                              .DataTextField("Descricao")
+                              .DataValueField("Id")
+                              .OptionLabel("Selecione")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:100%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("SetoresDaEmpresa", "Setor").Data("filtrarSetor");
+                                  })
+                                  .ServerFiltering(true);
+                              })
+                              .Enable(false)
+                              .AutoBind(false)
+                              .CascadeFrom("EmpresaId")
+                )
+                @Html.ValidationMessageFor(model => model.TipoSetorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TiposEquipamentos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().MultiSelectFor(model=>model.TiposEquipamentos)
+                              .DataTextField("Descricao")
+                              .DataValueField("Id")
+                              .Placeholder("Selecione")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:99%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Custom()
+                                      .ServerFiltering(true)
+                                      .Type("aspnetmvc-ajax")
+                                      .Transport(transport => { transport.Read("Read", "TipoEquipamento"); })
+                                      .Schema(schema => { schema.Data("Data").Total("Total"); });
+                              })
+                )
+                @Html.ValidationMessageFor(model => model.TiposEquipamentos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+
+}

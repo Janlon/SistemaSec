@@ -8,7 +8,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -39,5 +38,17 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @section scripts {
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <script src="http://localhost:44350/signalr/hubs"></script>
+        <script type="text/javascript">
+            $(function () {
+                $.connection.hub.url = "http://localhost:44350/signalr";
+                $.connection.hub.start().done(function () {
+                   chat.server.send("janlon de carvalho rodrigues", "teste"); 
+                });
+            });
+        </script>
+    }
 </body>
 </html>

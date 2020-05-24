@@ -9,6 +9,10 @@
     [Table("Empresas", Schema = "Sec")]
     public class Empresa : EntidadeBase
     {
+
+
+      
+
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [ScaffoldColumn(false)]
         public int Id { get; set; }
@@ -46,7 +50,7 @@
         [NotMapped()]
         [StringLength(14, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 1)]
         [Column(TypeName = "VARCHAR")]
-        [Index(IsUnique = true)]
+        //[Index(IsUnique = true)]
         public virtual string CNPJ { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XCNPJ, DataKey); } set { XCNPJ = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [NotMapped()]
@@ -65,6 +69,9 @@
         [StringLength(100, ErrorMessage = "{0} deve ter entre {2} e {1} dígitos/caracteres.", MinimumLength = 2)]
         [Column(TypeName = "VARCHAR")]
         public virtual string Atividade { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XAtividade, DataKey); } set { XAtividade = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
+
+        [Required(AllowEmptyStrings = true)]
+        public bool Matriz { get; set; } = true;
 
         [Display(Name = "Setores")]
         public virtual List<Setor> Setores { get; internal set; } = new List<Setor>();

@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Sistema Sec</title>
+
+        <link type="text/css" rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Armata" />
+        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
+        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
+        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
+        <link type="text/css" rel="stylesheet"  href="~/Content/Shared.css" />
+
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+
+        @(Html.Kendo().Menu()
+              .Name("menu")
+              .Scrollable(true)
+              .Items(items =>
+              {
+                  items.Add()
+                    .Text("Home").Action("Index", "Home");
+
+                  items.Add()
+                    .Text("Cadastros")
+                    .Items(children =>
+                    {
+                        children.Add().Text("Grupo Pessoas")
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("Pessoas").Action("Index", "pessoa");
+                                innerChildren.Add().Text("Endereços").Action("Index", "endereco");
+                                innerChildren.Add().Text("Contatos").Action("Index", "contato");
+                                innerChildren.Add().Text("Tipos de Contatos").Action("Index", "tipocontato");
+                                innerChildren.Add().Text("Usuários").Action("Index", "usuario");
+                                innerChildren.Add().Text("Permissões").Action("Index", "regra");
+                                innerChildren.Add().Text("Documentos").Action("Index", "documento");
+                                innerChildren.Add().Text("Tipos de Documentos").Action("Index", "tipodocumento");
+
+                            });
+                        children.Add().Text("Grupo Empresas")
+                            .Items(innerChildren =>
+                            {
+                                innerChildren.Add().Text("Empresas").Action("Index", "empresa");
+                                innerChildren.Add().Text("Setores").Action("Index", "setor");
+                                innerChildren.Add().Text("Tipo de Setores").Action("Index", "tiposetor");
+                                innerChildren.Add().Text("Equipamentos").Action("Index", "equipamento");
+                                innerChildren.Add().Text("Tipos de Equipamentos").Action("Index", "tipoequipamento");
+
+                            });
+                        children.Add().Text("Grupo Ordem de Serviços")
+                                .Items(innerChildren =>
+                                {
+                                    innerChildren.Add().Text("Ordem de Serviço").Action("Index", "ordemservico");
+                                    innerChildren.Add().Text("Serviços").Action("Index", "servico");
+                                });
+
+                    });
+
+                  items.Add().Text("Movimentação")
+                    .Items(children =>
+                    {
+                        children.Add().Text("Ordem de Serviços")
+                                .Items(innerChildren =>
+                                {
+                                    innerChildren.Add().Text("Entrada");
+                                    innerChildren.Add().Text("Saída");
+                                    innerChildren.Add().Text("Cancelado");
+
+                                });
+
+
+                    });
+
+                  items.Add()
+                     .Text("Relatórios")
+                     .Items(children =>
+                     {
+                         children.Add().Text("Ordem de Serviços")
+                                  .Items(innerChildren =>
+                                  {
+                                      innerChildren.Add().Text("Chamados abertos");
+                                      innerChildren.Add().Text("Chamados fechados");
+                                      innerChildren.Add().Text("Total de chamados por mês");
+                                      innerChildren.Add().Text("Total de chamados por empresa");
+
+                                  });
+                     });
+                  items.Add()
+                     .Text("Login")
+                     .Items(children =>
+                     {
+                         children.Add().Text("Configurações");
+                         children.Add().Text("Sair");
+                     });
+
+              }).Deferred(true)
+        )
+
+        <div class="container body-content">
+            <div class="loading"></div>
+            @RenderBody()
+            @*@RenderSection("scripts", required: false)*@
+        </div>
+
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/messages/kendo.messages.pt-BR.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/cultures/kendo.culture.pt-BR.min.js"></script>
+        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.aspnetmvc.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/kendo.grid.notifications.js"></script>
+        <script defer>
+            kendo.culture("pt-BR");
+            $("#menu").kendoMenu({ select: onSelect });
+            function onSelect(e) {
+                kendo.ui.progress($(".loading"), true);
+            }
+        </script>
+
+        @Html.Kendo().DeferredScripts(true)
+    </body>
+</html>

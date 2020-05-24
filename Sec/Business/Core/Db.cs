@@ -44,6 +44,11 @@
                 .WithRequired(p => p.Empresa)
                 .WillCascadeOnDelete(false);
 
+            //modelBuilder.Entity<EmpresaFilial>()
+            // .HasMany(p => p.Empresa)
+            // .WithRequired(p => p.EmpresaMatriz)
+            // .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Equipamento>()
                 .HasMany(t => t.Imagens)
                 .WithMany(t => t.Equipamentos)

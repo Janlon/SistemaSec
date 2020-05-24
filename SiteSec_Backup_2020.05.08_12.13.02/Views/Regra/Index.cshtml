@@ -1,0 +1,35 @@
+﻿@using SiteSec.Models
+
+@(Html.Kendo().Grid<Regra>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name);
+        columns.Command(command =>
+        {
+            command.Edit().Text("Alterar");
+            command.Destroy().Text("Apagar");
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true))
+    .AutoBind(true)
+    .Pageable()
+    .Mobile(MobileMode.Auto)
+    .Sortable()
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("Read", "Regra"))
+        .Create(update => update.Action("Create", "Regra"))
+        .Update(update => update.Action("Update", "Regra"))
+        .Destroy(update => update.Action("Destroy", "Regra"))
+    ).Deferred(true)
+)
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))

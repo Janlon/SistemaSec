@@ -1,0 +1,153 @@
+﻿@model SiteSec.Models.Empresa
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().MaskedTextBoxFor(model => model.CNPJ).Mask("00.000.000/0000-00").HtmlAttributes(new { style = "width:100%;" }))
+                @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RazaoSocial, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.RazaoSocial).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.RazaoSocial, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NomeFantasia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.NomeFantasia).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.NomeFantasia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CEP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="BuscaCep" class="form-control" style="width:100%;" />
+                <input type="hidden" id="CEP" , name="CEP" />
+                @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.Logradouro).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.Logradouro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.Bairro).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Localidade, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.Localidade).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.Localidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UF, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.UF).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Complemento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().TextBoxFor(model => model.Complemento).HtmlAttributes(new { style = "width:100%;" })
+                @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model=>model.Atividade, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @(Html.Kendo().DropDownListFor(model=>model.Atividade)
+                              .DataTextField("Descricao")
+                              .DataValueField("Id")
+                              .OptionLabel("Selecione")
+                              .Filter("contains")
+                              .HtmlAttributes(new { style = "width:100%;" })
+                              .DataSource(source =>
+                              {
+                                  source.Custom()
+                                      .ServerFiltering(true)
+                                      .Type("aspnetmvc-ajax")
+                                      .Transport(transport => { transport.Read("Read", "Cargo", new { PessoaFisica = false }); })
+                                      .Schema(schema => { schema.Data("Data").Total("Total"); });
+                              })
+                )
+                @Html.ValidationMessageFor(model => model.Atividade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+
+        function getCep() {  
+
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url: '@Url.Action("Read","Geo")',
+                data: { cep: this.value() },
+                contentType: "json",
+                beforeSend : function () {
+                    kendo.ui.progress($(".k-window"), true);
+                },
+                complete: function () {
+                    kendo.ui.progress($(".k-window"), false);
+                },
+                success: function (data) {
+
+                    var obj = JSON.parse(data);
+
+                    if (obj != null) {
+
+                        let cep = obj.cep != " " ? obj.cep : null;
+                        let logradouro = obj.logradouro != " " ? obj.logradouro : null;
+                        let bairro = obj.bairro != " " ? obj.bairro : null;
+                        let cidade = obj.localidade != " " ? obj.localidade : null;
+                        let uf = obj.uf != " " ? obj.uf : null;
+
+                        $('#CEP').val(cep).trigger("change");
+                        $('#Logradouro').val(logradouro).trigger("change");
+                        $('#Bairro').val(bairro).trigger("change");
+                        $('#Localidade').val(cidade).trigger("change");
+                        $('#UF').val(uf).trigger("change");
+                    }
+                }
+            });
+
+        }
+
+        $("#BuscaCep").kendoMaskedTextBox({
+            mask: "00000-000",
+            change: getCep 
+        });
+
+    });
+</script>

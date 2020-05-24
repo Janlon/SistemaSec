@@ -6,13 +6,13 @@
         <title>@ViewBag.Title - Sistema Sec</title>
 
         <link type="text/css" rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Armata" />
-        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" />
-        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.rtl.min.css" />
-        <link type="text/css" rel="stylesheet"  href="https://kendo.cdn.telerik.com/2017.1.118/styles/kendo.moonlight.min.css" />
-        <link type="text/css" rel="stylesheet"  href="~/Content/Shared.css" />
+        	<link href="@Url.Content("~/Content/kendo/2020.1.219/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2020.1.219/kendo.moonlight.min.css")" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet"  href="~/Content/Shared.css" />
 
         @Scripts.Render("~/bundles/modernizr")
-    </head>
+    	<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+</head>
     <body>
 
         @(Html.Kendo().Menu()
@@ -105,12 +105,15 @@
             @*@RenderSection("scripts", required: false)*@
         </div>
 
-        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/jquery.min.js"></script>
-        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.all.min.js"></script>
-        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/messages/kendo.messages.pt-BR.min.js"></script>
-        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/cultures/kendo.culture.pt-BR.min.js"></script>
-        <script type="text/javascript" src="https://kendo.cdn.telerik.com/2017.1.223/js/kendo.aspnetmvc.min.js"></script>
-        <script type="text/javascript" src="~/Scripts/kendo.grid.notifications.js"></script>
+        	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/messages/kendo.messages.pt-BR.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/cultures/kendo.culture.pt-BR.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2020.1.219/kendo.aspnetmvc.min.js")"></script>
+<script type="text/javascript" src="~/Scripts/kendo.grid.notifications.js"></script>
         <script defer>
             kendo.culture("pt-BR");
             $("#menu").kendoMenu({ select: onSelect });
@@ -119,6 +122,6 @@
             }
         </script>
 
-        @Html.Kendo().DeferredScripts(true)
+        @*@Html.Kendo().DeferredScripts(true)*@
     </body>
 </html>

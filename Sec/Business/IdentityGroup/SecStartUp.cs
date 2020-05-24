@@ -40,6 +40,7 @@ namespace Sec.IdentityGroup
         {
             ConfigureAuth(app);            
             DataInit();
+            app.MapSignalR();
         }
 
         public void Configuration(IAppBuilder app, string tokenPath)

@@ -1,0 +1,81 @@
+﻿@using SiteSec.Models
+
+<div id="janela" name="janela"></div>
+
+@(Html.Kendo().Grid<Pessoa>()
+    .Name("grid")
+    .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Imagens.FirstOrDefault().Image64).Encoded(false);
+        columns.Bound(p => p.Imagens.FirstOrDefault().Nome);
+        columns.Command(command =>
+        {
+            command.Custom("a").Text("Vizualizar").Click("openWindow");
+            command.Destroy().Text("Apagar");
+
+        });
+    })
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).DisplayDeleteConfirmation(true).TemplateName("Template"))
+    .AutoBind(true)
+    .Pageable()
+    .Sortable()
+    .Mobile(MobileMode.Auto)
+    .Scrollable()
+    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(150)
+        .Events(events => events.Error("Error"))
+        .Events(events => events.RequestEnd("RequestEnd"))
+        .Events(events => events.Change("Change"))
+        .Model(model => model.Id(p => p.Id))
+        .Read(read => read.Action("Read", "ImagemPessoa", new { PessoaId = ViewBag.PessoaId }))
+        .Create(update => update.Action("Create", "ImagemPessoa"))
+        .Update(update => update.Action("Update", "ImagemPessoa"))
+        .Destroy(update => update.Action("Destroy", "ImagemPessoa"))
+    ).Deferred(true)
+)
+
+@(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
+
+@Scripts.Render("~/bundles/Web")
+
+
+<script>
+     /*
+     *Função para abrir a janela para adicionar as imagens
+     */
+    function openWindow(e) {
+        e.preventDefault();
+        let wnd = null;
+        let dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        let direction = "/Imagem/Index/" + dataItem.Id;
+        wnd = $("#janela").data("kendoWindow");
+       
+        if (!wnd) {
+            wnd = $("#janela").kendoWindow({
+                actions: ["Close"],
+                title: "Imagem: " + dataItem.Nome,
+                content: direction,
+                visible: false,
+            }).data("kendoWindow");
+        }
+        wnd.center();
+        wnd.open();
+   
+    }
+    /*
+    *Função de retorno da mensagem de Erro
+    */
+    function onError(e) {
+        popupNotification("Ocorreu um erro ao inserir o registro", false);
+    }
+    /*
+    *Função de retorno da mensagem de Sucesso
+    */
+    function onSuccess(e) {
+        popupNotification("Registro inserido com sucesso", true);
+        location.reload(true);
+    }
+</script>

@@ -7,6 +7,7 @@ using Sec.Business;
 using Sec.Business.Models;
 using Sec.IdentityGroup;
 using Sec.Models;
+using Swagger.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,7 +48,7 @@ namespace Swagger.Controllers
         }
 
         [Route("~/api/Usuario/Login")]
-        public CrudResult<string> Login(Usuario obj)
+        public string Login(Account obj)
         { 
             try
             {
@@ -77,12 +78,12 @@ namespace Swagger.Controllers
 
                     if (httpResponse.IsSuccessStatusCode)
                     {
-                        am = new ApplicationManager();
-                        ApplicationUser au = am.UM.Find(obj.UserName.ToLower(), obj.Senha);
+                        //am = new ApplicationManager();
+                        //ApplicationUser au = am.UM.Find(obj.UserName.ToLower(), obj.Senha);
 
                         // usuario.AccessTokenFormat = JObject.Parse(bearerData)["access_token"].ToString();
                         // usuario.UserName = JObject.Parse(bearerData)["userName"].ToString();
-                        return null;
+                        return bearerData;
                     }
                 }
                 return null;

@@ -1,0 +1,23 @@
+﻿@model SiteSec.Models.Equipamento
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().Upload().Name("Files").Events(events => events
+                     .Error("onError")
+                     .Success("onSuccess")).Async(a => a
+                         .Save("Upload", "ImagemEquipamento", new { id = @ViewBag.EquipamentoId })
+                         .AutoUpload(true))
+            </div>
+        </div>
+
+    </div>
+
+}

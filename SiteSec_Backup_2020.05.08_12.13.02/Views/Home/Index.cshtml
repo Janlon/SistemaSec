@@ -1,0 +1,197 @@
+﻿@model SiteSec.Models.Agenda
+
+@using (Html.BeginForm())
+{
+    @(Html.Kendo().Scheduler<SiteSec.Models.Agenda>()
+    .Name("scheduler")
+    .Timezone("Etc/UTC")
+    .StartTime(8, 0, 0)
+    .EndTime(20, 0, 0)
+    .MajorTimeHeaderTemplate("#=kendo.toString(date, 'HH:mm')#")
+    .DateHeaderTemplate("#=kendo.toString(date, 'D')#")
+    .Mobile(MobileMode.Auto)
+    .Deferred(true)
+    .Date(DateTime.Now)
+    .Height(600)
+    .Views(views =>
+    {
+        views.DayView();
+        views.WeekView();
+        views.MonthView();
+        views.AgendaView(d => d.Selected(true));
+    })
+    .Editable(editable => editable.TemplateName("Template"))
+    .Events(e => {  e.Edit("editar"); })
+    .Selectable(true)
+    .DataSource(d => d
+    .Model(m =>
+            {
+                m.Id(f => f.OrdemId);
+                m.Field(f => f.Title);
+            })
+        .Read("Read", "Home")
+        .Create("Create", "Home")
+    )
+    .Resources(resource =>
+    {
+        resource.Add(m => m.PessoaId)
+            .Title("Responsável")
+            .DataSource(ds => ds
+                    .Custom()
+                    .Transport(transport => transport.Read(read => read.Action("Get", "Pessoa")))
+                )
+            .DataTextField("Nome")
+            .DataValueField("PessoaId");
+        resource.Add(m => m.EmpresaId)
+           .Title("Empresa")
+           .DataSource(ds => ds
+                   .Custom()
+                   .Transport(transport => transport.Read(read => read.Action("Get", "Empresa")))
+               )
+           .DataTextField("RazaoSocial")
+           .DataValueField("EmpresaId");
+    })
+    )
+}
+
+<script id="Template" type="text/x-kendo-template" defer>
+    <div class="event-template">
+        <div class="form-group">
+
+            <label class="control-label col-md-2">Emissão</label>
+            <div class="col-md-10">
+                <input name="start" data-role="datetimepicker" data-format="dd/MM/yyyy HH:mm" data-time-format="HH:mm" data-bind="value: start" />
+            </div>
+
+            <label class="control-label col-md-2">Validade</label>
+            <div class="col-md-10">
+                <input name="end" data-role="datetimepicker" data-format="dd/MM/yyyy HH:mm" data-time-format="HH:mm" data-bind="value: end" />
+            </div>
+
+            <label class="control-label col-md-2">Responsável</label>
+            <div class="col-md-10">
+                <input id="pessoas" data-text-field="Nome" data-value-field="PessoaId" data-role="dropdownlist" data-bind="source:responsaveis, value:PessoaId" data-autobind="true" style="width:100%" />
+            </div>
+
+            <label class="control-label col-md-2">Empresa</label>
+            <div class="col-md-10">
+                <input id="empresas" data-text-field="RazaoSocial" data-value-field="EmpresaId" data-role="dropdownlist" data-bind="source:empresas, value:EmpresaId" data-autobind="true" onchange="carregarTreeview(this.value);" style="width:100%" />
+            </div>
+
+            <input type="hidden" id="ListaResultados" />
+            <div id="treeview"></div>
+
+        </div>
+    </div>
+</script>
+
+<script defer>
+    function checkedNodeIds(nodes, checkedNodes) {
+            for (var i = 0; i < nodes.length; i++) {
+
+                if (nodes[i].checked)
+                    checkedNodes.push(nodes[i].id);
+
+                if (nodes[i].hasChildren)
+                    checkedNodeIds(nodes[i].children.view(), checkedNodes);
+            }
+        }
+    function onCheck() {
+        var checkedNodes = [],
+            treeView = $("#treeview").data("kendoTreeView"),
+            message;
+
+        checkedNodeIds(treeView.dataSource.view(), checkedNodes);
+
+        if (checkedNodes.length > 0) {
+            message = checkedNodes.join(",");
+        }
+
+        $("#Itens").val(message).trigger("change");
+    }
+    function carregarTreeview(e) {
+
+        id = this.value();
+
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: '@Url.Action("EquipamentosDosSetoresDaEmpresa", "Setor")',
+            data: { empresaId: id },
+            contentType: "json",
+            success: function (data) {
+
+                var itens = data.ItensOrdemServico;
+                var setores = new Array();
+                for (var i in itens) {
+                    var equipamentos = new Array();
+                    for (var x in itens[i].ItensEquipamentos) {
+                        var servicos = new Array();
+                        for (var z in itens[i].ItensEquipamentos[x].Servicos) {
+
+                            var idSetor = itens[i].SetorId;
+                            var idEquipamento = itens[i].ItensEquipamentos[x].EquipamentoId;
+                            var idServico = itens[i].ItensEquipamentos[x].Servicos[z].Id;
+
+                            servicos.push({ 'id': 'setorId=' + idSetor + ';equipamentoId=' + idEquipamento + ';servicoId=' + idServico, 'text': itens[i].ItensEquipamentos[x].Servicos[z].Descricao });
+                        }
+                        equipamentos.push({ 'id': itens[i].ItensEquipamentos[x].EquipamentoId, 'text': itens[i].ItensEquipamentos[x].TipoEquipamentoDescricao, 'items': servicos });
+                    }
+                    setores.push({ 'id': itens[i].SetorId, 'text': itens[i].TipoSetorDescricao, 'items': equipamentos });
+                }
+
+                var ds = new kendo.data.HierarchicalDataSource({
+                    data: setores
+                });
+
+                $("#treeview").kendoTreeView({
+                    dataSource: ds,
+                    check: onCheck,
+                    checkboxes: { checkChildren: true },
+                });
+            }
+        });
+    }
+    function editar(e) {
+        //altera o nome do titulo da janela
+        e.container.data("kendoWindow").setOptions({ title: "Abrir Ordem de Serviço" });
+
+        console.log($('[data-bind="value: empresaid"]').val());
+
+        //if ($("#EmpresaId").val() != 0) {
+        //    carregarTreeview($("#EmpresaId").val())
+        //}
+
+            @*// vincular o id da pessoa com a agenda
+            var vmP = new kendo.observable({
+                responsaveis: new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: '@Url.Action("Get","Pessoa")',
+                            cache: true,
+                            dataType: "json",
+                            contentType: "application/json",
+                            type: "GET"
+                        }
+                    }
+                })
+            });
+            kendo.bind($("#pessoas"), vmP);
+
+            // vincular o id da empresa com a agenda
+            var vmE = new kendo.observable({
+                empresas: new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: '@Url.Action("Get","Empresa")',
+                            cache: true,
+                            dataType: "json",
+                            contentType: "application/json",
+                            type: "GET"
+                        }
+                    }
+                })
+            });
+            kendo.bind($("#empresas"), vmE);*@
+    }
+</script>
