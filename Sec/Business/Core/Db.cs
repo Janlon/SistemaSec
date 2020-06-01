@@ -44,10 +44,20 @@
                 .WithRequired(p => p.Empresa)
                 .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<EmpresaFilial>()
-            // .HasMany(p => p.Empresa)
-            // .WithRequired(p => p.EmpresaMatriz)
-            // .WillCascadeOnDelete(false);
+            modelBuilder.Entity<EmpresaMatriz>()
+            .MapToStoredProcedures(s => s
+            .Update(u => u.HasName("upd_EmpresaMatriz"))
+            .Delete(d => d.HasName("del_EmpresaMatriz"))
+            .Insert(i => i.HasName("ins_EmpresaMatriz")));
+
+            modelBuilder.Entity<EmpresaFilial>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_EmpresaFilial"))
+                .Delete(d => d.HasName("del_EmpresaFilial"))
+                .Insert(i => i.HasName("ins_EmpresaFilial")))
+                .HasRequired(p => p.EmpresaMatriz)
+                .WithMany(p => p.EmpresasFiliais)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Equipamento>()
                 .HasMany(t => t.Imagens)

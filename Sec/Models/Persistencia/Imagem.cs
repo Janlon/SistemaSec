@@ -27,14 +27,16 @@ namespace Sec.Models
         //[Display(Name = "Referencia", AutoGenerateField = true, AutoGenerateFilter = true, Description ="Imagem de referência", Prompt = "Principal")]
         //public bool Principal { get; set; } = false;
 
-        /// <summary>
-        ///  Automatização de minificação de imagens, que converte imagens para WebP. 
-        ///  Vamos adotar esse como o padrão para imagens
-        /// </summary>
         [Required]
         [Column("Imagem")]
         [Display(Name = "Imagem")]
-        public byte[] File
+        public byte[] File { get; set; }
+
+        /// <summary>
+        ///  Automatização de minificação de imagens, que converte imagens para WebP.
+        /// </summary>
+        [NotMapped]
+        public byte[] WebP
         {
             get
             {
@@ -42,7 +44,7 @@ namespace Sec.Models
                 {
                     //usar para criar o nome da imagem
                     Guid guid = new Guid();
-                    
+
                     //CodecInfo para imagens Jpeg
                     ImageCodecInfo codec = ImageCodecInfo.GetImageEncoders().First(enc => enc.FormatID == ImageFormat.Jpeg.Guid);
                     //EncoderParameters que vai setar o nível de qualidade (compressão)
@@ -51,11 +53,11 @@ namespace Sec.Models
                         //Qualidade em 0L = máximo de compressão
                         Param = new[] { new EncoderParameter(Encoder.Quality, 0L) }
                     };
-                  
+
                     //diminuir o tamanho
                     Image originalImage = Image.FromStream(ms, true, true);
                     Image resizedImage = originalImage.GetThumbnailImage(800, (800 * originalImage.Height) / originalImage.Width, null, IntPtr.Zero);
-                    
+
                     // Create a bitmap.
                     Bitmap bmp = new Bitmap(resizedImage);
                     bmp.Save(guid.ToString(), codec, imgParams);

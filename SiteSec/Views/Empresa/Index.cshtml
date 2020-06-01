@@ -33,6 +33,6 @@
     .Create(update => update.Action("Create", "Empresa"))
     .Update(update => update.Action("Update", "Empresa"))
     .Destroy(update => update.Action("Destroy", "Empresa"))
-    ).Deferred(true)
+    )
 )
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))

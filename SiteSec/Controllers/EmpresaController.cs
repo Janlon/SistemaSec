@@ -27,9 +27,9 @@ namespace SiteSec.Controllers
             List<Empresa> resultado = new List<Empresa>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Empresa>>(str);
-            if (obj != null)
-                resultado = obj.OrderBy(p => p.RazaoSocial).ToList();
+            resultado = JsonConvert.DeserializeObject<List<Empresa>>(str);
+            if (resultado != null)
+                resultado = resultado.OrderBy(p => p.RazaoSocial).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }
