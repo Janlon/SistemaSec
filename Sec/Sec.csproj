@@ -135,10 +135,11 @@
     <Compile Include="Business\Core\FactoryBase.cs" />
     <Compile Include="Business\Engine\Entregas.cs" />
     <Compile Include="Business\Engine\Equipamentos.cs" />
+    <Compile Include="Business\Engine\Filiais.cs" />
     <Compile Include="Business\Engine\Geo.cs" />
     <Compile Include="Business\Engine\Imagens.cs" />
     <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
-    <Compile Include="Business\Engine\Login.cs" />
+    <Compile Include="Business\Engine\Matrizes.cs" />
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Pessoas.cs" />
     <Compile Include="Business\Engine\Regras.cs" />

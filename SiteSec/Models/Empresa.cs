@@ -26,6 +26,8 @@ namespace SiteSec.Models
         [Required(ErrorMessage = "{0} é obrigatório.")]
         public string CNPJ { get; set; } = "";
 
+        [Display(Name = "Matriz", AutoGenerateField = true, AutoGenerateFilter = true, Prompt = "Empresa que são Matriz")]
+        public bool EhMatriz { get; set; } = true;
 
 
 

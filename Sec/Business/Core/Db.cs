@@ -55,8 +55,8 @@
                 .Update(u => u.HasName("upd_EmpresaFilial"))
                 .Delete(d => d.HasName("del_EmpresaFilial"))
                 .Insert(i => i.HasName("ins_EmpresaFilial")))
-                .HasRequired(p => p.EmpresaMatriz)
-                .WithMany(p => p.EmpresasFiliais)
+                .HasRequired(p => p.Matriz)
+                .WithMany(p => p.Filiais)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Equipamento>()
@@ -197,6 +197,8 @@
         public DbSet<OrdemDeServico> OrdensDeServico { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<EmpresaMatriz> Matrizes { get; set; }
+        public DbSet<EmpresaFilial> Filiais { get; set; }
         public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Setor> Setores { get; set; }

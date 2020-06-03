@@ -48,6 +48,12 @@ namespace SiteSec.Controllers
                         }
                     }
                 }
+                if (usuarios.Count.Equals(0))
+                {
+                    List<Usuario> usuarios1 = new List<Usuario>();
+                    usuarios = usuarios1;
+                }
+                
 
                 return Json(usuarios.ToDataSourceResult(request));
             }

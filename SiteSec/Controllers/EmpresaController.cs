@@ -22,6 +22,19 @@ namespace SiteSec.Controllers
             ViewBag.Id = id == null ? "" : id.ToString();
             return View();
         }
+        public ActionResult Filial(int? id)
+        {
+            ViewBag.EmpresaMatrizId = id;
+            return PartialView();
+        }
+        public async Task<JsonResult> Get()
+        {
+            var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa");
+            var str = JsonConvert.SerializeObject(apiRetorno.result);
+            List<Empresa> empresas = JsonConvert.DeserializeObject<List<Empresa>>(str).OrderBy(p => p.RazaoSocial).ToList();
+
+            return Json(empresas, JsonRequestBehavior.AllowGet);
+        }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
             List<Empresa> resultado = new List<Empresa>();
@@ -62,13 +75,22 @@ namespace SiteSec.Controllers
             var apiRetorno = await api.Use(HttpMethod.Delete, new Empresa(), $"api/Empresa/{id}");
             return Json(new[] { apiRetorno }.ToDataSourceResult(request, ModelState));
         }
-        public async Task<JsonResult> Get()
+        public async Task<ActionResult> ReadFilial([DataSourceRequest]DataSourceRequest request, string id)
         {
+            List<Empresa> resultado = new List<Empresa>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            List<Empresa> empresas = JsonConvert.DeserializeObject<List<Empresa>>(str).OrderBy(p => p.RazaoSocial).ToList();
+            resultado = JsonConvert.DeserializeObject<List<Empresa>>(str);
+            if (resultado != null)
+                resultado = resultado.OrderBy(p => p.RazaoSocial).Where(p => p.Id != Convert.ToInt32(id)).ToList();
 
-            return Json(empresas, JsonRequestBehavior.AllowGet);
+            return Json(resultado.ToDataSourceResult(request));
+        }
+        public async Task<ActionResult> CreateMatrizFilial(EmpresaFilial obj)
+        {
+            List<Empresa> resultado = new List<Empresa>();
+            await api.Use(HttpMethod.Post, obj, "api/Empresa/Filial");
+            return Redirect(@Url.Action("Index"));
         }
     }
 }

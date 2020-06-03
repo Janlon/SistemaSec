@@ -8,9 +8,6 @@
 
     public static partial class Engine
     {
-        public static class Login
-        {
-
-        }
+      
     }
 }

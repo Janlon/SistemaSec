@@ -20,6 +20,8 @@
     internal class OrdensDeServicoFactory : Factory<OrdemDeServico> { }
     internal class PessoasFactory : Factory<Pessoa> { }
     internal class EmpresasFactory : Factory<Empresa> { }
+    internal class MatrizesFactory : Factory<EmpresaMatriz> { }
+    internal class FiliaisFactory : Factory<EmpresaFilial> { }
     internal class RetiradasFactory : Factory<RetiradaDoItemDaOrdemDeServico> { }
     internal class ServicosFactory : Factory<Servico> { }
     internal class SetoresFactory : Factory<Setor> { }

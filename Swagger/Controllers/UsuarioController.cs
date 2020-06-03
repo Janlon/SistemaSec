@@ -43,7 +43,7 @@ namespace Swagger.Controllers
         [Route("~/api/Usuario/{id:Guid}/Permissoes")]
         public CrudResult<IdentityRole> GetPermissoesDoUsuario(Guid id)
         {
-            CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
+            //CrudResult<IdentityRole> regras = new CrudResult<IdentityRole>();
             return Engine.Regras.Filter(p => p.Users.FirstOrDefault().UserId.Equals(id.ToString()));
         }
 

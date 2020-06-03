@@ -11,18 +11,27 @@ namespace Sec.Models
     [Table("Filiais", Schema = "Sec")]
     public class EmpresaFilial
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ScaffoldColumn(false)]
+        public int Id { get; set; }
 
-        [ScaffoldColumn(false), Key(), DatabaseGenerated(DatabaseGeneratedOption.None), Column(Order = 1)]
-        public int EmpresaMatrizId { get; set; }
+        [ScaffoldColumn(false)]
+        public int MatrizId { get; set; }
 
-        [ScaffoldColumn(false), Key(), DatabaseGenerated(DatabaseGeneratedOption.None), Column(Order = 2)]
+        /// <summary>
+        /// Representa a empresa filial
+        /// </summary>
+        [ScaffoldColumn(false)]
         public int EmpresaId { get; set; }
 
-        [ForeignKey("EmpresaMatrizId")]
-        public virtual EmpresaMatriz EmpresaMatriz { get; set; }
+        [ForeignKey("MatrizId")]
+        public virtual EmpresaMatriz Matriz { get; set; }
 
         [ForeignKey("EmpresaId")]
         public virtual Empresa Empresa { get; set; }
+
+        [NotMapped]
+        public virtual List<int> FilialId { get; set; }
 
     }
 }

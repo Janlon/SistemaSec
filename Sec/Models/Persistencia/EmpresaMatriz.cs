@@ -25,7 +25,7 @@ namespace Sec.Models
         public virtual Empresa Empresa { get; set; }
 
         [Display(Name = "Empresas Filiais")]
-        public List<EmpresaFilial> EmpresasFiliais { get; set; } = new List<EmpresaFilial>();
+        public List<EmpresaFilial> Filiais { get; set; } = new List<EmpresaFilial>();
 
     }
 }

@@ -27,9 +27,9 @@ namespace SiteSec.Controllers
             List<Regra> resultado = new List<Regra>();
             var apiRetorno = await api.Use(HttpMethod.Get, new Regra(), $"api/Regra/{id}");
             var str = JsonConvert.SerializeObject(apiRetorno.result);
-            var obj = JsonConvert.DeserializeObject<List<Regra>>(str);
-            if (obj.Count > 0)
-                resultado = obj.OrderBy(p => p.Name).ToList();
+            resultado = JsonConvert.DeserializeObject<List<Regra>>(str);
+            if (resultado.Count > 0)
+                resultado = resultado.OrderBy(p => p.Name).ToList();
 
             return Json(resultado.ToDataSourceResult(request));
         }
