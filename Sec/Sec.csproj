@@ -140,6 +140,7 @@
     <Compile Include="Business\Engine\Imagens.cs" />
     <Compile Include="Business\Engine\ItensDasOrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Matrizes.cs" />
+    <Compile Include="Business\Engine\MatrizesFiliais.cs" />
     <Compile Include="Business\Engine\OrdensDeServicos.cs" />
     <Compile Include="Business\Engine\Pessoas.cs" />
     <Compile Include="Business\Engine\Regras.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Persistencia\Empresa.cs" />
     <Compile Include="Models\Persistencia\EmpresaFilial.cs" />
     <Compile Include="Models\Persistencia\EmpresaMatriz.cs" />
+    <Compile Include="Models\Persistencia\EmpresaMatrizFilial.cs" />
     <Compile Include="Models\Persistencia\TipoDeEquipamento.cs" />
     <Compile Include="Models\Persistencia\TipoDeSetor.cs" />
     <Compile Include="Models\Persistencia\Usuario.cs" />

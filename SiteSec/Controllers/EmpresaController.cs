@@ -86,11 +86,32 @@ namespace SiteSec.Controllers
 
             return Json(resultado.ToDataSourceResult(request));
         }
-        public async Task<ActionResult> CreateMatrizFilial(EmpresaFilial obj)
+        public async Task<ActionResult> CreateMatrizFilial([DataSourceRequest]DataSourceRequest request, EmpresaFilial obj)
         {
-            List<Empresa> resultado = new List<Empresa>();
-            await api.Use(HttpMethod.Post, obj, "api/Empresa/Filial");
-            return Redirect(@Url.Action("Index"));
+            //criar a empresa matriz
+            var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Empresa/Matriz");
+            int matrizId = Convert.ToInt32(JsonConvert.SerializeObject(apiRetorno.origin.Id));
+            obj.MatrizId = matrizId;
+
+            foreach (var item in obj.Filiais)
+            {
+                //criar empresa filial.
+                obj.EmpresaId = item;
+                apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Empresa/Filial");
+                int filialId = Convert.ToInt32(JsonConvert.SerializeObject(apiRetorno.origin.Id));
+                obj.FilialId = filialId;
+
+                //vincular empresa matriz e filial
+                apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Empresa/MatrizFilial");
+               
+                //atualizar empresa como filial
+                apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{item}");
+                var str = JsonConvert.SerializeObject(apiRetorno.result);
+                Empresa empresa = JsonConvert.DeserializeObject<List<Empresa>>(str).FirstOrDefault();
+                empresa.EhMatriz = false;
+                apiRetorno = await api.Use(HttpMethod.Put, empresa, "api/Empresa");
+            }
+            return Redirect(Url.Action("Index"));
         }
     }
 }

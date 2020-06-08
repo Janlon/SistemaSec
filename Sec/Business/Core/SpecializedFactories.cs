@@ -22,6 +22,7 @@
     internal class EmpresasFactory : Factory<Empresa> { }
     internal class MatrizesFactory : Factory<EmpresaMatriz> { }
     internal class FiliaisFactory : Factory<EmpresaFilial> { }
+    internal class MatrizesFiliaisFactory : Factory<EmpresaMatrizFilial> { }
     internal class RetiradasFactory : Factory<RetiradaDoItemDaOrdemDeServico> { }
     internal class ServicosFactory : Factory<Servico> { }
     internal class SetoresFactory : Factory<Setor> { }

@@ -29,45 +29,6 @@
         public Db Create() { return new Db(); }
         protected override void PrepareModel(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Pessoa>()
-                .HasMany(t => t.Imagens)
-                .WithMany(t => t.Pessoas)
-                .Map(m =>
-                {
-                    m.ToTable("ImagensDasPessoas", "Sec");
-                    m.MapLeftKey("PessoaId");
-                    m.MapRightKey("ImagemId");
-                });
-
-            modelBuilder.Entity<Empresa>()
-                .HasMany(p => p.Setores)
-                .WithRequired(p => p.Empresa)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<EmpresaMatriz>()
-            .MapToStoredProcedures(s => s
-            .Update(u => u.HasName("upd_EmpresaMatriz"))
-            .Delete(d => d.HasName("del_EmpresaMatriz"))
-            .Insert(i => i.HasName("ins_EmpresaMatriz")));
-
-            modelBuilder.Entity<EmpresaFilial>()
-                .MapToStoredProcedures(s => s
-                .Update(u => u.HasName("upd_EmpresaFilial"))
-                .Delete(d => d.HasName("del_EmpresaFilial"))
-                .Insert(i => i.HasName("ins_EmpresaFilial")))
-                .HasRequired(p => p.Matriz)
-                .WithMany(p => p.Filiais)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Equipamento>()
-                .HasMany(t => t.Imagens)
-                .WithMany(t => t.Equipamentos)
-                .Map(m =>
-                {
-                    m.ToTable("ImagensDosEquipamentos", "Sec");
-                    m.MapLeftKey("EquipamentoId");
-                    m.MapRightKey("ImagemId");
-                });
 
             //modelBuilder.Entity<EntregaDoItemDaOrdemDeServico>()
             //    .HasRequired(p => p.Pessoa)
@@ -91,6 +52,33 @@
                 .Delete(d => d.HasName("del_Documento"))
                 .Insert(i => i.HasName("ins_Documento")));
 
+            modelBuilder.Entity<Empresa>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_Empresa"))
+                .Delete(d => d.HasName("del_Empresa"))
+                .Insert(i => i.HasName("ins_Empresa")))
+                .HasMany(p => p.Setores)
+                .WithRequired(p => p.Empresa)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EmpresaFilial>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_Filial"))
+                .Delete(d => d.HasName("del_Filial"))
+                .Insert(i => i.HasName("ins_Filial")));
+
+            modelBuilder.Entity<EmpresaMatriz>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_Matriz"))
+                .Delete(d => d.HasName("del_Matriz"))
+                .Insert(i => i.HasName("ins_Matriz")));
+
+            modelBuilder.Entity<EmpresaMatrizFilial>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_MatrizFilial"))
+                .Delete(d => d.HasName("del_MatrizFilial"))
+                .Insert(i => i.HasName("ins_MatrizFilial")));
+
             modelBuilder.Entity<Endereco>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Endereco"))
@@ -113,19 +101,21 @@
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Equipamento"))
                 .Delete(d => d.HasName("del_Equipamento"))
-                .Insert(i => i.HasName("ins_Equipamento")));
+                .Insert(i => i.HasName("ins_Equipamento")))
+                .HasMany(t => t.Imagens)
+                .WithMany(t => t.Equipamentos)
+                .Map(m =>
+                {
+                    m.ToTable("ImagensDosEquipamentos", "Sec");
+                    m.MapLeftKey("EquipamentoId");
+                    m.MapRightKey("ImagemId");
+                });
 
             modelBuilder.Entity<Imagem>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Imagem"))
                 .Delete(d => d.HasName("del_Imagem"))
                 .Insert(i => i.HasName("ins_Imagem")));
-
-            modelBuilder.Entity<Usuario>()
-                .MapToStoredProcedures(s => s
-                .Update(u => u.HasName("upd_Usuario"))
-                .Delete(d => d.HasName("del_Usuario"))
-                .Insert(i => i.HasName("ins_Usuario")));
 
             modelBuilder.Entity<ItemDaOrdemDeServico>()
                 .MapToStoredProcedures(s => s
@@ -143,7 +133,15 @@
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_Pessoa"))
                 .Delete(d => d.HasName("del_Pessoa"))
-                .Insert(i => i.HasName("ins_Pessoa")));
+                .Insert(i => i.HasName("ins_Pessoa")))
+                .HasMany(t => t.Imagens)
+                .WithMany(t => t.Pessoas)
+                .Map(m =>
+                {
+                    m.ToTable("ImagensDasPessoas", "Sec");
+                    m.MapLeftKey("PessoaId");
+                    m.MapRightKey("ImagemId");
+                });
 
             modelBuilder.Entity<RetiradaDoItemDaOrdemDeServico>()
                 .MapToStoredProcedures(s => s
@@ -163,12 +161,6 @@
                 .Delete(d => d.HasName("del_Setor"))
                 .Insert(i => i.HasName("ins_Setor")));
 
-            modelBuilder.Entity<TipoDeSetor>()
-              .MapToStoredProcedures(s => s
-              .Update(u => u.HasName("upd_TipoDeSetor"))
-              .Delete(d => d.HasName("del_TipoDeSetor"))
-              .Insert(i => i.HasName("ins_TipoDeSetor")));
-
             modelBuilder.Entity<TipoDeDocumento>()
                 .MapToStoredProcedures(s => s
                 .Update(u => u.HasName("upd_TipoDeDocumento"))
@@ -180,6 +172,18 @@
                 .Update(u => u.HasName("upd_TipoDeEquipamento"))
                 .Delete(d => d.HasName("del_TipoDeEquipamento"))
                 .Insert(i => i.HasName("ins_TipoDeEquipamento")));
+
+            modelBuilder.Entity<TipoDeSetor>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_TipoDeSetor"))
+                .Delete(d => d.HasName("del_TipoDeSetor"))
+                .Insert(i => i.HasName("ins_TipoDeSetor")));
+
+            modelBuilder.Entity<Usuario>()
+                .MapToStoredProcedures(s => s
+                .Update(u => u.HasName("upd_Usuario"))
+                .Delete(d => d.HasName("del_Usuario"))
+                .Insert(i => i.HasName("ins_Usuario")));
 
         }
         #endregion
@@ -199,6 +203,7 @@
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<EmpresaMatriz> Matrizes { get; set; }
         public DbSet<EmpresaFilial> Filiais { get; set; }
+        public DbSet<EmpresaMatrizFilial> MatrizesFiliais { get; set; }
         public DbSet<RetiradaDoItemDaOrdemDeServico> Retiradas { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Setor> Setores { get; set; }

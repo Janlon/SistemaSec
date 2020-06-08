@@ -15,23 +15,14 @@ namespace Sec.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        [ScaffoldColumn(false)]
-        public int MatrizId { get; set; }
-
         /// <summary>
         /// Representa a empresa filial
         /// </summary>
         [ScaffoldColumn(false)]
         public int EmpresaId { get; set; }
 
-        [ForeignKey("MatrizId")]
-        public virtual EmpresaMatriz Matriz { get; set; }
-
         [ForeignKey("EmpresaId")]
         public virtual Empresa Empresa { get; set; }
-
-        [NotMapped]
-        public virtual List<int> FilialId { get; set; }
 
     }
 }

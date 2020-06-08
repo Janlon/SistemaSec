@@ -7,9 +7,9 @@
         <div class="form-horizontal">
 
             <div class="form-group">
-                @Html.LabelFor(model => model.MatrizId, htmlAttributes: new { @class = "control-label col-md-10" })
+                @Html.LabelFor(model => model.EmpresaId, htmlAttributes: new { @class = "control-label col-md-10" })
                 <div class="col-md-10">
-                    @(Html.Kendo().DropDownListFor(model => model.MatrizId)
+                    @(Html.Kendo().DropDownListFor(model => model.EmpresaId)
                       .DataTextField("RazaoSocial")
                       .DataValueField("Id")
                       .OptionLabel("Selecione")
@@ -23,14 +23,14 @@
                            .Schema(schema => { schema.Data("Data").Total("Total"); });
                    })
                 )
-                    @Html.ValidationMessageFor(model => model.MatrizId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.EmpresaId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.FilialId, htmlAttributes: new { @class = "control-label col-md-10" })
+                @Html.LabelFor(model => model.Filiais, htmlAttributes: new { @class = "control-label col-md-10" })
                 <div class="col-md-10">
-                    @(Html.Kendo().MultiSelectFor(model => model.FilialId)
+                    @(Html.Kendo().MultiSelectFor(model => model.Filiais)
                       .DataTextField("RazaoSocial")
                       .DataValueField("Id")
                       .Placeholder("Selecione")
@@ -44,7 +44,7 @@
                            .Schema(schema => { schema.Data("Data").Total("Total"); });
                    })
                 )
-                    @Html.ValidationMessageFor(model => model.FilialId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Filiais, "", new { @class = "text-danger" })
                 </div>
             </div>
 

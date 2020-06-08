@@ -67,7 +67,7 @@
         public virtual string Atividade { get { return Generics.Helpers.Cryptis.Text.AESDecrypt(XAtividade, DataKey); } set { XAtividade = Generics.Helpers.Cryptis.Text.AESEncrypt(value, DataKey); } }
 
         [Required(AllowEmptyStrings = true)]
-        public bool EhMatriz { get; set; } = true;
+        public bool EhMatriz { get; set; }
 
         [Display(Name = "Setores")]
         public virtual List<Setor> Setores { get; internal set; } = new List<Setor>();

@@ -13,17 +13,18 @@ namespace SiteSec.Models
 
         [Display(Name ="Empresa Filial", Description ="Razão social da empresa")]
         [ScaffoldColumn(false)]
-        public List<int> FilialId { get; set; }
+        public List<int> Filiais { get; set; }
+
+        [Display(Name = "Empresa Filial", Description = "Razão social da empresa")]
+        [ScaffoldColumn(false)]
+        public int FilialId { get; set; }
 
         [Display(Name = "Empresa Matriz", Description = "Razão social da empresa")]
         [ScaffoldColumn(false)]
         public int MatrizId { get; set; }
 
-        /// <summary>
-        /// representa a empresa matriz
-        /// </summary>
         [ScaffoldColumn(false)]
-        public int EmpresaId  => MatrizId;
+        public int EmpresaId { get; set; }
 
     }
 }

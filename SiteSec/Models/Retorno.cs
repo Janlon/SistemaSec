@@ -9,15 +9,13 @@ public class ApiRetorno : IDisposable
     public string delay { get; set; }
     public int action { get; set; }
     public List<object> result { get; set; }
-    public object origin { get; set; }
     public List<object> relatedItems { get; set; }
     public List<Error> errors { get; set; }
     public bool success { get; set; }
     public int affected { get; set; }
     public string type { get; set; }
     public string mensagem { get; set; }
-
-
+    public Origin origin { get;  set; }
 
     public class Error
     {
@@ -49,4 +47,9 @@ public class ApiRetorno : IDisposable
         GC.SuppressFinalize(this);
     }
     #endregion
+}
+
+public class Origin
+{
+    public int Id { get; set; }
 }

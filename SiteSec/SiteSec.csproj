@@ -192,6 +192,7 @@
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\EmpresaFilial.cs" />
+    <Compile Include="Models\EmpresaMatriz.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Entrega.cs" />
     <Compile Include="Models\Equipamento.cs" />

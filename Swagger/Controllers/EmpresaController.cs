@@ -17,50 +17,20 @@ namespace Swagger.Controllers
         public CrudResult<Empresa> Get(int id) => Engine.Empresas.Find(new object[] { id });
 
         [Route("~/api/Empresa/{Id:int}/setores")]
-        public CrudResult<Setor> GetSetoresDaEmpresa(int id)
-        {
-            return Engine.Setores.Filter(p => p.EmpresaId.Equals(id));
-        }
+        public CrudResult<Setor> GetSetoresDaEmpresa(int Id) => Engine.Setores.Filter(p => p.EmpresaId.Equals(Id));
 
         public CrudResult<Empresa> Post(Empresa obj) => Engine.Empresas.Insert(obj);
 
+        [Route("~/api/Empresa/Matriz")]
+        public CrudResult<EmpresaMatriz> PostMatriz(EmpresaMatriz obj) => Engine.Matrizes.Insert(obj);
+
         [Route("~/api/Empresa/Filial")]
-        public CrudResult<Empresa> PostMatrizFilial(EmpresaFilial obj)
-        {
+        public CrudResult<EmpresaFilial> PostFilial(EmpresaFilial obj) => Engine.Filiais.Insert(obj);
 
-            Empresa empresa = Engine.Empresas.Filter(p => p.Id.Equals(obj.MatrizId)).Result.FirstOrDefault();
-            empresa.EhMatriz = true;
-            var ret = Engine.Empresas.Update(empresa);
+        [Route("~/api/Empresa/MatrizFilial")]
+        public CrudResult<EmpresaMatrizFilial> PostMatrizFilial(EmpresaMatrizFilial obj) => Engine.MatrizesFiliais.Insert(obj);
 
-            EmpresaMatriz empresaM = new EmpresaMatriz()
-            {
-                EmpresaId = obj.MatrizId
-            };
-            int empresaMId = Engine.Matrizes.Insert(empresaM).Origin.Id;
-          
-            foreach (var filialId in obj.FilialId)
-            {
-                Empresa empresaF = Engine.Empresas.Filter(p => p.Id.Equals(filialId)).Result.FirstOrDefault();
-                empresaF.EhMatriz = false;
-                ret = Engine.Empresas.Update(empresaF);
-
-                EmpresaFilial empresaFilial = new EmpresaFilial()
-                {
-                    MatrizId = empresaMId,
-                    EmpresaId = filialId
-                };
-
-                var rett = Engine.Filiais.Insert(obj);
-            }
-
-            return Engine.Empresas.List();
-
-        }
-
-        public CrudResult<Empresa> Put(Empresa obj)
-        {
-            return Engine.Empresas.Update(obj);
-        }
+        public CrudResult<Empresa> Put(Empresa obj) => Engine.Empresas.Update(obj);
 
         public CrudResult<Empresa> Delete(int id) => Engine.Empresas.Delete(Engine.Empresas.Find(new object[] { id }).Result.FirstOrDefault());
     }

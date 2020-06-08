@@ -23,9 +23,5 @@ namespace Sec.Models
 
         [ForeignKey("EmpresaId")]
         public virtual Empresa Empresa { get; set; }
-
-        [Display(Name = "Empresas Filiais")]
-        public List<EmpresaFilial> Filiais { get; set; } = new List<EmpresaFilial>();
-
     }
 }
