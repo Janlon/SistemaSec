@@ -7,7 +7,6 @@
     .ToolBar(toolbar => toolbar.Create().Text("Adicionar"))
     .Columns(columns =>
     {
-        columns.Bound(p => p.EhMatriz);
         columns.Bound(p => p.RazaoSocial);
         columns.Bound(p => p.NomeFantasia);
         columns.Bound(p => p.CNPJ);
@@ -20,6 +19,7 @@
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Template").DisplayDeleteConfirmation(true))
+    .ClientDetailTemplateId("templateFilial")
     .AutoBind(true)
     .Pageable()
     .Sortable()
