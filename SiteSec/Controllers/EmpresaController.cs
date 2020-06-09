@@ -37,14 +37,24 @@ namespace SiteSec.Controllers
         }
         public async Task<ActionResult> Read([DataSourceRequest]DataSourceRequest request, string id)
         {
-            List<Empresa> resultado = new List<Empresa>();
-            var apiRetorno = await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}");
-            var str = JsonConvert.SerializeObject(apiRetorno.result);
-            resultado = JsonConvert.DeserializeObject<List<Empresa>>(str);
-            if (resultado != null)
-                resultado = resultado.OrderBy(p => p.RazaoSocial).ToList();
+            //buscar todas as empresas independente se é matriz e filial
+            List<Empresa> empresas = new List<Empresa>();
+            var apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}")).result);
+            empresas = JsonConvert.DeserializeObject<List<Empresa>>(apiRetorno);
+            if (empresas != null && empresas.Count > 0)
+            {
+                empresas = empresas.OrderBy(p => p.RazaoSocial).ToList();
+                foreach (var empresa in empresas)
+                {
+                    //remover da lista todas as empresas que são filiais
+                    apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new EmpresaFilial(), $"api/Empresa/Filial/{empresa.Id}")).result);
+                    EmpresaFilial filial = JsonConvert.DeserializeObject<List<EmpresaFilial>>(apiRetorno).FirstOrDefault();
+                    if(filial != null)
+                        empresas.Remove(empresa);
+                }
+            }
 
-            return Json(resultado.ToDataSourceResult(request));
+            return Json(empresas.ToDataSourceResult(request));
         }
         public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Empresa obj)
         {

@@ -19,7 +19,7 @@
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Template").DisplayDeleteConfirmation(true))
-    .ClientDetailTemplateId("templateFilial")
+  //  .ClientDetailTemplateId("templateFilial")
     .AutoBind(true)
     .Pageable()
     .Sortable()
@@ -33,13 +33,31 @@
     .Events(events => events.RequestEnd("RequestEnd"))
     .Events(events => events.Change("Change"))
     .Model(model => model.Id(p => p.Id))
-    .Group(g => g.Add(c => c.EhMatriz))
     .Read(read => read.Action("Read", "Empresa", new { id = ViewBag.Id }))
     .Create(update => update.Action("Create", "Empresa"))
     .Update(update => update.Action("Update", "Empresa"))
     .Destroy(update => update.Action("Destroy", "Empresa"))
     )
 )
+
+<script id="templateFilial" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<EmpresaFilial>()
+            .Name("grid_#=MatrizId#") 
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.EmpresaId);
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .Read(read => read.Action("ReadFilial", "Empresa", new { matrizId = "#=MatrizId#" }))
+            )
+            .Pageable()
+            .Sortable()
+            .ToClientTemplate()
+    )
+</script>
+
 @(Html.Kendo().Notification().Name("popupNotification").Deferred(true))
 
 <script>

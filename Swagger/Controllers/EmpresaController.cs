@@ -27,6 +27,7 @@ namespace Swagger.Controllers
         [Route("~/api/Empresa/Filial")]
         public CrudResult<EmpresaFilial> PostFilial(EmpresaFilial obj) => Engine.Filiais.Insert(obj);
 
+
         [Route("~/api/Empresa/MatrizFilial")]
         public CrudResult<EmpresaMatrizFilial> PostMatrizFilial(EmpresaMatrizFilial obj) => Engine.MatrizesFiliais.Insert(obj);
 

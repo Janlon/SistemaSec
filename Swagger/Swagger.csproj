@@ -257,11 +257,14 @@
     <Compile Include="Controllers\EnderecoController.cs" />
     <Compile Include="Controllers\EntregaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
+    <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagemController.cs" />
     <Compile Include="Controllers\ItemDaOrdemDeServicoController.cs" />
     <Compile Include="Controllers\MailController.cs" />
+    <Compile Include="Controllers\MatrizController.cs" />
+    <Compile Include="Controllers\MatrizFilialController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\RegraController.cs" />
