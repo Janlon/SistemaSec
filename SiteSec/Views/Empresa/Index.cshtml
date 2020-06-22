@@ -19,7 +19,7 @@
         });
     })
     .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Template").DisplayDeleteConfirmation(true))
-  //  .ClientDetailTemplateId("templateFilial")
+    .ClientDetailTemplateId("TemplateFilial")
     .AutoBind(true)
     .Pageable()
     .Sortable()
@@ -40,17 +40,20 @@
     )
 )
 
-<script id="templateFilial" type="text/kendo-tmpl">
-    @(Html.Kendo().Grid<EmpresaFilial>()
-            .Name("grid_#=MatrizId#") 
+<script id="TemplateFilial" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<Empresa>()
+            .Name("grid_#=EmpresaId#")
             .Columns(columns =>
             {
-                columns.Bound(o => o.EmpresaId);
+                columns.Bound(p => p.RazaoSocial);
+                columns.Bound(p => p.NomeFantasia);
+                columns.Bound(p => p.CNPJ);
+                columns.Bound(p => p.Atividade);
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(10)
-                .Read(read => read.Action("ReadFilial", "Empresa", new { matrizId = "#=MatrizId#" }))
+                .Read(read => read.Action("Read", "MatrizFilial", new { matrizId = "#=MatrizId#" }))
             )
             .Pageable()
             .Sortable()

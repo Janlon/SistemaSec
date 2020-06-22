@@ -166,12 +166,15 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EntregaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
+    <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\GeoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagemController.cs" />
     <Compile Include="Controllers\ImagemEquipamentoController.cs" />
     <Compile Include="Controllers\ImagemPessoaController.cs" />
     <Compile Include="Controllers\ItemOrdemServicoController.cs" />
+    <Compile Include="Controllers\MatrizController.cs" />
+    <Compile Include="Controllers\MatrizFilialController.cs" />
     <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Controllers\RegraController.cs" />
@@ -191,8 +194,8 @@
     <Compile Include="Models\Contato.cs" />
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Empresa.cs" />
-    <Compile Include="Models\EmpresaFilial.cs" />
-    <Compile Include="Models\EmpresaMatriz.cs" />
+    <Compile Include="Models\Filial.cs" />
+    <Compile Include="Models\Matriz.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Entrega.cs" />
     <Compile Include="Models\Equipamento.cs" />
@@ -201,6 +204,7 @@
     <Compile Include="Models\Helpers\Helper.cs" />
     <Compile Include="Models\Imagem.cs" />
     <Compile Include="Models\ItemOrdemServico.cs" />
+    <Compile Include="Models\MatrizFilial.cs" />
     <Compile Include="Models\OrdemServico.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Regra.cs" />
@@ -482,6 +486,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Filial\" />
+    <Folder Include="Views\MatrizFilial\" />
+    <Folder Include="Views\Matriz\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

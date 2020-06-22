@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SiteSec.Models
 {
-    public class EmpresaFilial
+    public class Filial
     {
         [ScaffoldColumn(false)]
         public int Id { get; set; } = 0;

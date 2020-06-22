@@ -41,19 +41,25 @@ namespace SiteSec.Controllers
             List<Empresa> empresas = new List<Empresa>();
             var apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Empresa(), $"api/Empresa/{id}")).result);
             empresas = JsonConvert.DeserializeObject<List<Empresa>>(apiRetorno);
-            if (empresas != null && empresas.Count > 0)
+            if (empresas == null || empresas.Count <= 0)
             {
-                empresas = empresas.OrderBy(p => p.RazaoSocial).ToList();
-                foreach (var empresa in empresas)
+                return Json(empresas.ToDataSourceResult(request));
+            }
+            empresas = empresas.OrderBy(p => p.RazaoSocial).ToList();
+            List<Empresa> tmp = new List<Empresa>();
+            tmp = empresas;
+            foreach (var item in tmp)
+            {
+                //remover da lista todas as empresas que são filiais
+                apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new Filial(), $"api/Filial/{item.Id}/Empresa")).result);
+                Filial filial = JsonConvert.DeserializeObject<List<Filial>>(apiRetorno).FirstOrDefault();
+                if (filial != null)
                 {
-                    //remover da lista todas as empresas que são filiais
-                    apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Get, new EmpresaFilial(), $"api/Empresa/Filial/{empresa.Id}")).result);
-                    EmpresaFilial filial = JsonConvert.DeserializeObject<List<EmpresaFilial>>(apiRetorno).FirstOrDefault();
-                    if(filial != null)
-                        empresas.Remove(empresa);
+                    Empresa empresa = new Empresa();
+                    empresa = item;
+                    empresas.Remove(empresa);
                 }
             }
-
             return Json(empresas.ToDataSourceResult(request));
         }
         public async Task<ActionResult> Create([DataSourceRequest]DataSourceRequest request, Empresa obj)
@@ -96,7 +102,7 @@ namespace SiteSec.Controllers
 
             return Json(resultado.ToDataSourceResult(request));
         }
-        public async Task<ActionResult> CreateMatrizFilial([DataSourceRequest]DataSourceRequest request, EmpresaFilial obj)
+        public async Task<ActionResult> CreateMatrizFilial([DataSourceRequest]DataSourceRequest request, Filial obj)
         {
             //criar a empresa matriz
             var apiRetorno = await api.Use(HttpMethod.Post, obj, "api/Empresa/Matriz");

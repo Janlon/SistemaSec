@@ -16,6 +16,9 @@ namespace Swagger.Controllers
 
         public CrudResult<EmpresaMatriz> Get(int id) => Engine.Matrizes.Find(new object[] { id });
 
+        [Route("~/api/Matriz/{EmpresaId:int}/Empresa")]
+        public CrudResult<EmpresaMatriz> GetEmpresaMatriz(int EmpresaId) => Engine.Matrizes.Filter(p => p.EmpresaId.Equals(EmpresaId));
+
         public CrudResult<EmpresaMatriz> Post(EmpresaMatriz obj) => Engine.Matrizes.Insert(obj);
 
         public CrudResult<EmpresaMatriz> Put(EmpresaMatriz obj) => Engine.Matrizes.Update(obj);

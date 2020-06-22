@@ -16,6 +16,9 @@ namespace Swagger.Controllers
 
         public CrudResult<EmpresaFilial> Get(int id) => Engine.Filiais.Find(new object[] { id });
 
+        [Route("~/api/Filial/{EmpresaId:int}/Empresa")]
+        public CrudResult<EmpresaFilial> GetEmpresaFilial(int EmpresaId) => Engine.Filiais.Filter(p => p.EmpresaId.Equals(EmpresaId));
+
         public CrudResult<EmpresaFilial> Post(EmpresaFilial obj) => Engine.Filiais.Insert(obj);
 
         public CrudResult<Empresa> Put(Empresa obj) => Engine.Empresas.Update(obj);
