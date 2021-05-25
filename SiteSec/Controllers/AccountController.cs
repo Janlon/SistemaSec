@@ -36,12 +36,12 @@ namespace SiteSec.Controllers
             if (!ModelState.IsValid)
                 return View(obj);
 
-            var apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Post, obj, "/api/Usuario/Login")).result);
+            //var apiRetorno = JsonConvert.SerializeObject((await api.Use(HttpMethod.Post, obj, "/api/Usuario/Login")).result);
 
-            if (User.IsInRole("Administrators"))
-            {
+            //if (User.IsInRole("Administrators"))
+            //{
                 return Redirect("~/Home/index");
-            }
+           // }
 
             return View(obj);
         }

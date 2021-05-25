@@ -27,11 +27,15 @@
 
     @(Html.Kendo().Menu()
               .Name("menu")
-              .Scrollable(true)
+              .Scrollable(false)
               .Items(items =>
               {
                   items.Add()
-                    .Text("Home").Action("Index", "Home");
+                     .Text("Agenda")
+                     .Items(children =>
+                     {
+                         children.Add().Text("Agenda").Action("Index", "hHome");
+                     });
                   items.Add()
                     .Text("Cadastros")
                     .Items(children =>
@@ -61,10 +65,10 @@
                             });
                         children.Add().Text("Grupo Ordem de Serviços")
                             .Items(innerChildren =>
-                                {
-                                    innerChildren.Add().Text("Ordem de Serviço").Action("Index", "ordemservico");
-                                    innerChildren.Add().Text("Serviços").Action("Index", "servico");
-                                });
+                            {
+                                innerChildren.Add().Text("Ordem de Serviço").Action("Index", "ordemservico");
+                                innerChildren.Add().Text("Serviços").Action("Index", "servico");
+                            });
                     });
                   items.Add().Text("Movimentação")
                     .Items(children =>
@@ -98,11 +102,11 @@
                      .Text("Login")
                      .Items(children =>
                      {
-                         children.Add().Text("Configurações");
+                         children.Add().Text("Configurações").Action("Index", "empresa");
                          children.Add().Text("Sair");
                      });
 
-              }).Deferred(true)
+              })
         )
 
     <main>
